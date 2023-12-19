@@ -1,5 +1,5 @@
 import { createTRPCRouter } from "@/server/api/trpc";
-import { aspenRouter } from "./routers/aspen";
+import { aspenRouter } from "./routers/aspen/aspen";
 
 /**
  * This is the primary router for your server.
