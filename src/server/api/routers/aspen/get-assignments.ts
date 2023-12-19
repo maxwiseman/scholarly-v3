@@ -3,7 +3,7 @@ import { goToAcademics, login } from "./lib";
 
 export async function getAssignments(id: string) {
   const browser = await puppeteer.launch({
-    headless: process.env.VERCEL_ENV === "production" ? "new" : false,
+    headless: process.env.VERCEL_ENV ? "new" : false,
   });
   const context = await browser.createIncognitoBrowserContext();
   const page = await context.newPage();
