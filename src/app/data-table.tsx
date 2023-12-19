@@ -4,24 +4,20 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
-import * as React from "react";
+import { CaretSortIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import {
-  CaretSortIcon,
-  ChevronDownIcon,
-  DotsHorizontalIcon,
-} from "@radix-ui/react-icons";
-import {
-  type ColumnDef,
-  type ColumnFiltersState,
-  type SortingState,
-  type VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
+  type ColumnDef,
+  type ColumnFiltersState,
+  type SortingState,
+  type VisibilityState,
 } from "@tanstack/react-table";
+import * as React from "react";
 
 import { Button } from "@/app/_components/ui/button";
 import { Checkbox } from "@/app/_components/ui/checkbox";
@@ -29,9 +25,6 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/app/_components/ui/dropdown-menu";
 import { Input } from "@/app/_components/ui/input";
@@ -43,6 +36,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/app/_components/ui/table";
+import {
+  ContextMenu,
+  ContextMenuCheckboxItem,
+  ContextMenuContent,
+  ContextMenuTrigger,
+} from "./_components/ui/context-menu";
 // export type ClassData = {
 //   id: string | undefined;
 //   name: string;
@@ -254,41 +253,64 @@ export function DataTable<T>({
       </div>
       <div className="overflow-hidden rounded-md border">
         <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead
-                      className="bg-muted [&:has([role=checkbox])]:flex [&:has([role=checkbox])]:items-center [&:has([role=checkbox])]:justify-center [&:has([role=checkbox])]:px-0"
-                      key={header.id}
-                    >
-                      {header.isPlaceholder ? null : typeof header.column
-                          .columnDef.header == "string" ? (
-                        <Button
-                          variant="ghost"
-                          className="p-0 font-bold hover:bg-transparent"
-                          onClick={() =>
-                            header.column.toggleSorting(
-                              header.column.getIsSorted() === "asc",
-                            )
-                          }
+          <ContextMenu>
+            <ContextMenuTrigger asChild>
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead
+                          className="bg-muted [&:has([role=checkbox])]:flex [&:has([role=checkbox])]:items-center [&:has([role=checkbox])]:justify-center [&:has([role=checkbox])]:px-0"
+                          key={header.id}
                         >
-                          {header.column.columnDef.header?.toString()}
-                          <CaretSortIcon className="ml-2 h-4 w-4" />
-                        </Button>
-                      ) : (
-                        flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )
-                      )}
-                    </TableHead>
+                          {header.isPlaceholder ? null : typeof header.column
+                              .columnDef.header == "string" ? (
+                            <Button
+                              variant="ghost"
+                              className="p-0 font-bold hover:bg-transparent"
+                              onClick={() =>
+                                header.column.toggleSorting(
+                                  header.column.getIsSorted() === "asc",
+                                )
+                              }
+                            >
+                              {header.column.columnDef.header?.toString()}
+                              <CaretSortIcon className="ml-2 h-4 w-4" />
+                            </Button>
+                          ) : (
+                            flexRender(
+                              header.column.columnDef.header,
+                              header.getContext(),
+                            )
+                          )}
+                        </TableHead>
+                      );
+                    })}
+                  </TableRow>
+                ))}
+              </TableHeader>
+            </ContextMenuTrigger>
+            <ContextMenuContent>
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <ContextMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
+                    >
+                      {column.id}
+                    </ContextMenuCheckboxItem>
                   );
                 })}
-              </TableRow>
-            ))}
-          </TableHeader>
+            </ContextMenuContent>
+          </ContextMenu>
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
