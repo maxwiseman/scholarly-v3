@@ -44,9 +44,34 @@ export default function Home() {
       id: "Category",
     },
     {
+      header: "Date Assigned",
+      accessorKey: "dateAssigned",
+      id: "Date Assigned",
+    },
+    {
+      header: "Date Due",
+      accessorKey: "dateDue",
+      id: "Date Due",
+    },
+    {
+      header: "Extra Credit",
+      accessorKey: "extraCredit",
+      id: "Extra Credit",
+    },
+    {
       header: "Points Possible",
       accessorKey: "pointsPossible",
       id: "Points Possible",
+    },
+    {
+      header: "Points",
+      accessorKey: "score",
+      id: "Points",
+    },
+    {
+      header: "Feedback",
+      accessorKey: "feedback",
+      id: "Feedback",
     },
   ];
 
@@ -58,6 +83,11 @@ export default function Home() {
             searchKey="Name"
             data={assignmentData.data ?? []}
             columns={columns}
+            defaultVisibility={{
+              "Date Assigned": false,
+              "Date Due": false,
+              "Extra Credit": false,
+            }}
           />
         )}
         {!classData.isFetched && (

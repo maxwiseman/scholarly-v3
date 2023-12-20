@@ -142,10 +142,12 @@ export function DataTable<T>({
   data,
   columns,
   searchKey,
+  defaultVisibility = {},
 }: {
   data: T[];
   columns: ColumnDef<T>[];
   searchKey?: string;
+  defaultVisibility?: VisibilityState;
 }) {
   // columns.map((column) => {
   //   return {
@@ -187,7 +189,7 @@ export function DataTable<T>({
     [],
   );
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+    React.useState<VisibilityState>(defaultVisibility);
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
@@ -261,7 +263,7 @@ export function DataTable<T>({
                     {headerGroup.headers.map((header) => {
                       return (
                         <TableHead
-                          className="bg-muted [&:has([role=checkbox])]:flex [&:has([role=checkbox])]:items-center [&:has([role=checkbox])]:justify-center [&:has([role=checkbox])]:px-0"
+                          className="bg-muted [&:has([role=checkbox])]:flex [&:has([role=checkbox])]:items-center [&:has([role=checkbox])]:justify-center [&:has([role=checkbox])]:px-1"
                           key={header.id}
                         >
                           {header.isPlaceholder ? null : typeof header.column
@@ -320,7 +322,7 @@ export function DataTable<T>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
-                      className="[&:has([role=checkbox])]:flex [&:has([role=checkbox])]:items-center [&:has([role=checkbox])]:justify-center [&:has([role=checkbox])]:px-0"
+                      className="[&:has([role=checkbox])]:flex [&:has([role=checkbox])]:items-center [&:has([role=checkbox])]:justify-center [&:has([role=checkbox])]:px-1"
                       key={cell.id}
                     >
                       {flexRender(
