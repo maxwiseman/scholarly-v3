@@ -38,7 +38,7 @@ export const users = sqliteTable("user", {
   email: text("email", { length: 255 }).notNull(),
   emailVerified: int("emailVerified", {
     mode: "timestamp",
-  }).default(sql`CURRENT_TIMESTAMP(3)`),
+  }),
   image: text("image", { length: 255 }),
 });
 

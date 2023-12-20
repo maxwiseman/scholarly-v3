@@ -41,7 +41,7 @@ import {
   ContextMenuCheckboxItem,
   ContextMenuContent,
   ContextMenuTrigger,
-} from "./_components/ui/context-menu";
+} from "./context-menu";
 // export type ClassData = {
 //   id: string | undefined;
 //   name: string;
