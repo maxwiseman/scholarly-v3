@@ -2,7 +2,7 @@
 
 import { api } from "@/trpc/react";
 import { type ColumnDef } from "@tanstack/react-table";
-import { DataTable } from "../_components/ui/data-table";
+import { DataTable } from "../../_components/ui/data-table";
 
 export default function Home() {
   const classData = api.aspen.getClasses.useQuery(undefined, {
@@ -75,7 +75,7 @@ export default function Home() {
 
   return (
     <>
-      <main className="p-6">
+      <main className="min-h-[200vh] p-8">
         {classData.data && classData.isFetched && (
           <DataTable
             searchKey="Name"

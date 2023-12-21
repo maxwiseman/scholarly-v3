@@ -4,6 +4,9 @@ import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 
 import { TRPCReactProvider } from "@/trpc/react";
+import { ServerSessionProvider } from "./_components/serverSessionProvider";
+import { getServerSession } from "next-auth";
+import { ThemeProvider } from "./_components/themeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -16,19 +19,32 @@ export const metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession();
+  console.log(session?.user.name);
+
   return (
     <html lang="en">
+      <head />
       <body
-        className={`bg-background min-h-screen font-sans antialiased ${inter.variable}`}
+        className={`min-h-screen bg-background font-sans antialiased ${inter.variable}`}
       >
-        <TRPCReactProvider cookies={cookies().toString()}>
-          {children}
-        </TRPCReactProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ServerSessionProvider session={session}>
+            <TRPCReactProvider cookies={cookies().toString()}>
+              {children}
+            </TRPCReactProvider>
+          </ServerSessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
