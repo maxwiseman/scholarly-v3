@@ -2,9 +2,9 @@
 
 import { api } from "@/trpc/react";
 import { type ColumnDef } from "@tanstack/react-table";
-import { DataTable } from "../../_components/ui/data-table";
+import { DataTable } from "../../../../_components/ui/data-table";
 
-export default function Home() {
+export default function Home({ params }: { params: { classId: string } }) {
   const classData = api.aspen.getClasses.useQuery(undefined, {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
@@ -12,7 +12,7 @@ export default function Home() {
   });
   const assignmentData = api.aspen.getAssignments.useQuery(
     {
-      id: "SSC00000Q9Vncm",
+      id: params.classId,
     },
     {
       refetchOnWindowFocus: false,
