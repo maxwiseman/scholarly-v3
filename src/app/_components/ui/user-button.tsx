@@ -26,7 +26,7 @@ export function UserButton(): React.ReactElement {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger className="rounded-full">
-          <Avatar className="h-9 w-9">
+          <Avatar className="h-8 w-8">
             {session.data?.user.image && (
               <AvatarImage src={session.data?.user.image} />
             )}
@@ -88,7 +88,7 @@ export function UserButton(): React.ReactElement {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Avatar>
+        <Avatar className="h-8 w-8">
           <AvatarFallback>
             <IconUser />
           </AvatarFallback>

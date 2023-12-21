@@ -2,7 +2,13 @@ import { Separator } from "@/app/_components/ui/separator";
 import { Sidebar } from "./sidebar";
 import { Badge } from "@/app/_components/ui/badge";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: { classId: string };
+}) {
   return (
     <div className="p-8">
       <div>
@@ -15,9 +21,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </div>
       <Separator className="mt-4" />
-      <div className="flex w-full">
-        <div className="py-8">
-          <Sidebar />
+      <div className="flex w-full gap-8 py-8">
+        <div className="">
+          <Sidebar classId={params.classId} />
         </div>
         <div className="grow">{children}</div>
       </div>

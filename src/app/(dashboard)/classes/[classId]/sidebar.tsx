@@ -1,20 +1,60 @@
-import { Button } from "@/app/_components/ui/button";
+"use client";
 
-export function Sidebar(): React.ReactNode {
+import { LinkButton } from "@/app/_components/ui/button";
+import { usePathname } from "next/navigation";
+
+export function Sidebar({ classId }: { classId: string }): React.ReactNode {
+  const pathName = usePathname();
+  console.log("pathname", pathName);
+
   return (
-    <div className="flex w-48 flex-col gap-2">
-      <Button className="justify-start" variant={"ghost"}>
+    <div className="sticky top-20 flex w-48 flex-col gap-2">
+      <LinkButton
+        href={`/classes/${classId}`}
+        className="justify-start"
+        variant={pathName == `/classes/${classId}` ? "secondary" : "ghost"}
+      >
+        Overview
+      </LinkButton>
+      <LinkButton
+        href={`/classes/${classId}/assignments`}
+        disabled
+        className="justify-start"
+        variant={
+          pathName == `/classes/${classId}/assignments` ? "secondary" : "ghost"
+        }
+      >
         Assignments
-      </Button>
-      <Button className="justify-start" variant={"secondary"}>
+      </LinkButton>
+      <LinkButton
+        href={`/classes/${classId}/grades`}
+        className="justify-start"
+        variant={
+          pathName == `/classes/${classId}/grades` ? "secondary" : "ghost"
+        }
+      >
         Grades
-      </Button>
-      <Button className="justify-start" variant={"ghost"}>
+      </LinkButton>
+      <LinkButton
+        href={`/classes/${classId}/quizzes`}
+        disabled
+        className="justify-start"
+        variant={
+          pathName == `/classes/${classId}/quizzes` ? "secondary" : "ghost"
+        }
+      >
         Quizzes
-      </Button>
-      <Button className="justify-start" variant={"ghost"}>
+      </LinkButton>
+      <LinkButton
+        href={`/classes/${classId}/discussions`}
+        disabled
+        className="justify-start"
+        variant={
+          pathName == `/classes/${classId}/discussions` ? "secondary" : "ghost"
+        }
+      >
         Discussions
-      </Button>
+      </LinkButton>
     </div>
   );
 }

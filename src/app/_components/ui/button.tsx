@@ -4,6 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 import { IconLoader } from "@tabler/icons-react";
+import Link from "next/link";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:border disabled:border-input disabled:bg-secondary disabled:text-muted-foreground disabled:opacity-50",
@@ -41,6 +42,15 @@ export interface ButtonProps
   asChild?: boolean;
   loading?: boolean;
   icon?: React.ReactElement;
+}
+
+export interface LinkButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean;
+  loading?: boolean;
+  icon?: React.ReactElement;
+  href: string;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -81,4 +91,44 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 Button.displayName = "Button";
 
-export { Button, buttonVariants };
+const LinkButton = React.forwardRef<HTMLButtonElement, LinkButtonProps>(
+  ({ href, className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button";
+    const StyledIcon = props.icon
+      ? React.cloneElement(props.icon, { className: "h-4 w-4 mr-2" })
+      : null;
+    return (
+      <Link href={href}>
+        <Comp
+          disabled={props.disabled ?? props.loading}
+          className={cn("w-full", buttonVariants({ variant, size, className }))}
+          ref={ref}
+          {...props}
+        >
+          <div
+            className={cn(
+              "overflow-hidden transition-[width]",
+              props.loading ? "mr-2 w-4" : "mr-0 w-0",
+            )}
+          >
+            <IconLoader className={cn("h-4 w-4 animate-spin")} />
+          </div>
+          {props.icon && (
+            <div
+              className={cn(
+                "overflow-hidden transition-[width]",
+                !props.loading ? "mr-2 w-4" : "mr-0 w-0",
+              )}
+            >
+              {!props.loading && StyledIcon}
+            </div>
+          )}
+          {props.children}
+        </Comp>
+      </Link>
+    );
+  },
+);
+LinkButton.displayName = "LinkButton";
+
+export { Button, LinkButton, buttonVariants };
