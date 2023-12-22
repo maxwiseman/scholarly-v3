@@ -265,7 +265,7 @@ export function DataTable<T>({
                     {headerGroup.headers.map((header) => {
                       return (
                         <TableHead
-                          className="bg-muted [&:has([role=checkbox])]:flex [&:has([role=checkbox])]:items-center [&:has([role=checkbox])]:justify-center [&:has([role=checkbox])]:px-1"
+                          className="bg-muted [&:has([role=checkbox])]:flex [&:has([role=checkbox])]:items-center [&:has([role=checkbox])]:justify-center [&:has([role=checkbox])]:pl-2"
                           key={header.id}
                         >
                           {header.isPlaceholder ? null : typeof header.column
@@ -324,7 +324,7 @@ export function DataTable<T>({
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
-                      className="[&:has([role=checkbox])]:flex [&:has([role=checkbox])]:items-center [&:has([role=checkbox])]:justify-center [&:has([role=checkbox])]:px-1"
+                      className="[&:has([role=checkbox])]:px-1[&:has([role=checkbox])]:pl-2 [&:has([role=checkbox])]:flex [&:has([role=checkbox])]:items-center [&:has([role=checkbox])]:justify-center [&:has([role=checkbox])]:pl-2"
                       key={cell.id}
                     >
                       {flexRender(
