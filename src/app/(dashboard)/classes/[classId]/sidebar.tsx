@@ -8,7 +8,7 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
   console.log("pathname", pathName);
 
   return (
-    <div className="sticky top-[5.5rem] flex w-48 flex-col gap-2">
+    <div className="sticky top-[5.5rem] flex w-[15vw] min-w-[12rem] max-w-xs flex-col gap-2">
       <LinkButton
         href={`/classes/${classId}`}
         className="justify-start"

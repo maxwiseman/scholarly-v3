@@ -26,8 +26,13 @@ export function ClassCard({
   return (
     <Link href={`/classes/${classData.id}`}>
       <Card>
-        <CardHeader className="py-3 pb-0">
-          <CardTitle className="line-clamp-1 text-xl font-bold">
+        <CardHeader className="flex flex-row items-center gap-2 space-y-0 py-3 pb-0">
+          {/* <Avatar className="h-7 w-7">
+            <AvatarFallback>
+              <IconUser />
+            </AvatarFallback>
+          </Avatar> */}
+          <CardTitle className="mt-0 line-clamp-1 text-xl font-bold">
             {classData.name}
           </CardTitle>
         </CardHeader>

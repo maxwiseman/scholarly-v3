@@ -16,7 +16,7 @@ export function ClassInfo({ classId }: { classId: string }): React.ReactNode {
 
   if (!classFetcher.isFetched)
     return (
-      <div className="flex h-48 flex-col justify-center bg-card p-8">
+      <div className="flex h-[30vh] min-h-[12rem] flex-col justify-center bg-card p-8">
         <Skeleton className="h-9 w-96" />
         <div className="mt-2 flex flex-row gap-2">
           <Skeleton className="h-[22px] w-28" />
@@ -25,7 +25,7 @@ export function ClassInfo({ classId }: { classId: string }): React.ReactNode {
     );
 
   return (
-    <div className="flex h-48 flex-col justify-center bg-card p-8">
+    <div className="flex h-[30vh] min-h-[12rem] flex-col justify-center bg-card p-8">
       <h1 className="mt-0 text-3xl font-bold">{classInfo?.name}</h1>
       {/* <h4 className="text-muted-foreground">Lorem ipsum dolor sit amet</h4> */}
       <div className="mt-2 flex flex-row gap-2">
