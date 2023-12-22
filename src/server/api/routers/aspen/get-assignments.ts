@@ -57,7 +57,7 @@ export async function getAssignments(id: string) {
     (elements) => elements.map((element) => element.innerText),
   );
   const score = await page.$$eval(
-    "#dataGrid tr:not(:first-of-type) > td:nth-of-type(8) td:nth-of-type(2)",
+    "#dataGrid tr:not(:first-of-type) > td:nth-of-type(8) td:not(:has(.percentFieldBarFill)):not(:nth-of-type(3))",
     (elements) => elements.map((element) => element.innerText),
   );
   const feedback = await page.$$eval(
@@ -69,11 +69,11 @@ export async function getAssignments(id: string) {
     return {
       name: name[index],
       category: category[index],
-      pointsPossible: pointsPossible[index],
+      pointsPossible: parseFloat(pointsPossible[index] ?? ""),
       dateAssigned: Date.parse(dateAssigned[index] ?? ""),
       dateDue: Date.parse(dateDue[index] ?? ""),
       extraCredit: extraCredit[index] === "Y",
-      score: parseFloat(score[index] ?? "") || "M",
+      score: (parseFloat(score[index] ?? "") || score[index]?.toString()) ?? "",
       feedback: feedback[index],
     };
   });
