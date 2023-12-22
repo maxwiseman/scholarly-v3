@@ -14,7 +14,7 @@ export default function Layout({
       <ClassInfo classId={params.classId} />
       <Separator />
       <div className="flex w-full gap-8 p-8">
-        <div className="">
+        <div>
           <Sidebar classId={params.classId} />
         </div>
         <div className="grow">{children}</div>
