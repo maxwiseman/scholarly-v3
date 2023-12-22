@@ -24,7 +24,7 @@ export default function Home({ params }: { params: { classId: string } }) {
   const columns: ColumnDef<{
     name: string | undefined;
     category: string | undefined;
-    pointsPossible: string | undefined;
+    pointsPossible: number;
     dateAssigned: number;
     dateDue: number;
     extraCredit: boolean;

@@ -10,10 +10,10 @@ export default function Layout({
   params: { classId: string };
 }) {
   return (
-    <div className="p-8">
+    <div>
       <ClassInfo classId={params.classId} />
-      <Separator className="mt-4" />
-      <div className="flex w-full gap-8 py-8">
+      <Separator />
+      <div className="flex w-full gap-8 p-8">
         <div className="">
           <Sidebar classId={params.classId} />
         </div>

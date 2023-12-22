@@ -21,7 +21,9 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
         disabled
         className="justify-start"
         variant={
-          pathName == `/classes/${classId}/assignments` ? "secondary" : "ghost"
+          pathName.startsWith(`/classes/${classId}/assignments`)
+            ? "secondary"
+            : "ghost"
         }
       >
         Assignments
@@ -30,7 +32,9 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
         href={`/classes/${classId}/grades`}
         className="justify-start"
         variant={
-          pathName == `/classes/${classId}/grades` ? "secondary" : "ghost"
+          pathName.startsWith(`/classes/${classId}/grades`)
+            ? "secondary"
+            : "ghost"
         }
       >
         Grades
@@ -40,7 +44,9 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
         disabled
         className="justify-start"
         variant={
-          pathName == `/classes/${classId}/quizzes` ? "secondary" : "ghost"
+          pathName.startsWith(`/classes/${classId}/quizzes`)
+            ? "secondary"
+            : "ghost"
         }
       >
         Quizzes
@@ -50,7 +56,9 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
         disabled
         className="justify-start"
         variant={
-          pathName == `/classes/${classId}/discussions` ? "secondary" : "ghost"
+          pathName.startsWith(`/classes/${classId}/discussions`)
+            ? "secondary"
+            : "ghost"
         }
       >
         Discussions
