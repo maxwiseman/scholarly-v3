@@ -98,7 +98,7 @@ const LinkButton = React.forwardRef<HTMLButtonElement, LinkButtonProps>(
       ? React.cloneElement(props.icon, { className: "h-4 w-4 mr-2" })
       : null;
     return (
-      <Link href={href}>
+      <Link tabIndex={-1} href={href}>
         <Comp
           disabled={props.disabled ?? props.loading}
           className={cn("w-full", buttonVariants({ variant, size, className }))}

@@ -75,7 +75,7 @@ export default function Home({ params }: { params: { classId: string } }) {
 
   return (
     <>
-      <main className="min-h-[200vh]">
+      <main>
         {classData.data && classData.isFetched && (
           <DataTable
             searchKey="Name"

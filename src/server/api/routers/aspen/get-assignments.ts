@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-import { goToAcademics, login } from "./lib";
+import { capitalize, goToAcademics, login } from "./lib";
 
 export async function getAssignments(id: string) {
   const browser = await puppeteer.launch({
@@ -73,7 +73,9 @@ export async function getAssignments(id: string) {
       dateAssigned: Date.parse(dateAssigned[index] ?? ""),
       dateDue: Date.parse(dateDue[index] ?? ""),
       extraCredit: extraCredit[index] === "Y",
-      score: (parseFloat(score[index] ?? "") || score[index]?.toString()) ?? "",
+      score:
+        parseFloat(score[index] ?? "") ||
+        capitalize(score[index]?.toString() ?? ""),
       feedback: feedback[index],
     };
   });
