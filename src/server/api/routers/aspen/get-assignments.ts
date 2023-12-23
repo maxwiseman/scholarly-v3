@@ -18,7 +18,7 @@ export async function getAssignments(id: string) {
               ? "/usr/bin/google-chrome"
               : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
       };
-  const browser = await chrome.puppeteer.launch(options);
+  const browser = await puppeteer.launch(options);
   const context = await browser.createIncognitoBrowserContext();
   const page = await context.newPage();
 
