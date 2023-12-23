@@ -5,8 +5,8 @@ import { cookies } from "next/headers";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { ServerSessionProvider } from "./_components/serverSessionProvider";
-import { getServerSession } from "next-auth";
 import { ThemeProvider } from "./_components/themeProvider";
+import { getServerAuthSession } from "@/server/auth";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,7 +24,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
+  const session = await getServerAuthSession();
   console.log(session?.user.name);
 
   return (
