@@ -1,10 +1,24 @@
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
+import chrome from "chrome-aws-lambda";
 import { capitalize, decapitalize, goToAcademics, login } from "./lib";
 
 export async function getClasses() {
-  const browser = await puppeteer.launch({
-    headless: process.env.VERCEL_ENV ? "new" : false,
-  });
+  const options = process.env.AWS_REGION
+    ? {
+        args: chrome.args,
+        executablePath: await chrome.executablePath,
+        headless: chrome.headless,
+      }
+    : {
+        args: [],
+        executablePath:
+          process.platform === "win32"
+            ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+            : process.platform === "linux"
+              ? "/usr/bin/google-chrome"
+              : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+      };
+  const browser = await puppeteer.launch(options);
   const context = await browser.createIncognitoBrowserContext();
   const page = await context.newPage();
 

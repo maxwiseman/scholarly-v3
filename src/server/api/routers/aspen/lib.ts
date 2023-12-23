@@ -2,7 +2,7 @@ import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db";
 import { users } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
-import type { Page } from "puppeteer";
+import type { Page } from "puppeteer-core";
 
 export async function login(page: Page, onError: () => void | Promise<void>) {
   const session = await getServerAuthSession();
