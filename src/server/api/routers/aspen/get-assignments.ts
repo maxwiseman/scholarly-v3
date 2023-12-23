@@ -1,13 +1,16 @@
 import puppeteer from "puppeteer-core";
-import chrome from "chrome-aws-lambda";
+import chromium from "@sparticuz/chromium-min";
 import { capitalize, goToAcademics, login } from "./lib";
 
 export async function getAssignments(id: string) {
   const options = process.env.AWS_REGION
     ? {
-        args: chrome.args,
-        executablePath: await chrome.executablePath,
-        headless: chrome.headless,
+        args: chromium.args,
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath(
+          "https://github.com/Sparticuz/chromium/releases/download/v110.0.1/chromium-v110.0.1-pack.tar",
+        ),
+        headless: chromium.headless,
       }
     : {
         args: [],
