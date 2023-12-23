@@ -143,7 +143,7 @@ export function DataTable<T>({
   columns,
   searchKey,
   defaultVisibility = {},
-  paginated,
+  paginated = false,
 }: {
   data: T[];
   columns: ColumnDef<T>[];
