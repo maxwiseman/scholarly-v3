@@ -149,7 +149,7 @@ export function DataTable<T>({
   columns: ColumnDef<T>[];
   searchKey?: string;
   defaultVisibility?: VisibilityState;
-  paginated: boolean;
+  paginated?: boolean;
 }) {
   // columns.map((column) => {
   //   return {
