@@ -87,7 +87,7 @@ export function UserButton(): React.ReactElement {
     );
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger className="rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
         <Avatar className="h-8 w-8">
           <AvatarFallback>
             <IconUser />
