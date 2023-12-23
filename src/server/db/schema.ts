@@ -23,6 +23,9 @@ export const users = sqliteTable("user", {
     mode: "timestamp",
   }),
   image: text("image", { length: 255 }),
+  canvasApiKey: text("canvasApiKey", { length: 255 }),
+  aspenUsername: text("aspenUsername", { length: 255 }),
+  aspenPassword: text("aspenPassword", { length: 255 }),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({

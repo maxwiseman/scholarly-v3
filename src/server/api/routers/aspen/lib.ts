@@ -1,10 +1,25 @@
+import { getServerAuthSession } from "@/server/auth";
+import { db } from "@/server/db";
+import { users } from "@/server/db/schema";
+import { eq } from "drizzle-orm";
 import type { Page } from "puppeteer";
 
 export async function login(page: Page, onError: () => void | Promise<void>) {
+  const session = await getServerAuthSession();
+  if (!session) {
+    await onError();
+    return;
+  }
+  const dbUser = await db.query.users.findFirst({
+    where: eq(users.id, session.user.id),
+  });
+
+  console.log("DB data received");
+
   await page.goto("https://aspen.knoxschools.org");
   await page.waitForSelector("#username", { timeout: 2000 });
-  await page.type("#username", process.env.ASPEN_USERNAME ?? "");
-  await page.type("#password", process.env.ASPEN_PASSWORD ?? "");
+  await page.type("#username", dbUser?.aspenUsername ?? "");
+  await page.type("#password", dbUser?.aspenPassword ?? "");
   await page.click("#logonButton");
   try {
     await page.waitForSelector(".navTab", { timeout: 1000 });
