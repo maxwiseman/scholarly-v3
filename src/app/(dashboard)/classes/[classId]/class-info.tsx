@@ -25,7 +25,10 @@ export function ClassInfo({ classId }: { classId: string }): React.ReactNode {
     );
 
   return (
-    <div className="flex h-[30vh] min-h-[12rem] flex-col justify-center bg-card p-8">
+    <div
+      style={{ boxShadow: "inset 0px -3px 44px -26px rgba(0,0,0,0.4)" }}
+      className="flex h-[30vh] min-h-[12rem] flex-col justify-center bg-card p-8"
+    >
       <h1 className="mt-0 text-3xl font-bold">{classInfo?.name}</h1>
       {/* <h4 className="text-muted-foreground">Lorem ipsum dolor sit amet</h4> */}
       <div className="mt-2 flex flex-row gap-2">
