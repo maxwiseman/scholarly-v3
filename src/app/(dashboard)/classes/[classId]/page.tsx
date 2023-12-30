@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Table,
   TableBody,
@@ -7,16 +9,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/app/_components/ui/table";
-import { api } from "@/trpc/server";
+import { api } from "@/trpc/react";
 
-export default async function Page({
+export default function Page({
   params,
 }: {
   params: { classId: string };
-}): Promise<React.ReactElement> {
-  const categories = await api.aspen.getCategories.query({
+}): React.ReactElement {
+  const categoryFetcher = api.aspen.getCategories.useQuery({
     id: params.classId,
   });
+
+  if (!categoryFetcher.isFetched) {
+    return <main className="text-muted-foreground">Loading...</main>;
+  }
 
   return (
     <main>
@@ -29,7 +35,7 @@ export default async function Page({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {categories.categories.map((category) => {
+          {categoryFetcher.data?.categories.map((category) => {
             return (
               <TableRow key={category.name}>
                 <TableCell>{category.name}</TableCell>
@@ -44,7 +50,7 @@ export default async function Page({
         <TableFooter>
           <TableRow>
             <TableCell colSpan={2}>Gradebook Average</TableCell>
-            <TableCell>{categories.average}%</TableCell>
+            <TableCell>{categoryFetcher.data?.average}%</TableCell>
           </TableRow>
         </TableFooter>
       </Table>
