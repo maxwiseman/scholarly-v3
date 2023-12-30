@@ -20,7 +20,7 @@ export default async function Page({
 
   return (
     <main>
-      <Table>
+      <Table className="overflow-hidden rounded-md">
         <TableHeader>
           <TableRow>
             <TableHead>Category</TableHead>
