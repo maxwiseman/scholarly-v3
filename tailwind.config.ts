@@ -1,3 +1,4 @@
+// eslint-disable-next-line tsdoc/syntax -- This is just the default, it doesn't really matter
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],

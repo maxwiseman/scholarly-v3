@@ -1,6 +1,8 @@
 "use client";
 
 import { signIn, signOut, useSession } from "next-auth/react";
+import { IconLogout, IconMoonStars, IconUser } from "@tabler/icons-react";
+import { useTheme } from "next-themes";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import {
   DropdownMenu,
@@ -15,8 +17,6 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSubContent,
 } from "./dropdown-menu";
-import { IconLogout, IconMoonStars, IconUser } from "@tabler/icons-react";
-import { useTheme } from "next-themes";
 
 export function UserButton(): React.ReactElement {
   const session = useSession();
@@ -27,9 +27,9 @@ export function UserButton(): React.ReactElement {
       <DropdownMenu>
         <DropdownMenuTrigger className="rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
           <Avatar className="h-8 w-8">
-            {session.data?.user.image && (
-              <AvatarImage src={session.data?.user.image} />
-            )}
+            {session.data.user.image ? (
+              <AvatarImage src={session.data.user.image} />
+            ) : null}
             <AvatarFallback>
               <IconUser />
             </AvatarFallback>
@@ -37,10 +37,10 @@ export function UserButton(): React.ReactElement {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="mx-2">
           <DropdownMenuLabel className="pb-0">
-            {session.data?.user.name}
+            {session.data.user.name}
           </DropdownMenuLabel>
           <DropdownMenuLabel className="pt-0 text-xs font-normal text-muted-foreground">
-            {session.data?.user.email}
+            {session.data.user.email}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuSub>
@@ -50,22 +50,28 @@ export function UserButton(): React.ReactElement {
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
                 <DropdownMenuCheckboxItem
-                  checked={theme == "system"}
-                  onClick={() => setTheme("system")}
+                  checked={theme === "system"}
+                  onClick={() => {
+                    setTheme("system");
+                  }}
                 >
                   {/* <IconDeviceDesktop className="mr-2 h-4 w-4" /> */}
                   System
                 </DropdownMenuCheckboxItem>
                 <DropdownMenuCheckboxItem
-                  checked={theme == "light"}
-                  onClick={() => setTheme("light")}
+                  checked={theme === "light"}
+                  onClick={() => {
+                    setTheme("light");
+                  }}
                 >
                   {/* <IconSun className="mr-2 h-4 w-4" /> */}
                   Light
                 </DropdownMenuCheckboxItem>
                 <DropdownMenuCheckboxItem
-                  checked={theme == "dark"}
-                  onClick={() => setTheme("dark")}
+                  checked={theme === "dark"}
+                  onClick={() => {
+                    setTheme("dark");
+                  }}
                 >
                   {/* <IconMoon className="mr-2 h-4 w-4" /> */}
                   Dark

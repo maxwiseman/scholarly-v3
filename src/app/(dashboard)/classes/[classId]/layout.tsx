@@ -1,6 +1,6 @@
-import { Separator } from "@/app/_components/ui/separator";
 import { ClassInfo } from "./class-info";
 import { Sidebar } from "./sidebar";
+import { Separator } from "@/app/_components/ui/separator";
 
 export default function Layout({
   children,
@@ -8,7 +8,7 @@ export default function Layout({
 }: {
   children: React.ReactNode;
   params: { classId: string };
-}) {
+}): React.ReactElement {
   return (
     <div>
       <ClassInfo classId={params.classId} />

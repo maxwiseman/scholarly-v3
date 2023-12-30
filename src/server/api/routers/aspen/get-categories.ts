@@ -2,6 +2,7 @@ import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium-min";
 import { goToAcademics, login } from "./lib";
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type -- We have good type inference
 export async function getCategories(id: string) {
   const options = process.env.AWS_REGION
     ? {
@@ -15,6 +16,7 @@ export async function getCategories(id: string) {
     : {
         args: [],
         executablePath:
+          // eslint-disable-next-line no-nested-ternary -- This isn't that confusing
           process.platform === "win32"
             ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
             : process.platform === "linux"

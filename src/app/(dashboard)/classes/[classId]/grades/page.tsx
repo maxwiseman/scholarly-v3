@@ -1,10 +1,14 @@
 "use client";
 
-import { api } from "@/trpc/react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "../../../../_components/ui/data-table";
+import { api } from "@/trpc/react";
 
-export default function Home({ params }: { params: { classId: string } }) {
+export default function Home({
+  params,
+}: {
+  params: { classId: string };
+}): React.ReactElement {
   const classData = api.aspen.getClasses.useQuery(undefined, {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
@@ -74,24 +78,22 @@ export default function Home({ params }: { params: { classId: string } }) {
   ];
 
   return (
-    <>
-      <main>
-        {classData.data && classData.isFetched && (
-          <DataTable
-            searchKey="Name"
-            data={assignmentData.data ?? []}
-            columns={columns}
-            defaultVisibility={{
-              "Date Assigned": false,
-              "Date Due": false,
-              "Extra Credit": false,
-            }}
-          />
-        )}
-        {!classData.isFetched && (
-          <p className="text-muted-foreground">Loading...</p>
-        )}
-      </main>
-    </>
+    <main>
+      {classData.data && classData.isFetched ? (
+        <DataTable
+          columns={columns}
+          data={assignmentData.data ?? []}
+          defaultVisibility={{
+            "Date Assigned": false,
+            "Date Due": false,
+            "Extra Credit": false,
+          }}
+          searchKey="Name"
+        />
+      ) : null}
+      {!classData.isFetched && (
+        <p className="text-muted-foreground">Loading...</p>
+      )}
+    </main>
   );
 }

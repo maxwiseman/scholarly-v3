@@ -1,3 +1,6 @@
+import { CircularProgress } from "@nextui-org/react";
+import { IconPencil } from "@tabler/icons-react";
+import Link from "next/link";
 import { Button } from "@/app/_components/ui/button";
 import {
   Card,
@@ -21,9 +24,6 @@ import {
   DialogTrigger,
 } from "@/app/_components/ui/dialog";
 import { Input } from "@/app/_components/ui/input";
-import { CircularProgress } from "@nextui-org/react";
-import { IconPencil } from "@tabler/icons-react";
-import Link from "next/link";
 
 export function ClassCard({
   classData,
@@ -40,7 +40,7 @@ export function ClassCard({
     tardies: number;
     dismissals: number;
   };
-}) {
+}): React.ReactElement {
   return (
     <Dialog>
       <ContextMenu>
@@ -60,16 +60,17 @@ export function ClassCard({
                   {classData.name}
                 </CardTitle>
                 <CircularProgress
-                  showValueLabel
-                  color={"warning"}
                   classNames={{
                     indicator:
+                      // eslint-disable-next-line no-nested-ternary -- This isn't that confusing
                       classData.termGrade > 85
                         ? "stroke-success"
                         : classData.termGrade > 70
                           ? "stroke-warning"
                           : "stroke-error",
                   }}
+                  color="warning"
+                  showValueLabel
                   value={classData.termGrade}
                 />
               </CardHeader>
@@ -94,7 +95,7 @@ export function ClassCard({
         <DialogHeader>
           <DialogTitle>Edit class</DialogTitle>
           <DialogDescription>
-            Make changes to the class here. Click save when you're done.
+            Make changes to the class here. Click save when you&lsquo;re done.
           </DialogDescription>
         </DialogHeader>
         <Input />

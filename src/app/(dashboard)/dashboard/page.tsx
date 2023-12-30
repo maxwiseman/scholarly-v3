@@ -1,10 +1,10 @@
 "use client";
 
+import { ClassCard } from "./class-card";
 import { Separator } from "@/app/_components/ui/separator";
 import { api } from "@/trpc/react";
-import { ClassCard } from "./class-card";
 
-export default function Page() {
+export default function Page(): React.ReactElement {
   const classFetcher = api.aspen.getClasses.useQuery(undefined, {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
@@ -19,7 +19,7 @@ export default function Page() {
       <Separator className="my-4" />
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {classFetcher.data?.map((classData) => {
-          return <ClassCard classData={classData} />;
+          return <ClassCard classData={classData} key={classData.id} />;
         })}
       </div>
     </div>

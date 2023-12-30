@@ -2,6 +2,7 @@ import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium-min";
 import { capitalize, decapitalize, goToAcademics, login } from "./lib";
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type -- We have a good type inference
 export async function getClasses() {
   const options = process.env.AWS_REGION
     ? {
@@ -15,6 +16,7 @@ export async function getClasses() {
     : {
         args: [],
         executablePath:
+          // eslint-disable-next-line no-nested-ternary -- This isn't that confusing
           process.platform === "win32"
             ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
             : process.platform === "linux"
@@ -82,11 +84,9 @@ export async function getClasses() {
     const teacherSplit = teacher.split("; ");
     return teacherSplit.map((singleTeacher: string) => {
       const singleTeacherNames = singleTeacher.split(", ");
-      return (
-        capitalize(singleTeacherNames[1] ?? "") +
-        " " +
-        capitalize(singleTeacherNames[0] ?? "")
-      );
+      return `${capitalize(singleTeacherNames[1] ?? "")} ${capitalize(
+        singleTeacherNames[0] ?? "",
+      )}`;
     });
   });
 

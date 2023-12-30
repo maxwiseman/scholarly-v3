@@ -6,10 +6,9 @@ import {
 } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
-
+import { sqliteTable } from "drizzle-orm/sqlite-core";
 import { env } from "@/env";
 import { db } from "@/server/db";
-import { sqliteTable } from "drizzle-orm/sqlite-core";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -74,4 +73,5 @@ export const authOptions: NextAuthOptions = {
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type -- It's fine
 export const getServerAuthSession = () => getServerSession(authOptions);

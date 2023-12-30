@@ -1,6 +1,5 @@
 import * as React from "react";
-
-import { cn } from "@/lib/utils";
+import { useMediaQuery } from "usehooks-ts";
 import {
   Dialog,
   DialogContent,
@@ -22,15 +21,15 @@ import {
 } from "./drawer";
 import { Label } from "./label";
 import { Input } from "./input";
-import { useMediaQuery } from "usehooks-ts";
+import { cn } from "@/lib/utils";
 
-export function DrawerDialogDemo() {
+export function DrawerDialogDemo(): React.ReactElement {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog onOpenChange={setOpen} open={open}>
         <DialogTrigger asChild>
           <Button variant="outline">Edit Profile</Button>
         </DialogTrigger>
@@ -38,7 +37,8 @@ export function DrawerDialogDemo() {
           <DialogHeader>
             <DialogTitle>Edit profile</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
+              Make changes to your profile here. Click save when you&lsquo;re
+              done.
             </DialogDescription>
           </DialogHeader>
           <ProfileForm />
@@ -48,7 +48,7 @@ export function DrawerDialogDemo() {
   }
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
+    <Drawer onOpenChange={setOpen} open={open}>
       <DrawerTrigger asChild>
         <Button variant="outline">Edit Profile</Button>
       </DrawerTrigger>
@@ -56,7 +56,8 @@ export function DrawerDialogDemo() {
         <DrawerHeader className="text-left">
           <DrawerTitle>Edit profile</DrawerTitle>
           <DrawerDescription>
-            Make changes to your profile here. Click save when you're done.
+            Make changes to your profile here. Click save when you&lsquo;re
+            done.
           </DrawerDescription>
         </DrawerHeader>
         <ProfileForm className="px-4" />
@@ -70,16 +71,18 @@ export function DrawerDialogDemo() {
   );
 }
 
-function ProfileForm({ className }: React.ComponentProps<"form">) {
+function ProfileForm({
+  className,
+}: React.ComponentProps<"form">): React.ReactElement {
   return (
     <form className={cn("grid items-start gap-4", className)}>
       <div className="grid gap-2">
         <Label htmlFor="email">Email</Label>
-        <Input type="email" id="email" defaultValue="shadcn@example.com" />
+        <Input defaultValue="shadcn@example.com" id="email" type="email" />
       </div>
       <div className="grid gap-2">
         <Label htmlFor="username">Username</Label>
-        <Input id="username" defaultValue="@shadcn" />
+        <Input defaultValue="@shadcn" id="username" />
       </div>
       <Button type="submit">Save changes</Button>
     </form>

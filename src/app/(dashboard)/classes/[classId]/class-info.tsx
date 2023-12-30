@@ -11,7 +11,7 @@ export function ClassInfo({ classId }: { classId: string }): React.ReactNode {
     refetchOnReconnect: false,
   });
   const classInfo = classFetcher.data?.find((singleClass) => {
-    return singleClass.id == classId;
+    return singleClass.id === classId;
   });
 
   if (!classFetcher.isFetched)
@@ -30,7 +30,11 @@ export function ClassInfo({ classId }: { classId: string }): React.ReactNode {
       {/* <h4 className="text-muted-foreground">Lorem ipsum dolor sit amet</h4> */}
       <div className="mt-2 flex flex-row gap-2">
         {classInfo?.teachers?.map((teacher) => {
-          return <Badge variant={"default"}>{teacher}</Badge>;
+          return (
+            <Badge key={teacher} variant="default">
+              {teacher}
+            </Badge>
+          );
         })}
       </div>
     </div>

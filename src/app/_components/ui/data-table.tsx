@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
 import { CaretSortIcon, ChevronDownIcon } from "@radix-ui/react-icons";
@@ -18,7 +14,12 @@ import {
   type VisibilityState,
 } from "@tanstack/react-table";
 import * as React from "react";
-
+import {
+  ContextMenu,
+  ContextMenuCheckboxItem,
+  ContextMenuContent,
+  ContextMenuTrigger,
+} from "./context-menu";
 import { Button } from "@/app/_components/ui/button";
 import { Checkbox } from "@/app/_components/ui/checkbox";
 import {
@@ -36,12 +37,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/app/_components/ui/table";
-import {
-  ContextMenu,
-  ContextMenuCheckboxItem,
-  ContextMenuContent,
-  ContextMenuTrigger,
-} from "./context-menu";
 // export type ClassData = {
 //   id: string | undefined;
 //   name: string;
@@ -150,7 +145,7 @@ export function DataTable<T>({
   searchKey?: string;
   defaultVisibility?: VisibilityState;
   paginated?: boolean;
-}) {
+}): React.ReactElement {
   // columns.map((column) => {
   //   return {
   //     cell: ({ row }) => {
@@ -162,24 +157,30 @@ export function DataTable<T>({
   //   };
   // });
 
-  if (columns[0] && columns[0].id != "select")
+  if (columns[0] && columns[0].id !== "select")
     columns.unshift({
       id: "select",
+      // eslint-disable-next-line react/no-unstable-nested-components -- It is ok because we are using tanstack tables
       header: ({ table }) => (
         <Checkbox
+          aria-label="Select all"
           checked={
             table.getIsAllPageRowsSelected() ||
             (table.getIsSomePageRowsSelected() && "indeterminate")
           }
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
+          onCheckedChange={(value) => {
+            table.toggleAllPageRowsSelected(Boolean(value));
+          }}
         />
       ),
+      // eslint-disable-next-line react/no-unstable-nested-components -- It is ok because we are using tanstack tables
       cell: ({ row }) => (
         <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => {
+            row.toggleSelected(Boolean(value));
+          }}
         />
       ),
       enableSorting: false,
@@ -216,21 +217,23 @@ export function DataTable<T>({
   return (
     <div className="w-full">
       <div className="flex items-center pb-4">
-        {searchKey && (
+        {searchKey ? (
           <Input
-            placeholder="Filter..."
-            value={
-              (table.getColumn(searchKey)?.getFilterValue() as string) ?? ""
-            }
+            className="max-w-sm"
             onChange={(event) =>
               table.getColumn(searchKey)?.setFilterValue(event.target.value)
             }
-            className="max-w-sm"
+            placeholder="Filter..."
+            value={
+              (table.getColumn(searchKey)?.getFilterValue() as
+                | string
+                | undefined) ?? ""
+            }
           />
-        )}
+        ) : null}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
+            <Button className="ml-auto" variant="outline">
               Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -241,12 +244,12 @@ export function DataTable<T>({
               .map((column) => {
                 return (
                   <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
                     checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
+                    className="capitalize"
+                    key={column.id}
+                    onCheckedChange={(value) => {
+                      column.toggleVisibility(Boolean(value));
+                    }}
                   >
                     {column.id}
                   </DropdownMenuCheckboxItem>
@@ -268,18 +271,19 @@ export function DataTable<T>({
                           className="bg-muted [&:has([role=checkbox])]:flex [&:has([role=checkbox])]:items-center [&:has([role=checkbox])]:justify-center [&:has([role=checkbox])]:pl-2"
                           key={header.id}
                         >
+                          {/* eslint-disable-next-line no-nested-ternary -- It's fine in this case */}
                           {header.isPlaceholder ? null : typeof header.column
-                              .columnDef.header == "string" ? (
+                              .columnDef.header === "string" ? (
                             <Button
-                              variant="ghost"
                               className="p-0 font-bold hover:bg-transparent"
-                              onClick={() =>
+                              onClick={() => {
                                 header.column.toggleSorting(
                                   header.column.getIsSorted() === "asc",
-                                )
-                              }
+                                );
+                              }}
+                              variant="ghost"
                             >
-                              {header.column.columnDef.header?.toString()}
+                              {header.column.columnDef.header.toString()}
                               <CaretSortIcon className="ml-2 h-4 w-4" />
                             </Button>
                           ) : (
@@ -302,12 +306,12 @@ export function DataTable<T>({
                 .map((column) => {
                   return (
                     <ContextMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize"
                       checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
+                      className="capitalize"
+                      key={column.id}
+                      onCheckedChange={(value) => {
+                        column.toggleVisibility(Boolean(value));
+                      }}
                     >
                       {column.id}
                     </ContextMenuCheckboxItem>
@@ -316,11 +320,11 @@ export function DataTable<T>({
             </ContextMenuContent>
           </ContextMenu>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  key={row.id}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
@@ -338,8 +342,8 @@ export function DataTable<T>({
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
                   className="h-24 text-center"
+                  colSpan={columns.length}
                 >
                   No results.
                 </TableCell>
@@ -353,26 +357,30 @@ export function DataTable<T>({
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
-        {paginated && (
+        {paginated ? (
           <div className="space-x-2">
             <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
+              onClick={() => {
+                table.previousPage();
+              }}
+              size="sm"
+              variant="outline"
             >
               Previous
             </Button>
             <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
+              onClick={() => {
+                table.nextPage();
+              }}
+              size="sm"
+              variant="outline"
             >
               Next
             </Button>
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );
@@ -386,7 +394,7 @@ interface DataTableProps<TData, TValue> {
 export function DataTableSimple<TData, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData, TValue>): React.ReactElement {
   const table = useReactTable({
     data,
     columns,
@@ -415,11 +423,11 @@ export function DataTableSimple<TData, TValue>({
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows?.length ? (
+          {table.getRowModel().rows.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
-                key={row.id}
                 data-state={row.getIsSelected() && "selected"}
+                key={row.id}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
@@ -430,7 +438,7 @@ export function DataTableSimple<TData, TValue>({
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
+              <TableCell className="h-24 text-center" colSpan={columns.length}>
                 No results.
               </TableCell>
             </TableRow>

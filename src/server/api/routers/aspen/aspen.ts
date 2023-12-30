@@ -1,9 +1,8 @@
 import { z } from "zod";
-
-import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { getAssignments } from "./get-assignments";
 import { getCategories } from "./get-categories";
 import { getClasses } from "./get-classes";
+import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
 export const aspenRouter = createTRPCRouter({
   getAssignments: publicProcedure

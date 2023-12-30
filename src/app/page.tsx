@@ -3,7 +3,8 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "./_components/ui/button";
 import { UserButton } from "./_components/ui/user-button";
-export default function Page() {
+
+export default function Page(): React.ReactElement {
   const session = useSession();
 
   return (
@@ -16,10 +17,10 @@ export default function Page() {
         Sign in
       </Button>
       <Button
-        variant={"secondary"}
         onClick={async () => {
           await signOut();
         }}
+        variant="secondary"
       >
         Sign out
       </Button>

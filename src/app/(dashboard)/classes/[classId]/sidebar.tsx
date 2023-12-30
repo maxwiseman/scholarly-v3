@@ -1,25 +1,24 @@
 "use client";
 
-import { LinkButton } from "@/app/_components/ui/button";
 import { usePathname } from "next/navigation";
+import { LinkButton } from "@/app/_components/ui/button";
 
 export function Sidebar({ classId }: { classId: string }): React.ReactNode {
   const pathName = usePathname();
-  console.log("pathname", pathName);
 
   return (
     <div className="sticky top-[5.5rem] flex w-[15vw] min-w-[12rem] max-w-xs flex-col gap-2">
       <LinkButton
-        href={`/classes/${classId}`}
         className="justify-start"
-        variant={pathName == `/classes/${classId}` ? "secondary" : "ghost"}
+        href={`/classes/${classId}`}
+        variant={pathName === `/classes/${classId}` ? "secondary" : "ghost"}
       >
         Overview
       </LinkButton>
       <LinkButton
-        href={`/classes/${classId}/assignments`}
-        disabled
         className="justify-start"
+        disabled
+        href={`/classes/${classId}/assignments`}
         variant={
           pathName.startsWith(`/classes/${classId}/assignments`)
             ? "secondary"
@@ -29,8 +28,8 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
         Assignments
       </LinkButton>
       <LinkButton
-        href={`/classes/${classId}/grades`}
         className="justify-start"
+        href={`/classes/${classId}/grades`}
         variant={
           pathName.startsWith(`/classes/${classId}/grades`)
             ? "secondary"
@@ -40,9 +39,9 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
         Grades
       </LinkButton>
       <LinkButton
-        href={`/classes/${classId}/quizzes`}
-        disabled
         className="justify-start"
+        disabled
+        href={`/classes/${classId}/quizzes`}
         variant={
           pathName.startsWith(`/classes/${classId}/quizzes`)
             ? "secondary"
@@ -52,9 +51,9 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
         Quizzes
       </LinkButton>
       <LinkButton
-        href={`/classes/${classId}/discussions`}
-        disabled
         className="justify-start"
+        disabled
+        href={`/classes/${classId}/discussions`}
         variant={
           pathName.startsWith(`/classes/${classId}/discussions`)
             ? "secondary"

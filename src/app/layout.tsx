@@ -2,12 +2,11 @@ import "@/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
-
-import { TRPCReactProvider } from "@/trpc/react";
-import { ServerSessionProvider } from "./_components/serverSessionProvider";
-import { ThemeProvider } from "./_components/themeProvider";
+import { ServerSessionProvider } from "./_components/server-session-provider";
+import { ThemeProvider } from "./_components/theme-provider";
+import { NextUIClientProvider } from "./_components/next-ui-provider";
 import { getServerAuthSession } from "@/server/auth";
-import { NextUIClientProvider } from "./_components/nextUIProvider";
+import { TRPCReactProvider } from "@/trpc/react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,9 +23,8 @@ export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}) {
+}): Promise<React.ReactElement> {
   const session = await getServerAuthSession();
-  console.log(session?.user.name);
 
   return (
     <html lang="en">
@@ -37,8 +35,8 @@ export default async function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
-          enableSystem
           disableTransitionOnChange
+          enableSystem
         >
           <ServerSessionProvider session={session}>
             <TRPCReactProvider cookies={cookies().toString()}>

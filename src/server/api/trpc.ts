@@ -10,7 +10,6 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
-
 import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db";
 
@@ -26,6 +25,7 @@ import { db } from "@/server/db";
  *
  * @see https://trpc.io/docs/server/context
  */
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type -- Good type inference
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   const session = await getServerAuthSession();
 
@@ -82,6 +82,7 @@ export const publicProcedure = t.procedure;
 
 /** Reusable middleware that enforces users are logged in before running the procedure. */
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Just in case
   if (!ctx.session || !ctx.session.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
