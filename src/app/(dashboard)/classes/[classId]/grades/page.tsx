@@ -49,11 +49,23 @@ export default function Home({
       header: "Date Assigned",
       accessorKey: "dateAssigned",
       id: "Date Assigned",
+      accessorFn: (data) => {
+        return new Date(data.dateAssigned).toLocaleDateString("en-us", {
+          day: "numeric",
+          month: "short",
+        });
+      },
     },
     {
       header: "Date Due",
       accessorKey: "dateDue",
       id: "Date Due",
+      accessorFn: (data) => {
+        return new Date(data.dateDue).toLocaleDateString("en-us", {
+          day: "numeric",
+          month: "short",
+        });
+      },
     },
     {
       header: "Extra Credit",
