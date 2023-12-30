@@ -7,6 +7,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { ServerSessionProvider } from "./_components/serverSessionProvider";
 import { ThemeProvider } from "./_components/themeProvider";
 import { getServerAuthSession } from "@/server/auth";
+import { NextUIClientProvider } from "./_components/nextUIProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -41,7 +42,7 @@ export default async function RootLayout({
         >
           <ServerSessionProvider session={session}>
             <TRPCReactProvider cookies={cookies().toString()}>
-              {children}
+              <NextUIClientProvider>{children}</NextUIClientProvider>
             </TRPCReactProvider>
           </ServerSessionProvider>
         </ThemeProvider>
