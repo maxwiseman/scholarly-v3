@@ -80,7 +80,7 @@ export async function getAssignments(id: string) {
     (elements) =>
       elements.map(
         (element) =>
-          element.querySelector("td:not(:has(.percentFieldBarFill))")
+          element.querySelector("td:not(:has(.percentFieldContainer))")
             ?.textContent,
       ),
   );
@@ -97,9 +97,10 @@ export async function getAssignments(id: string) {
       dateAssigned: Date.parse(dateAssigned[index] ?? ""),
       dateDue: Date.parse(dateDue[index] ?? ""),
       extraCredit: extraCredit[index] === "Y",
-      score:
-        parseFloat(score[index] ?? "") ||
-        capitalize(score[index]?.toString() ?? ""),
+      score: score[index]?.match(/^0\.0.*/)
+        ? 0
+        : parseFloat(score[index] ?? "") ||
+          capitalize(score[index]?.toString() ?? ""),
       feedback: feedback[index],
     };
   });
