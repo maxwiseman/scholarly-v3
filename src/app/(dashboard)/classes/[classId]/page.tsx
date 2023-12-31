@@ -13,9 +13,16 @@ export default function Page({
 }: {
   params: { classId: string };
 }): React.ReactElement {
-  const assignmentData = api.aspen.getAssignments.useQuery({
-    id: params.classId,
-  });
+  const assignmentData = api.aspen.getAssignments.useQuery(
+    {
+      id: params.classId,
+    },
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+    },
+  );
 
   if (!assignmentData.isFetched) {
     return <main className="text-muted-foreground">Loading...</main>;
