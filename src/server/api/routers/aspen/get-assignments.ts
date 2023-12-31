@@ -76,8 +76,13 @@ export async function getAssignments(id: string) {
     (elements) => elements.map((element) => element.innerText),
   );
   const score = await page.$$eval(
-    "#dataGrid tr:not(:first-of-type) > td:nth-of-type(8) td:not(:has(.percentFieldBarFill)):not(:nth-of-type(3))",
-    (elements) => elements.map((element) => element.innerText),
+    "#dataGrid tr:not(:first-of-type) > td:nth-of-type(8) tr",
+    (elements) =>
+      elements.map(
+        (element) =>
+          element.querySelector("td:not(:has(.percentFieldBarFill))")
+            ?.textContent,
+      ),
   );
   const feedback = await page.$$eval(
     "#dataGrid tr:not(:first-of-type) > td:nth-of-type(9)",
