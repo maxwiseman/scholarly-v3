@@ -1,8 +1,14 @@
 "use client";
 
 import { signIn, signOut, useSession } from "next-auth/react";
-import { IconLogout, IconMoonStars, IconUser } from "@tabler/icons-react";
+import {
+  IconLogout,
+  IconMoonStars,
+  IconSettings,
+  IconUser,
+} from "@tabler/icons-react";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import {
   DropdownMenu,
@@ -79,6 +85,11 @@ export function UserButton(): React.ReactElement {
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
+          <Link href="/settings">
+            <DropdownMenuItem>
+              <IconSettings className="mr-2 h-4 w-4" /> Settings
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={async () => {
