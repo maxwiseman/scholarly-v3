@@ -60,6 +60,7 @@ export function ClassCard({
                   {classData.name}
                 </CardTitle>
                 <CircularProgress
+                  aria-label="Current term grade"
                   classNames={{
                     indicator:
                       // eslint-disable-next-line no-nested-ternary -- This isn't that confusing

@@ -31,10 +31,16 @@ export function UserButton(): React.ReactElement {
   if (session.data)
     return (
       <DropdownMenu>
-        <DropdownMenuTrigger className="rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring">
+        <DropdownMenuTrigger
+          aria-label="User dropdown"
+          className="rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+        >
           <Avatar className="h-8 w-8">
             {session.data.user.image ? (
-              <AvatarImage src={session.data.user.image} />
+              <AvatarImage
+                alt="Profile picture"
+                src={session.data.user.image}
+              />
             ) : null}
             <AvatarFallback>
               <IconUser />
