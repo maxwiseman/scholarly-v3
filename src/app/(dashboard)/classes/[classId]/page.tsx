@@ -1,14 +1,11 @@
 "use client";
 
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/app/_components/ui/table";
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/app/_components/ui/card";
 import { api } from "@/trpc/react";
 
 export default function Page({
@@ -16,44 +13,31 @@ export default function Page({
 }: {
   params: { classId: string };
 }): React.ReactElement {
-  const categoryFetcher = api.aspen.getCategories.useQuery({
+  const assignmentData = api.aspen.getAssignments.useQuery({
     id: params.classId,
   });
 
-  if (!categoryFetcher.isFetched) {
+  if (!assignmentData.isFetched) {
     return <main className="text-muted-foreground">Loading...</main>;
   }
 
   return (
     <main>
-      <Table className="overflow-hidden rounded-md">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Category</TableHead>
-            <TableHead>Weight</TableHead>
-            <TableHead>Average</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {categoryFetcher.data?.categories.map((category) => {
-            return (
-              <TableRow key={category.name}>
-                <TableCell>{category.name}</TableCell>
-                <TableCell>{category.weight * 100}%</TableCell>
-                <TableCell>
-                  {isNaN(category.value) ? "" : `${category.value}%`}
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell colSpan={2}>Gradebook Average</TableCell>
-            <TableCell>{categoryFetcher.data?.average}%</TableCell>
-          </TableRow>
-        </TableFooter>
-      </Table>
+      <Card>
+        <CardHeader>
+          <CardTitle>Missing Assignments</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul>
+            {assignmentData.data?.map((assignment) => {
+              if (assignment.score === "M" || assignment.score === 0) {
+                return <li key={assignment.name}>{assignment.name}</li>;
+              }
+              return null;
+            })}
+          </ul>
+        </CardContent>
+      </Card>
     </main>
   );
 }
