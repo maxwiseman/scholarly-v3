@@ -1,29 +1,28 @@
-import puppeteer from "puppeteer-core";
-import chromium from "@sparticuz/chromium-min";
+import puppeteer, { type Browser } from "puppeteer-core";
 import { capitalize, decapitalize, goToAcademics, login } from "./lib";
+import { env } from "@/env";
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type -- We have a good type inference
 export async function getClasses() {
-  const options = process.env.AWS_REGION
-    ? {
-        args: chromium.args,
-        defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath(
-          "https://github.com/Sparticuz/chromium/releases/download/v119.0.2/chromium-v119.0.2-pack.tar",
-        ),
-        headless: chromium.headless,
-      }
-    : {
-        args: [],
-        executablePath:
-          // eslint-disable-next-line no-nested-ternary -- This isn't that confusing
-          process.platform === "win32"
-            ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
-            : process.platform === "linux"
-              ? "/usr/bin/google-chrome"
-              : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-      };
-  const browser = await puppeteer.launch(options);
+  const options = {
+    args: [],
+    executablePath:
+      // eslint-disable-next-line no-nested-ternary -- This isn't that confusing
+      process.platform === "win32"
+        ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+        : process.platform === "linux"
+          ? "/usr/bin/google-chrome"
+          : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  };
+  let browser: Browser;
+  if (process.env.VERCEL) {
+    browser = await puppeteer.connect({
+      browserWSEndpoint: `wss://chrome.browserless.io?token=${env.BROWSERLESS_API_KEY}`,
+    });
+  } else {
+    browser = await puppeteer.launch(options);
+  }
+  // const browser = await puppeteer.launch(options);
   const context = await browser.createIncognitoBrowserContext();
   const page = await context.newPage();
 
