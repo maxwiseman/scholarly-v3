@@ -61,9 +61,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
-        disabled={props.disabled ?? props.loading}
         ref={ref}
         {...props}
+        disabled={props.disabled || props.loading}
       >
         <div
           className={cn(
@@ -100,9 +100,9 @@ const LinkButton = React.forwardRef<HTMLButtonElement, LinkButtonProps>(
       <Link href={href} tabIndex={-1}>
         <Comp
           className={cn("w-full", buttonVariants({ variant, size, className }))}
-          disabled={props.disabled ?? props.loading}
           ref={ref}
           {...props}
+          disabled={props.disabled || props.loading}
         >
           <div
             className={cn(
