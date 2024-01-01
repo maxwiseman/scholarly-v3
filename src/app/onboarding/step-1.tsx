@@ -19,8 +19,8 @@ import { Separator } from "../_components/ui/separator";
 import { api } from "@/trpc/react";
 
 const formSchema = z.object({
-  canvasApiKey: z.string().min(2, {
-    message: "Key must be at least 2 characters.",
+  canvasApiKey: z.string().length(69, {
+    message: "API keys should by 69 characters (nice).",
   }),
   aspenUsername: z.string().min(7, {
     message: "Username should be 7 characters",

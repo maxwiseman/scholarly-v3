@@ -1,12 +1,14 @@
 "use client";
 
-import { IconArrowRight } from "@tabler/icons-react";
+import { IconArrowRight, IconLoader } from "@tabler/icons-react";
+import { useEffect, useState } from "react";
 import { Button } from "../_components/ui/button";
 import { Card } from "../_components/ui/card";
 import {
   Select,
   SelectContent,
   SelectItem,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "../_components/ui/select";
@@ -29,6 +31,29 @@ export function StepTwo({
     refetchOnReconnect: false,
   });
 
+  const [classData, setClassData] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    const mockData = { ...classData };
+    canvasData.data?.forEach((canvasCourse) => {
+      mockData[canvasCourse.id] =
+        aspenData.data?.filter((aspenCourse) => {
+          if (
+            aspenCourse.name
+              .toUpperCase()
+              .includes(canvasCourse.name.toUpperCase()) ||
+            canvasCourse.name
+              .toUpperCase()
+              .includes(aspenCourse.name.toUpperCase())
+          )
+            return true;
+          return false;
+        })[0]?.id || "";
+    });
+    if (canvasData.isFetched && aspenData.isFetched) setClassData(mockData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- This would cause an infinite loop
+  }, [canvasData.data, aspenData.data]);
+
   if (canvasData.data && aspenData.data)
     return (
       <div className="flex w-full max-w-3xl flex-col items-center p-8">
@@ -40,7 +65,9 @@ export function StepTwo({
           {canvasData.data.map((canvasCourse) => {
             return (
               <Card
-                className="flex w-full items-center justify-between gap-4 p-4"
+                className={`flex w-full items-center justify-between gap-4 p-4 ${
+                  classData[canvasCourse.id] === "" ? "!border-primary/25" : ""
+                }`}
                 key={canvasCourse.id}
               >
                 <span className="line-clamp-1 block w-full text-muted-foreground">
@@ -62,6 +89,11 @@ export function StepTwo({
                       return false;
                     })[0]?.id || ""
                   }
+                  onValueChange={(value) => {
+                    const mockData = { ...classData };
+                    mockData[canvasCourse.id] = value;
+                    if (mockData !== classData) setClassData(mockData);
+                  }}
                 >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select a class" />
@@ -77,6 +109,7 @@ export function StepTwo({
                         </SelectItem>
                       );
                     })}
+                    <SelectSeparator />
                     <SelectItem value="none">None</SelectItem>
                   </SelectContent>
                 </Select>
@@ -84,7 +117,7 @@ export function StepTwo({
             );
           })}
           <Button
-            className="w-full"
+            className="!mt-6 w-full"
             onClick={() => {
               if (onSubmit) onSubmit();
             }}
@@ -94,5 +127,15 @@ export function StepTwo({
         </div>
       </div>
     );
-  return <>Loading...</>;
+  return (
+    <div className="flex w-full max-w-3xl flex-col items-center p-8">
+      <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight transition-colors">
+        Time to link your classes
+      </h1>
+      <Separator className="my-8 mt-4" />
+      <div className="flex flex-row items-center justify-center gap-2 text-muted-foreground">
+        <IconLoader className="animate-spin" /> Loading...
+      </div>
+    </div>
+  );
 }
