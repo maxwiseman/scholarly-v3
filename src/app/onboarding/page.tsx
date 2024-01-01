@@ -5,7 +5,7 @@ import { StepOne } from "./step-1";
 import { StepTwo } from "./step-2";
 
 export default function Page(): React.ReactElement {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
 
   return (
     <main className="flex w-full justify-center p-8">
