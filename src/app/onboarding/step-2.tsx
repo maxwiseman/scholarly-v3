@@ -32,6 +32,7 @@ export function StepTwo({
   });
 
   const [classData, setClassData] = useState<Record<string, string>>({});
+  const [isValid, setIsValid] = useState(false);
 
   useEffect(() => {
     const mockData = { ...classData };
@@ -54,9 +55,15 @@ export function StepTwo({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- This would cause an infinite loop
   }, [canvasData.data, aspenData.data]);
 
+  useEffect(() => {
+    if (Object.values(classData).every((value) => value !== ""))
+      setIsValid(true);
+    else setIsValid(false);
+  }, [classData]);
+
   if (canvasData.data && aspenData.data)
     return (
-      <div className="flex w-full max-w-3xl flex-col items-center p-8">
+      <div className="flex w-full max-w-3xl flex-col items-center">
         <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight transition-colors">
           Time to link your classes
         </h1>
@@ -118,6 +125,7 @@ export function StepTwo({
           })}
           <Button
             className="!mt-6 w-full"
+            disabled={!isValid}
             onClick={() => {
               if (onSubmit) onSubmit();
             }}

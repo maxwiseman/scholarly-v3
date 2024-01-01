@@ -42,14 +42,67 @@ export function StepOne({
     },
   });
   const [loading, setLoading] = useState(false);
+  const [enabled, setEnabled] = useState(false);
   const updateSettings = api.user.updateSettings.useMutation({});
+
+  const canvasData = api.canvas.getClasses.useQuery(undefined, {
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    enabled,
+  });
+  const aspenData = api.aspen.getClasses.useQuery(undefined, {
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    enabled,
+  });
+
   useEffect(() => {
-    if (!updateSettings.isLoading) {
+    if (
+      !updateSettings.isLoading &&
+      !aspenData.isLoading &&
+      !canvasData.isLoading
+    ) {
       setLoading(false);
+      if (
+        !aspenData.isError &&
+        !canvasData.isError &&
+        aspenData.isFetched &&
+        canvasData.isFetched
+      ) {
+        if (onSubmit) onSubmit();
+      }
+      if (aspenData.isError) {
+        form.setError("aspenUsername", {
+          type: "custom",
+          message: "Your Aspen credentials are incorrect",
+        });
+        form.setError("aspenPassword", {
+          type: "custom",
+          message: "Your Aspen credentials are incorrect",
+        });
+      }
+      if (canvasData.isError) {
+        form.setError("canvasApiKey", {
+          type: "custom",
+          message: "Your API key is invalid",
+        });
+      }
     }
-  }, [updateSettings.isLoading]);
+  }, [
+    aspenData.isError,
+    aspenData.isFetched,
+    aspenData.isLoading,
+    canvasData.isError,
+    canvasData.isFetched,
+    canvasData.isLoading,
+    form,
+    onSubmit,
+    updateSettings.isLoading,
+  ]);
   return (
-    <div className="flex w-full max-w-xl flex-col items-center p-8">
+    <div className="flex w-full max-w-xl flex-col items-center">
       <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight transition-colors">
         Let&lsquo;s get you set up
       </h1>
@@ -60,7 +113,13 @@ export function StepOne({
           onSubmit={form.handleSubmit((input) => {
             setLoading(true);
             updateSettings.mutate(input);
-            if (onSubmit) onSubmit();
+            setEnabled(true);
+            aspenData.refetch().catch(() => {
+              console.error("Incorrect Aspen info");
+            });
+            canvasData.refetch().catch(() => {
+              console.error("Incorrect Canvas info");
+            });
           })}
         >
           <FormField
