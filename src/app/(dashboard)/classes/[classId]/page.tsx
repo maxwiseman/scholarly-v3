@@ -39,7 +39,10 @@ export default function Page({
         <CardContent>
           <ul>
             {assignmentData.data?.map((assignment) => {
-              if (assignment.score === "M" || assignment.score === 0) {
+              if (
+                (!assignment.extraCredit && assignment.score === "M") ||
+                assignment.score === 0
+              ) {
                 return <li key={assignment.name}>{assignment.name}</li>;
               }
               return null;

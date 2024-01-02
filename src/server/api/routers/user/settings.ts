@@ -70,7 +70,7 @@ export async function updateSettings(settings: Partial<Settings>): Promise<{
       executablePath:
         // eslint-disable-next-line no-nested-ternary -- This isn't that confusing
         process.platform === "win32"
-          ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+          ? "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
           : process.platform === "linux"
             ? "/usr/bin/google-chrome"
             : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
