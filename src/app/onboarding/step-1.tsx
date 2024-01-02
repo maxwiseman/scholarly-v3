@@ -42,38 +42,22 @@ export function StepOne({
     },
   });
   const [loading, setLoading] = useState(false);
-  const [enabled, setEnabled] = useState(false);
   const updateSettings = api.user.updateSettings.useMutation({});
 
-  const canvasData = api.canvas.getClasses.useQuery(undefined, {
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    enabled,
-  });
-  const aspenData = api.aspen.getClasses.useQuery(undefined, {
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    enabled,
-  });
-
   useEffect(() => {
-    if (
-      !updateSettings.isLoading &&
-      !aspenData.isLoading &&
-      !canvasData.isLoading
-    ) {
+    if (!updateSettings.isLoading) {
       setLoading(false);
       if (
-        !aspenData.isError &&
-        !canvasData.isError &&
-        aspenData.isFetched &&
-        canvasData.isFetched
+        updateSettings.data?.aspenPassword === false &&
+        !updateSettings.data.aspenUsername &&
+        !updateSettings.data.canvasApiKey
       ) {
         if (onSubmit) onSubmit();
       }
-      if (aspenData.isError) {
+      if (
+        updateSettings.data?.aspenPassword ||
+        updateSettings.data?.aspenUsername
+      ) {
         form.setError("aspenUsername", {
           type: "custom",
           message: "Your Aspen credentials are incorrect",
@@ -83,22 +67,19 @@ export function StepOne({
           message: "Your Aspen credentials are incorrect",
         });
       }
-      if (canvasData.isError) {
+      if (updateSettings.data?.canvasApiKey) {
         form.setError("canvasApiKey", {
           type: "custom",
-          message: "Your API key is invalid",
+          message: "Your API key was invalid",
         });
       }
     }
   }, [
-    aspenData.isError,
-    aspenData.isFetched,
-    aspenData.isLoading,
-    canvasData.isError,
-    canvasData.isFetched,
-    canvasData.isLoading,
     form,
     onSubmit,
+    updateSettings.data?.aspenPassword,
+    updateSettings.data?.aspenUsername,
+    updateSettings.data?.canvasApiKey,
     updateSettings.isLoading,
   ]);
   return (
@@ -113,13 +94,6 @@ export function StepOne({
           onSubmit={form.handleSubmit((input) => {
             setLoading(true);
             updateSettings.mutate(input);
-            setEnabled(true);
-            aspenData.refetch().catch(() => {
-              console.error("Incorrect Aspen info");
-            });
-            canvasData.refetch().catch(() => {
-              console.error("Incorrect Canvas info");
-            });
           })}
         >
           <FormField

@@ -34,6 +34,8 @@ export function StepTwo({
   const [classData, setClassData] = useState<Record<string, string>>({});
   const [isValid, setIsValid] = useState(false);
 
+  const addClasses = api.user.addClasses.useMutation();
+
   useEffect(() => {
     const mockData = { ...classData };
     canvasData.data?.forEach((canvasCourse) => {
@@ -61,7 +63,14 @@ export function StepTwo({
     else setIsValid(false);
   }, [classData]);
 
-  if (canvasData.data && aspenData.data)
+  if (
+    canvasData.data &&
+    aspenData.data &&
+    canvasData.isFetched &&
+    aspenData.isFetched &&
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- For some this is needed
+    canvasData.data.map
+  )
     return (
       <div className="flex w-full max-w-3xl flex-col items-center">
         <h1 className="scroll-m-20 text-3xl font-semibold tracking-tight transition-colors">
@@ -72,7 +81,7 @@ export function StepTwo({
           {canvasData.data.map((canvasCourse) => {
             return (
               <Card
-                className={`flex w-full items-center justify-between gap-4 p-4 ${
+                className={`flex w-full items-center justify-between gap-4 p-4 transition-colors ${
                   classData[canvasCourse.id] === "" ? "!border-primary/25" : ""
                 }`}
                 key={canvasCourse.id}
@@ -127,6 +136,20 @@ export function StepTwo({
             className="!mt-6 w-full"
             disabled={!isValid}
             onClick={() => {
+              addClasses.mutate(
+                canvasData.data.map((canvasCourse) => {
+                  const aspenCourse = aspenData.data.filter(
+                    (value) => value.id === classData[canvasCourse.id],
+                  )[0];
+                  return {
+                    name: canvasCourse.name,
+                    teachers: aspenCourse?.teachers,
+                    gradeAverage: aspenCourse?.termGrade,
+                    aspenId: aspenCourse?.id,
+                    canvasId: canvasCourse.id.toString(),
+                  };
+                }),
+              );
               if (onSubmit) onSubmit();
             }}
           >

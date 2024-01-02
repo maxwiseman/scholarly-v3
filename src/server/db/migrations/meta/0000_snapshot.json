@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "a3b60789-d9ba-4fbd-af64-a335949375ee",
+  "id": "f6bfd976-dd3d-4005-b4f1-be83c18d6829",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -86,6 +86,13 @@
         }
       },
       "indexes": {
+        "account_userId_unique": {
+          "name": "account_userId_unique",
+          "columns": [
+            "userId"
+          ],
+          "isUnique": true
+        },
         "userId_idx": {
           "name": "userId_idx",
           "columns": [
@@ -104,6 +111,228 @@
           "name": "account_provider_providerAccountId_pk"
         }
       },
+      "uniqueConstraints": {}
+    },
+    "aspenAssignments": {
+      "name": "aspenAssignments",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "classId": {
+          "name": "classId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "pointsPossible": {
+          "name": "pointsPossible",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "points": {
+          "name": "points",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "feedback": {
+          "name": "feedback",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dateAssigned": {
+          "name": "dateAssigned",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dateDue": {
+          "name": "dateDue",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "aspenAssignments_id_unique": {
+          "name": "aspenAssignments_id_unique",
+          "columns": [
+            "id"
+          ],
+          "isUnique": true
+        },
+        "userIdx": {
+          "name": "userIdx",
+          "columns": [
+            "userId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "aspenAssignments_userId_user_id_fk": {
+          "name": "aspenAssignments_userId_user_id_fk",
+          "tableFrom": "aspenAssignments",
+          "tableTo": "user",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        },
+        "aspenAssignments_classId_classes_id_fk": {
+          "name": "aspenAssignments_classId_classes_id_fk",
+          "tableFrom": "aspenAssignments",
+          "tableTo": "classes",
+          "columnsFrom": [
+            "classId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "classes": {
+      "name": "classes",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "teachers": {
+          "name": "teachers",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "gradeAverage": {
+          "name": "gradeAverage",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "gradeCategories": {
+          "name": "gradeCategories",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "aspenId": {
+          "name": "aspenId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "canvasId": {
+          "name": "canvasId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "classes_id_unique": {
+          "name": "classes_id_unique",
+          "columns": [
+            "id"
+          ],
+          "isUnique": true
+        },
+        "userIdx": {
+          "name": "userIdx",
+          "columns": [
+            "userId"
+          ],
+          "isUnique": false
+        },
+        "aspenIdx": {
+          "name": "aspenIdx",
+          "columns": [
+            "aspenId"
+          ],
+          "isUnique": false
+        },
+        "canvasIdx": {
+          "name": "canvasIdx",
+          "columns": [
+            "canvasId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "classes_userId_user_id_fk": {
+          "name": "classes_userId_user_id_fk",
+          "tableFrom": "classes",
+          "tableTo": "user",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
     "session": {
@@ -204,7 +433,15 @@
           "autoincrement": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "user_id_unique": {
+          "name": "user_id_unique",
+          "columns": [
+            "id"
+          ],
+          "isUnique": true
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}

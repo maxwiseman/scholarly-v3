@@ -36,6 +36,7 @@
     "@trpc/next": "^10.43.6",
     "@trpc/react-query": "^10.43.6",
     "@trpc/server": "^10.43.6",
+    "@types/uuid": "^9.0.7",
     "@vercel/style-guide": "^5.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
@@ -54,6 +55,7 @@
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7",
     "usehooks-ts": "^2.9.1",
+    "uuid": "^9.0.1",
     "vaul": "^0.8.0",
     "zod": "^3.22.4"
   },

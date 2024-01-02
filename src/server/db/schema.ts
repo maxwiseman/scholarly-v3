@@ -3,6 +3,7 @@ import {
   index,
   int,
   primaryKey,
+  real,
   sqliteTable,
   text,
 } from "drizzle-orm/sqlite-core";
@@ -16,7 +17,7 @@ import { type AdapterAccount } from "next-auth/adapters";
  */
 
 export const users = sqliteTable("user", {
-  id: text("id", { length: 255 }).notNull().primaryKey(),
+  id: text("id", { length: 255 }).notNull().primaryKey().unique(),
   name: text("name", { length: 255 }),
   email: text("email", { length: 255 }).notNull(),
   emailVerified: int("emailVerified", {
@@ -31,12 +32,14 @@ export const users = sqliteTable("user", {
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
   sessions: many(sessions),
+  classes: many(classes),
+  aspenAssignments: many(classes),
 }));
 
 export const accounts = sqliteTable(
   "account",
   {
-    userId: text("userId", { length: 255 }).notNull(),
+    userId: text("userId", { length: 255 }).notNull().unique(),
     type: text("type", { length: 255 })
       .$type<AdapterAccount["type"]>()
       .notNull(),
@@ -85,5 +88,79 @@ export const verificationTokens = sqliteTable(
   },
   (vt) => ({
     compoundKey: primaryKey(vt.identifier, vt.token),
+  }),
+);
+
+export const classes = sqliteTable(
+  "classes",
+  {
+    id: text("id").notNull().primaryKey().unique(),
+    userId: text("userId", { length: 255 }).references(() => users.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
+    name: text("name"),
+    teachers: text("teachers", { mode: "json" }).$type<string[]>(),
+    gradeAverage: real("gradeAverage"),
+    gradeCategories: text("gradeCategories", { mode: "json" }).$type<
+      { name: string; weight: number; value: number }[]
+    >(),
+    aspenId: text("aspenId"),
+    canvasId: text("canvasId"),
+  },
+  (table) => {
+    return {
+      userIdx: index("userIdx").on(table.userId),
+      aspenIdx: index("aspenIdx").on(table.aspenId),
+      canvasIdx: index("canvasIdx").on(table.canvasId),
+    };
+  },
+);
+
+export const classesRelations = relations(classes, ({ one, many }) => ({
+  user: one(users, {
+    fields: [classes.userId],
+    references: [users.id],
+  }),
+  aspenAssignments: many(aspenAssignments),
+}));
+
+export const aspenAssignments = sqliteTable(
+  "aspenAssignments",
+  {
+    id: text("id").notNull().primaryKey().unique(),
+    userId: text("userId").references(() => users.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
+    classId: text("classId").references(() => classes.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    }),
+    name: text("name"),
+    pointsPossible: real("pointsPossible"),
+    points: text("points", { mode: "json" }).$type<string | number>(),
+    feedback: text("feedback"),
+    dateAssigned: int("dateAssigned", { mode: "timestamp" }),
+    dateDue: int("dateDue", { mode: "timestamp" }),
+  },
+  (table) => {
+    return {
+      userIdx: index("userIdx").on(table.userId),
+    };
+  },
+);
+
+export const aspenAssignmentsRelations = relations(
+  aspenAssignments,
+  ({ one }) => ({
+    user: one(users, {
+      fields: [aspenAssignments.userId],
+      references: [users.id],
+    }),
+    class: one(classes, {
+      fields: [aspenAssignments.classId],
+      references: [classes.id],
+    }),
   }),
 );

@@ -7,6 +7,7 @@ import { users } from "@/server/db/schema";
 export async function login(
   page: Page,
   onError: () => void | Promise<void>,
+  credentials?: { username?: string; password?: string },
 ): Promise<void> {
   const session = await getServerAuthSession();
   if (!session) {
@@ -19,8 +20,14 @@ export async function login(
 
   await page.goto("https://aspen.knoxschools.org");
   await page.waitForSelector("#username", { timeout: 2000 });
-  await page.type("#username", dbUser?.aspenUsername ?? "");
-  await page.type("#password", dbUser?.aspenPassword ?? "");
+  await page.type(
+    "#username",
+    credentials?.username ?? dbUser?.aspenUsername ?? "",
+  );
+  await page.type(
+    "#password",
+    credentials?.password ?? dbUser?.aspenPassword ?? "",
+  );
   await page.click("#logonButton");
   try {
     await page.waitForSelector(".navTab", { timeout: 1000 });
