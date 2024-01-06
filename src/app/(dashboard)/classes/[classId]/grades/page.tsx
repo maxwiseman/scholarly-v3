@@ -24,14 +24,14 @@ export default function Home({
     refetchOnMount: false,
     refetchOnReconnect: false,
   });
-  const categoryData = api.aspen.getCategories.useQuery(
-    { id: params.classId },
-    {
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    },
-  );
+  // const categoryData = api.aspen.getCategories.useQuery(
+  //   { id: params.classId },
+  //   {
+  //     refetchOnWindowFocus: false,
+  //     refetchOnMount: false,
+  //     refetchOnReconnect: false,
+  //   },
+  // );
   const assignmentData = api.user.getAssignments.useQuery(
     {
       id: params.classId,
@@ -123,22 +123,33 @@ export default function Home({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {categoryData.data?.categories.map((category) => {
-            return (
-              <TableRow key={category.name}>
-                <TableCell>{category.name}</TableCell>
-                <TableCell>{category.weight * 100}%</TableCell>
-                <TableCell>
-                  {isNaN(category.value) ? "" : `${category.value}%`}
-                </TableCell>
-              </TableRow>
-            );
-          })}
+          {classData.data
+            ?.filter((singleClass) => {
+              return singleClass.id === params.classId;
+            })[0]
+            ?.gradeCategories?.map((category) => {
+              return (
+                <TableRow key={category.name}>
+                  <TableCell>{category.name}</TableCell>
+                  <TableCell>{category.weight * 100}%</TableCell>
+                  <TableCell>
+                    {isNaN(category.value) ? "" : `${category.value}%`}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
         </TableBody>
         <TableFooter>
           <TableRow>
             <TableCell colSpan={2}>Gradebook Average</TableCell>
-            <TableCell>{categoryData.data?.average}%</TableCell>
+            <TableCell>
+              {
+                classData.data?.filter((singleClass) => {
+                  return singleClass.id === params.classId;
+                })[0]?.gradeAverage
+              }
+              %
+            </TableCell>
           </TableRow>
         </TableFooter>
       </Table>

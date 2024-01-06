@@ -89,8 +89,8 @@ export async function getAssignments(id: string) {
 
   const data = name.map((assignmentName, index) => {
     return {
-      name: name[index],
-      category: category[index],
+      name: name[index] || "",
+      category: category[index] || "",
       pointsPossible: parseFloat(pointsPossible[index] ?? ""),
       dateAssigned: Date.parse(dateAssigned[index] ?? ""),
       dateDue: Date.parse(dateDue[index] ?? ""),
@@ -99,7 +99,7 @@ export async function getAssignments(id: string) {
         ? 0
         : parseFloat(score[index] ?? "") ||
           capitalize(score[index]?.toString() ?? ""),
-      feedback: feedback[index],
+      feedback: feedback[index] || "",
     };
   });
 

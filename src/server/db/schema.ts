@@ -95,19 +95,21 @@ export const classes = sqliteTable(
   "classes",
   {
     id: text("id").notNull().primaryKey().unique(),
-    userId: text("userId", { length: 255 }).references(() => users.id, {
-      onDelete: "cascade",
-      onUpdate: "cascade",
-    }),
-    name: text("name"),
+    userId: text("userId", { length: 255 })
+      .references(() => users.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      })
+      .notNull(),
+    name: text("name").notNull(),
     teachers: text("teachers", { mode: "json" }).$type<string[]>(),
-    gradeAverage: real("gradeAverage"),
+    gradeAverage: real("gradeAverage").notNull(),
     gradeCategories: text("gradeCategories", { mode: "json" }).$type<
       { name: string; weight: number; value: number }[]
     >(),
     schedule: text("schedule"),
-    term: text("term"),
-    teacherEmail: text("teacherEmail"),
+    term: text("term").default("FY"),
+    teacherEmail: text("teacherEmail").notNull(),
     aspenId: text("aspenId"),
     canvasId: text("canvasId"),
   },
@@ -132,22 +134,28 @@ export const aspenAssignments = sqliteTable(
   "aspenAssignments",
   {
     id: text("id").notNull().primaryKey().unique(),
-    userId: text("userId").references(() => users.id, {
-      onDelete: "cascade",
-      onUpdate: "cascade",
-    }),
-    classId: text("classId").references(() => classes.id, {
-      onDelete: "cascade",
-      onUpdate: "cascade",
-    }),
-    name: text("name"),
-    pointsPossible: real("pointsPossible"),
-    points: text("points", { mode: "json" }).$type<string | number>(),
-    extraCredit: int("extraCredit", { mode: "boolean" }),
-    category: text("category"),
-    feedback: text("feedback"),
-    dateAssigned: int("dateAssigned", { mode: "timestamp" }),
-    dateDue: int("dateDue", { mode: "timestamp" }),
+    userId: text("userId")
+      .references(() => users.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      })
+      .notNull(),
+    classId: text("classId")
+      .references(() => classes.id, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      })
+      .notNull(),
+    name: text("name").notNull().unique(),
+    pointsPossible: real("pointsPossible").notNull(),
+    points: text("points", { mode: "json" }).$type<string | number>().notNull(),
+    extraCredit: int("extraCredit", { mode: "boolean" })
+      .default(false)
+      .notNull(),
+    category: text("category").notNull(),
+    feedback: text("feedback").default("").notNull(),
+    dateAssigned: int("dateAssigned", { mode: "timestamp" }).notNull(),
+    dateDue: int("dateDue", { mode: "timestamp" }).notNull(),
   },
   (table) => {
     return {

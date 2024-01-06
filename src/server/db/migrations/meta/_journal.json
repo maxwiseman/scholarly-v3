@@ -15,6 +15,13 @@
       "when": 1704567068506,
       "tag": "0001_breezy_captain_midlands",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1704579445588,
+      "tag": "0002_bumpy_the_leader",
+      "breakpoints": true
     }
   ]
 }

@@ -40,7 +40,7 @@ export function ClassCard({
             href={`/classes/${classData.id}`}
           >
             <Card className="shadow-sm">
-              <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 py-3 pb-0">
+              <CardHeader className="flex h-[3.25rem] flex-row items-center justify-between gap-2 space-y-0 py-3 pb-0">
                 {/* <Avatar className="h-7 w-7">
                 <AvatarFallback>
                   <IconUser />
