@@ -39,6 +39,7 @@ export async function getAssignments(classId: string): Promise<
       id: aspenIdData.aspenId,
     })
     .then(async (assignmentData) => {
+      console.log("Data fetched successfully!");
       try {
         await db
           .insert(aspenAssignments)
