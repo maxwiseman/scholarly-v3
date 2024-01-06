@@ -1,9 +1,18 @@
 import puppeteer, { type Browser } from "puppeteer-core";
+import { and, eq } from "drizzle-orm";
 import { goToAcademics, login } from "./lib";
 import { env } from "@/env";
+import { getServerAuthSession } from "@/server/auth";
+import { db } from "@/server/db";
+import { classes } from "@/server/db/schema";
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type -- We have good type inference
 export async function getCategories(id: string) {
+  const session = await getServerAuthSession();
+  const aspenIdData = await db.query.classes.findFirst({
+    where: and(eq(classes.id, id), eq(classes.userId, session?.user.id || "")),
+  });
+  const aspenId = aspenIdData?.aspenId;
   const options = {
     args: [],
     executablePath:
@@ -37,7 +46,7 @@ export async function getCategories(id: string) {
 
   // Go to class by ID
   await page.evaluate(
-    `doParamSubmit(2100, document.forms['classListForm'], '${id}');`,
+    `doParamSubmit(2100, document.forms['classListForm'], '${aspenId}');`,
   );
   await page.waitForSelector("#dataGridRight", { timeout: 10000 });
   if (!process.env.VERCEL_ENV) await page.screenshot({ path: "output.png" });
