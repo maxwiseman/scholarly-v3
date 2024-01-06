@@ -95,7 +95,7 @@ export async function getAssignments(id: string) {
       dateAssigned: Date.parse(dateAssigned[index] ?? ""),
       dateDue: Date.parse(dateDue[index] ?? ""),
       extraCredit: extraCredit[index] === "Y",
-      score: score[index]?.match(/^0\.0.*/)
+      points: score[index]?.match(/^0\.0.*/)
         ? 0
         : parseFloat(score[index] ?? "") ||
           capitalize(score[index]?.toString() ?? ""),

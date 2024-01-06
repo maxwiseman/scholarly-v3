@@ -47,7 +47,7 @@ export function StepTwo({
               .includes(canvasCourse.name.toUpperCase()) ||
             canvasCourse.name
               .toUpperCase()
-              .includes(aspenCourse.name.toUpperCase())
+              .includes(aspenCourse.name.toUpperCase() || "")
           )
             return true;
           return false;
@@ -99,7 +99,7 @@ export function StepTwo({
                           .includes(canvasCourse.name.toUpperCase()) ||
                         canvasCourse.name
                           .toUpperCase()
-                          .includes(aspenCourse.name.toUpperCase())
+                          .includes(aspenCourse.name.toUpperCase() || "")
                       )
                         return true;
                       return false;
@@ -147,6 +147,9 @@ export function StepTwo({
                     gradeAverage: aspenCourse?.termGrade,
                     aspenId: aspenCourse?.id,
                     canvasId: canvasCourse.id.toString(),
+                    term: aspenCourse?.term,
+                    schedule: aspenCourse?.schedule,
+                    teacherEmail: aspenCourse?.teacherEmail,
                   };
                 }),
               );

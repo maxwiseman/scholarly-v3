@@ -5,7 +5,7 @@ import { Separator } from "@/app/_components/ui/separator";
 import { api } from "@/trpc/react";
 
 export default function Page(): React.ReactElement {
-  const classFetcher = api.aspen.getClasses.useQuery(undefined, {
+  const classFetcher = api.user.getClasses.useQuery(undefined, {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: false,
@@ -19,7 +19,14 @@ export default function Page(): React.ReactElement {
       <Separator className="my-4" />
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {classFetcher.data?.map((classData) => {
-          return <ClassCard classData={classData} key={classData.id} />;
+          return (
+            <ClassCard
+              classData={{
+                ...classData,
+              }}
+              key={classData.id}
+            />
+          );
         })}
       </div>
     </div>

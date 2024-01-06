@@ -105,6 +105,9 @@ export const classes = sqliteTable(
     gradeCategories: text("gradeCategories", { mode: "json" }).$type<
       { name: string; weight: number; value: number }[]
     >(),
+    schedule: text("schedule"),
+    term: text("term"),
+    teacherEmail: text("teacherEmail"),
     aspenId: text("aspenId"),
     canvasId: text("canvasId"),
   },
@@ -140,6 +143,8 @@ export const aspenAssignments = sqliteTable(
     name: text("name"),
     pointsPossible: real("pointsPossible"),
     points: text("points", { mode: "json" }).$type<string | number>(),
+    extraCredit: int("extraCredit", { mode: "boolean" }),
+    category: text("category"),
     feedback: text("feedback"),
     dateAssigned: int("dateAssigned", { mode: "timestamp" }),
     dateDue: int("dateDue", { mode: "timestamp" }),

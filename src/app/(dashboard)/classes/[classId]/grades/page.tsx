@@ -19,7 +19,7 @@ export default function Home({
 }: {
   params: { classId: string };
 }): React.ReactElement {
-  const classData = api.aspen.getClasses.useQuery(undefined, {
+  const classData = api.user.getClasses.useQuery(undefined, {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: false,
@@ -32,7 +32,7 @@ export default function Home({
       refetchOnReconnect: false,
     },
   );
-  const assignmentData = api.aspen.getAssignments.useQuery(
+  const assignmentData = api.user.getAssignments.useQuery(
     {
       id: params.classId,
     },
@@ -44,14 +44,16 @@ export default function Home({
   );
 
   const columns: ColumnDef<{
-    name: string | undefined;
-    category: string | undefined;
-    pointsPossible: number;
-    dateAssigned: number;
-    dateDue: number;
-    extraCredit: boolean;
-    score: string | number;
-    feedback: string | undefined;
+    id: string;
+    name: string | null;
+    userId: string | null;
+    classId: string | null;
+    pointsPossible: number | null;
+    points: string | number | null;
+    extraCredit: boolean | null;
+    feedback: string | null;
+    dateAssigned: Date | null;
+    dateDue: Date | null;
   }>[] = [
     {
       header: "Name",
@@ -68,7 +70,7 @@ export default function Home({
       accessorKey: "dateAssigned",
       id: "Date Assigned",
       accessorFn: (data) => {
-        return new Date(data.dateAssigned).toLocaleDateString("en-us", {
+        return data.dateAssigned?.toLocaleDateString("en-us", {
           day: "numeric",
           month: "short",
         });
@@ -79,7 +81,7 @@ export default function Home({
       accessorKey: "dateDue",
       id: "Date Due",
       accessorFn: (data) => {
-        return new Date(data.dateDue).toLocaleDateString("en-us", {
+        return data.dateDue?.toLocaleDateString("en-us", {
           day: "numeric",
           month: "short",
         });
@@ -89,6 +91,9 @@ export default function Home({
       header: "Extra Credit",
       accessorKey: "extraCredit",
       id: "Extra Credit",
+      accessorFn: (data) => {
+        return data.extraCredit ? "Yes" : "No";
+      },
     },
     {
       header: "Points Possible",
@@ -97,7 +102,7 @@ export default function Home({
     },
     {
       header: "Points",
-      accessorKey: "score",
+      accessorKey: "points",
       id: "Points",
     },
     {

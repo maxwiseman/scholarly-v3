@@ -13,7 +13,7 @@ export default function Page({
 }: {
   params: { classId: string };
 }): React.ReactElement {
-  const assignmentData = api.aspen.getAssignments.useQuery(
+  const assignmentData = api.user.getAssignments.useQuery(
     {
       id: params.classId,
     },
@@ -40,8 +40,8 @@ export default function Page({
           <ul>
             {assignmentData.data?.map((assignment) => {
               if (
-                (!assignment.extraCredit && assignment.score === "M") ||
-                assignment.score === 0
+                (!assignment.extraCredit && assignment.points === "M") ||
+                assignment.points === 0
               ) {
                 return <li key={assignment.name}>{assignment.name}</li>;
               }
@@ -57,7 +57,7 @@ export default function Page({
         <CardContent>
           <ul>
             {assignmentData.data?.map((assignment) => {
-              if (new Date(assignment.dateDue) > new Date()) {
+              if (assignment.dateDue && assignment.dateDue > new Date()) {
                 return <li key={assignment.name}>{assignment.name}</li>;
               }
               return null;

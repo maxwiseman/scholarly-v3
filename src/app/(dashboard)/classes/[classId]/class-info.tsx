@@ -5,7 +5,7 @@ import { Skeleton } from "@/app/_components/ui/skeleton";
 import { api } from "@/trpc/react";
 
 export function ClassInfo({ classId }: { classId: string }): React.ReactNode {
-  const classFetcher = api.aspen.getClasses.useQuery(undefined, {
+  const classFetcher = api.user.getClasses.useQuery(undefined, {
     refetchOnWindowFocus: false,
     refetchOnMount: false,
     refetchOnReconnect: false,

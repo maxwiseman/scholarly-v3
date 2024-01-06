@@ -24,22 +24,12 @@ import {
   DialogTrigger,
 } from "@/app/_components/ui/dialog";
 import { Input } from "@/app/_components/ui/input";
+import { type CourseData } from "@/server/api/routers/user/get-classes";
 
 export function ClassCard({
   classData,
 }: {
-  classData: {
-    id: string | undefined;
-    name: string;
-    schedule: string | undefined;
-    term: string | undefined;
-    teachers: string[] | undefined;
-    teacherEmail: string | undefined;
-    termGrade: number;
-    absences: number;
-    tardies: number;
-    dismissals: number;
-  };
+  classData: CourseData;
 }): React.ReactElement {
   return (
     <Dialog>
@@ -59,21 +49,23 @@ export function ClassCard({
                 <CardTitle className="mt-0 line-clamp-1 text-xl font-semibold">
                   {classData.name}
                 </CardTitle>
-                <CircularProgress
-                  aria-label="Current term grade"
-                  classNames={{
-                    indicator:
-                      // eslint-disable-next-line no-nested-ternary -- This isn't that confusing
-                      classData.termGrade > 85
-                        ? "stroke-success"
-                        : classData.termGrade > 70
-                          ? "stroke-warning"
-                          : "stroke-error",
-                  }}
-                  color="warning"
-                  showValueLabel
-                  value={classData.termGrade}
-                />
+                {classData.gradeAverage ? (
+                  <CircularProgress
+                    aria-label="Current term grade"
+                    classNames={{
+                      indicator:
+                        // eslint-disable-next-line no-nested-ternary -- This isn't that confusing
+                        classData.gradeAverage > 85
+                          ? "stroke-success"
+                          : classData.gradeAverage > 70
+                            ? "stroke-warning"
+                            : "stroke-error",
+                    }}
+                    color="warning"
+                    showValueLabel
+                    value={classData.gradeAverage}
+                  />
+                ) : null}
               </CardHeader>
               {/* <Separator className="my-2" /> */}
               <CardContent className="pb-3 text-muted-foreground">
