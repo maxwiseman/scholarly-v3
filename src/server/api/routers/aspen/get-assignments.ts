@@ -1,9 +1,19 @@
 import puppeteer, { type Browser } from "puppeteer-core";
+import { v4 as uuid } from "uuid";
+import { and, eq, sql } from "drizzle-orm";
 import { capitalize, goToAcademics, login } from "./lib";
 import { env } from "@/env";
+import { db } from "@/server/db";
+import { aspenAssignments, classes } from "@/server/db/schema";
+import { getServerAuthSession } from "@/server/auth";
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type -- We have a good type inference
 export async function getAssignments(id: string) {
+  const session = await getServerAuthSession();
+  const aspenIdData = await db.query.classes.findFirst({
+    where: and(eq(classes.id, id), eq(classes.userId, session?.user.id || "")),
+  });
+  const aspenId = aspenIdData?.aspenId || "";
   const options = {
     args: [],
     executablePath:
@@ -37,7 +47,7 @@ export async function getAssignments(id: string) {
 
   // Go to class by ID
   await page.evaluate(
-    `doParamSubmit(2100, document.forms['classListForm'], '${id}');`,
+    `doParamSubmit(2100, document.forms['classListForm'], '${aspenId}');`,
   );
 
   // Go to Assignments page
@@ -92,8 +102,8 @@ export async function getAssignments(id: string) {
       name: name[index] || "",
       category: category[index] || "",
       pointsPossible: parseFloat(pointsPossible[index] ?? ""),
-      dateAssigned: Date.parse(dateAssigned[index] ?? ""),
-      dateDue: Date.parse(dateDue[index] ?? ""),
+      dateAssigned: new Date(Date.parse(dateAssigned[index] ?? "")),
+      dateDue: new Date(Date.parse(dateDue[index] ?? "")),
       extraCredit: extraCredit[index] === "Y",
       points: score[index]?.match(/^0\.0.*/)
         ? 0
@@ -104,6 +114,37 @@ export async function getAssignments(id: string) {
   });
 
   await browser.close();
+
+  await db
+    .insert(aspenAssignments)
+    .values(
+      data.map((assignment) => {
+        return {
+          ...assignment,
+          id: uuid(),
+          userId: session?.user.id || "",
+          classId: id,
+          dateAssigned: assignment.dateAssigned,
+          dateDue: assignment.dateDue,
+        };
+      }),
+    ) // Replace with your schema and new data
+    .onConflictDoUpdate({
+      target: aspenAssignments.name, // Replace with the unique identifier column of your assignments
+      set: {
+        category: sql`EXCLUDED.category`,
+        classId: sql`EXCLUDED.classId`,
+        dateAssigned: sql`EXCLUDED.dateAssigned`,
+        dateDue: sql`EXCLUDED.dateDue`,
+        extraCredit: sql`EXCLUDED.extraCredit`,
+        feedback: sql`EXCLUDED.feedback`,
+        name: sql`EXCLUDED.name`,
+        points: sql`EXCLUDED.points`,
+        pointsPossible: sql`EXCLUDED.pointsPossible`,
+        userId: sql`EXCLUDED.userId`,
+      }, // Replace with the new data you want to update
+    })
+    .execute();
 
   return data;
 }

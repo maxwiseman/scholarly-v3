@@ -24,6 +24,15 @@ export default function Page({
     },
   );
 
+  const assignmentAspenData = api.aspen.getAssignments.useQuery(
+    { id: params.classId },
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+    },
+  );
+
   if (!assignmentData.isFetched) {
     return <main className="text-muted-foreground">Loading...</main>;
   }
@@ -38,7 +47,7 @@ export default function Page({
         </CardHeader>
         <CardContent>
           <ul>
-            {assignmentData.data?.map((assignment) => {
+            {assignmentAspenData.data?.map((assignment) => {
               if (
                 (!assignment.extraCredit && assignment.points === "M") ||
                 assignment.points === 0
@@ -46,7 +55,16 @@ export default function Page({
                 return <li key={assignment.name}>{assignment.name}</li>;
               }
               return null;
-            })}
+            }) ||
+              assignmentData.data?.map((assignment) => {
+                if (
+                  (!assignment.extraCredit && assignment.points === "M") ||
+                  assignment.points === 0
+                ) {
+                  return <li key={assignment.name}>{assignment.name}</li>;
+                }
+                return null;
+              })}
           </ul>
         </CardContent>
       </Card>
@@ -56,12 +74,19 @@ export default function Page({
         </CardHeader>
         <CardContent>
           <ul>
-            {assignmentData.data?.map((assignment) => {
+            {assignmentAspenData.data?.map((assignment) => {
+              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- its ok
               if (assignment.dateDue && assignment.dateDue > new Date()) {
                 return <li key={assignment.name}>{assignment.name}</li>;
               }
               return null;
-            })}
+            }) ||
+              assignmentData.data?.map((assignment) => {
+                if (assignment.dateDue && assignment.dateDue > new Date()) {
+                  return <li key={assignment.name}>{assignment.name}</li>;
+                }
+                return null;
+              })}
           </ul>
         </CardContent>
       </Card>

@@ -43,11 +43,17 @@ export default function Home({
     },
   );
 
+  const assignmentAspenData = api.aspen.getAssignments.useQuery(
+    { id: params.classId },
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+    },
+  );
+
   const columns: ColumnDef<{
-    id: string;
     name: string | null;
-    userId: string | null;
-    classId: string | null;
     pointsPossible: number | null;
     points: string | number | null;
     extraCredit: boolean | null;
@@ -158,7 +164,7 @@ export default function Home({
       {classData.data && classData.isFetched ? (
         <DataTable
           columns={columns}
-          data={assignmentData.data ?? []}
+          data={assignmentAspenData.data || assignmentData.data || []}
           defaultVisibility={{
             "Date Assigned": false,
             "Date Due": false,
