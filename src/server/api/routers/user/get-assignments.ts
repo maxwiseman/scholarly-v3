@@ -33,6 +33,7 @@ export async function getAssignments(classId: string): Promise<
     ),
   });
   if (!aspenIdData?.aspenId) throw new Error("Aspen ID could not be loaded!");
+  console.log("Fetching from Aspen...");
   api.aspen.getAssignments
     .query({
       id: aspenIdData.aspenId,
