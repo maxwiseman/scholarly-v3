@@ -19,7 +19,7 @@ export async function login(
   });
 
   await page.goto("https://aspen.knoxschools.org");
-  await page.waitForSelector("#username", { timeout: 2000 });
+  await page.waitForSelector("#username", { timeout: 10000 });
   await page.type(
     "#username",
     credentials?.username ?? dbUser?.aspenUsername ?? "",
@@ -30,7 +30,7 @@ export async function login(
   );
   await page.click("#logonButton");
   try {
-    await page.waitForSelector(".navTab", { timeout: 1000 });
+    await page.waitForSelector(".navTab", { timeout: 10000 });
   } catch {
     try {
       await page.waitForSelector(".errorMessageH1", { timeout: 500 });
@@ -47,7 +47,7 @@ export async function goToAcademics(page: Page): Promise<void> {
   await page.goto(
     "https://aspen.knoxschools.org/aspen/portalClassList.do?navkey=academics.classes.list",
   );
-  await page.waitForSelector(".listGrid", { timeout: 2000 });
+  await page.waitForSelector(".listGrid", { timeout: 10000 });
 }
 
 export function decapitalize(text: string, separator = " "): string {

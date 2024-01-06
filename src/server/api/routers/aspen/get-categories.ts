@@ -39,7 +39,7 @@ export async function getCategories(id: string) {
   await page.evaluate(
     `doParamSubmit(2100, document.forms['classListForm'], '${id}');`,
   );
-  await page.waitForSelector("#dataGridRight", { timeout: 2000 });
+  await page.waitForSelector("#dataGridRight", { timeout: 10000 });
   if (!process.env.VERCEL_ENV) await page.screenshot({ path: "output.png" });
 
   // Extract data

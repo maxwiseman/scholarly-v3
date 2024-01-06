@@ -42,10 +42,10 @@ export async function getAssignments(id: string) {
 
   // Go to Assignments page
   await page.waitForSelector("a[title='List of assignments']", {
-    timeout: 2000,
+    timeout: 10000,
   });
   await page.click("a[title='List of assignments']");
-  await page.waitForSelector("#dataGrid", { timeout: 2000 });
+  await page.waitForSelector("#dataGrid", { timeout: 10000 });
   if (!process.env.VERCEL_ENV) await page.screenshot({ path: "output.png" });
 
   // Extract data
