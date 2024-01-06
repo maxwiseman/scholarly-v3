@@ -70,11 +70,11 @@ export async function getAssignments(classId: string): Promise<
           })
           .execute();
       } catch (err) {
-        console.error(err);
+        throw new Error(JSON.stringify(err));
       }
     })
-    .catch(() => {
-      throw new Error("Couldn't fetch from Aspen");
+    .catch((err: Error) => {
+      throw new Error("Couldn't fetch from Aspen", err);
     });
 
   return dbData;
