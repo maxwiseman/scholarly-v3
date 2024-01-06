@@ -25,14 +25,22 @@ export const userRouter = createTRPCRouter({
     .input(
       z.array(
         z.object({
-          name: z.string().optional(),
-          teachers: z.array(z.string()).optional(),
-          teacherEmail: z.string().optional(),
-          gradeAverage: z.number().optional(),
-          aspenId: z.string().optional(),
-          canvasId: z.string().optional(),
-          schedule: z.string().optional(),
-          term: z.string().optional(),
+          id: z.string(),
+          gradeCategories: z.array(
+            z.object({
+              name: z.string(),
+              weight: z.number(),
+              value: z.number(),
+            }),
+          ),
+          name: z.string(),
+          teachers: z.array(z.string()),
+          teacherEmail: z.string(),
+          gradeAverage: z.number(),
+          aspenId: z.string(),
+          canvasId: z.string(),
+          schedule: z.string(),
+          term: z.string(),
         }),
       ),
     )

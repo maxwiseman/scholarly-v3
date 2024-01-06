@@ -2,6 +2,7 @@
 
 import { IconArrowRight, IconLoader } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
+import { v4 as uuid } from "uuid";
 import { Button } from "../_components/ui/button";
 import { Card } from "../_components/ui/card";
 import {
@@ -142,14 +143,16 @@ export function StepTwo({
                     (value) => value.id === classData[canvasCourse.id],
                   )[0];
                   return {
+                    id: uuid(),
                     name: canvasCourse.name,
-                    teachers: aspenCourse?.teachers,
-                    gradeAverage: aspenCourse?.termGrade,
-                    aspenId: aspenCourse?.id,
+                    teachers: aspenCourse?.teachers || [],
+                    gradeAverage: aspenCourse?.termGrade || 100,
+                    gradeCategories: [],
+                    aspenId: aspenCourse?.id || "",
                     canvasId: canvasCourse.id.toString(),
-                    term: aspenCourse?.term,
-                    schedule: aspenCourse?.schedule,
-                    teacherEmail: aspenCourse?.teacherEmail,
+                    term: aspenCourse?.term || "",
+                    schedule: aspenCourse?.schedule || "",
+                    teacherEmail: aspenCourse?.teacherEmail || "",
                   };
                 }),
               );

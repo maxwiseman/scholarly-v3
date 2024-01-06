@@ -1,4 +1,3 @@
-import { v4 } from "uuid";
 import {
   type SQLiteColumn,
   type SQLiteTableWithColumns,
@@ -16,13 +15,15 @@ export type ClassInfo = {
       : never
     : never;
 };
-export async function addClasses(input: Partial<ClassInfo>[]): Promise<void> {
+export async function addClasses(
+  input: Omit<ClassInfo, "userId">[],
+): Promise<void> {
   const session = await getServerAuthSession();
 
   // eslint-disable-next-line @typescript-eslint/no-misused-promises -- This should be ok
   input.forEach(async (data) => {
     await db
       .insert(classes)
-      .values({ id: v4(), ...data, userId: session?.user.id });
+      .values({ ...data, userId: session?.user.id || "" });
   });
 }
