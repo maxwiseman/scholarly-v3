@@ -1,7 +1,7 @@
 import { z } from "zod";
+import { getAssignments } from "./get-assignments";
 import { getClasses } from "./get-classes";
 import { getModules } from "./get-modules";
-import { getAssignments } from "./get-assignments";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
 export const canvasRouter = createTRPCRouter({

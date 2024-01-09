@@ -95,7 +95,10 @@ export default function Page({
                     return (
                       <LinkButton
                         className="flex flex-row justify-start gap-2"
-                        href={`/classes/${params.classId}/modules/${module.id}/items/${item.id}`}
+                        href={`/classes/${params.classId}/${item.url?.replace(
+                          /https:\/\/knoxschools\.instructure\.com\/api\/v1\/courses\/[^/]*\//,
+                          "",
+                        )}`}
                         key={item.id}
                         style={{ marginLeft: `${item.indent * 1.5}rem` }}
                         variant="ghost"
