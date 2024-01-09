@@ -32,7 +32,7 @@ export default function Page({
           }
           return (
             <LinkButton
-              className="flex flex-row justify-start gap-2"
+              className="flex flex-row justify-start gap-2 !px-2"
               href={`/classes/${params.classId}/assignments/${assignment.id}`}
               key={assignment.id}
               variant="ghost"

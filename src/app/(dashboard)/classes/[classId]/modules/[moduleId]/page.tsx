@@ -27,7 +27,9 @@ export default function Page({
 }): React.ReactElement {
   const moduleData = api.canvas.getModules.useQuery(params.classId);
   const [searchString, setSearchString] = useState("");
-  const [accordionValue, setAccordionValue] = useState<string[]>([]);
+  const [accordionValue, setAccordionValue] = useState<string[]>([
+    params.moduleId,
+  ]);
 
   return (
     <div className="flex flex-col gap-2">
@@ -49,7 +51,7 @@ export default function Page({
           onClick={() => {
             if (accordionValue.length === 0) {
               setAccordionValue(
-                moduleData.data?.map((module) => module.name) ?? [],
+                moduleData.data?.map((module) => module.id.toString()) ?? [],
               );
             } else if (accordionValue.length !== 0) {
               setAccordionValue([]);
@@ -79,7 +81,7 @@ export default function Page({
       >
         {moduleData.data?.map((module) => {
           return (
-            <AccordionItem className="py-2" key={module.id} value={module.name}>
+            <AccordionItem key={module.id} value={module.id.toString()}>
               <AccordionTrigger>{module.name}</AccordionTrigger>
               <AccordionContent className="flex flex-col gap-1">
                 {module.items.map((item) => {
@@ -94,15 +96,11 @@ export default function Page({
                   if (item.type !== "SubHeader")
                     return (
                       <LinkButton
-                        className="flex flex-row justify-start gap-2 !px-2"
-                        href={
-                          item.type === "ExternalUrl"
-                            ? item.external_url || ""
-                            : `/classes/${params.classId}/${item.url?.replace(
-                                /https:\/\/knoxschools\.instructure\.com\/api\/v1\/courses\/[^/]*\//,
-                                "",
-                              )}`
-                        }
+                        className="flex flex-row justify-start gap-2"
+                        href={`/classes/${params.classId}/${item.url?.replace(
+                          /https:\/\/knoxschools\.instructure\.com\/api\/v1\/courses\/[^/]*\//,
+                          "",
+                        )}`}
                         key={item.id}
                         style={{ marginLeft: `${item.indent * 1.5}rem` }}
                         variant="ghost"
