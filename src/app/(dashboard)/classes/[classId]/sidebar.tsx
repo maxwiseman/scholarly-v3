@@ -17,7 +17,17 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
       </LinkButton>
       <LinkButton
         className="justify-start"
-        disabled
+        href={`/classes/${classId}/modules`}
+        variant={
+          pathName.startsWith(`/classes/${classId}/modules`)
+            ? "secondary"
+            : "ghost"
+        }
+      >
+        Modules
+      </LinkButton>
+      <LinkButton
+        className="justify-start"
         href={`/classes/${classId}/assignments`}
         variant={
           pathName.startsWith(`/classes/${classId}/assignments`)
