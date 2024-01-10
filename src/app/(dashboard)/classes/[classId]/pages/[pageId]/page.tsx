@@ -1,33 +1,26 @@
-"use client";
-
-import React from "react";
-import { api } from "@/trpc/react";
+import { api } from "@/trpc/server";
 import { Separator } from "@/app/_components/ui/separator";
-import { Skeleton } from "@/app/_components/ui/skeleton";
 
-export default function Page({
+export default async function Page({
   params,
 }: {
   params: { classId: string; pageId: string };
-}): React.ReactElement {
-  const pageData = api.canvas.getPage.useQuery(params);
+}): Promise<React.ReactElement> {
+  const pageData = await api.canvas.getPage.query(params);
 
   return (
     <div className="flex w-full justify-center">
       <div className="w-full max-w-4xl">
         <div className="flex flex-col gap-2">
-          {pageData.isFetched ? (
-            <h1 className="mt-0 text-3xl font-bold">{pageData.data?.title}</h1>
-          ) : (
-            <Skeleton className="h-9 w-96" />
-          )}
+          <h1 className="mt-0 text-3xl font-bold">{pageData.title}</h1>
         </div>
-        <Separator className="my-4" />
+        <Separator className="my-6" />
         <div
           className="typography"
           dangerouslySetInnerHTML={{
             __html:
-              pageData.data?.body.replaceAll(
+              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Sometimes this is empty
+              pageData.body?.replaceAll(
                 /href="https:\/\/knoxschools\.instructure\.com\/courses\/[^/]*/g,
                 `href="/classes/${params.classId}`,
               ) || "",

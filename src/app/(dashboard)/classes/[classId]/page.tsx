@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/app/_components/ui/card";
+import { queryOpts } from "@/lib/utils";
 import { api } from "@/trpc/react";
 
 export default function Page({
@@ -17,20 +18,12 @@ export default function Page({
     {
       id: params.classId,
     },
-    {
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    },
+    queryOpts,
   );
 
   const assignmentAspenData = api.aspen.getAssignments.useQuery(
     { id: params.classId },
-    {
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    },
+    queryOpts,
   );
 
   if (!assignmentData.isFetched) {

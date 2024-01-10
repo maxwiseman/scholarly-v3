@@ -4,13 +4,17 @@ import { useState } from "react";
 import { api } from "@/trpc/react";
 import { LinkButton } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
+import { queryOpts } from "@/lib/utils";
 
 export default function Page({
   params,
 }: {
   params: { classId: string };
 }): React.ReactElement {
-  const assignmentData = api.canvas.getAssignments.useQuery(params.classId);
+  const assignmentData = api.canvas.getAssignments.useQuery(
+    params.classId,
+    queryOpts,
+  );
   const [searchString, setSearchString] = useState("");
 
   return (

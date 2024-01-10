@@ -2,17 +2,17 @@
 
 import { Badge } from "@/app/_components/ui/badge";
 import { Skeleton } from "@/app/_components/ui/skeleton";
+import { queryOpts } from "@/lib/utils";
 import { api } from "@/trpc/react";
 
 export function ClassInfo({ classId }: { classId: string }): React.ReactNode {
-  const classFetcher = api.user.getClasses.useQuery(undefined, {
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-  });
+  const classFetcher = api.user.getClasses.useQuery(undefined, queryOpts);
   const classInfo = classFetcher.data?.find((singleClass) => {
     return singleClass.id === classId;
   });
+
+  api.canvas.getAssignments.useQuery(classId, queryOpts);
+  api.canvas.getModules.useQuery(classId, queryOpts);
 
   if (!classFetcher.isFetched)
     return (

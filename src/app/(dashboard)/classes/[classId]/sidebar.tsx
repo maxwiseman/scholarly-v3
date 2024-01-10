@@ -50,7 +50,6 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
       </LinkButton>
       <LinkButton
         className="justify-start"
-        disabled
         href={`/classes/${classId}/quizzes`}
         variant={
           pathName.startsWith(`/classes/${classId}/quizzes`)
@@ -62,7 +61,6 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
       </LinkButton>
       <LinkButton
         className="justify-start"
-        disabled
         href={`/classes/${classId}/discussions`}
         variant={
           pathName.startsWith(`/classes/${classId}/discussions`)

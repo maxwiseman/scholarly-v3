@@ -13,17 +13,14 @@ import {
   TableRow,
 } from "@/app/_components/ui/table";
 import { Separator } from "@/app/_components/ui/separator";
+import { queryOpts } from "@/lib/utils";
 
 export default function Home({
   params,
 }: {
   params: { classId: string };
 }): React.ReactElement {
-  const classData = api.user.getClasses.useQuery(undefined, {
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-  });
+  const classData = api.user.getClasses.useQuery(undefined, queryOpts);
   // const categoryData = api.aspen.getCategories.useQuery(
   //   { id: params.classId },
   //   {
@@ -36,20 +33,12 @@ export default function Home({
     {
       id: params.classId,
     },
-    {
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    },
+    queryOpts,
   );
 
   const assignmentAspenData = api.aspen.getAssignments.useQuery(
     { id: params.classId },
-    {
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-    },
+    queryOpts,
   );
 
   const columns: ColumnDef<{

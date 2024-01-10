@@ -19,13 +19,14 @@ import {
 import { Button, LinkButton } from "@/app/_components/ui/button";
 import { api } from "@/trpc/react";
 import { Input } from "@/app/_components/ui/input";
+import { queryOpts } from "@/lib/utils";
 
 export default function Page({
   params,
 }: {
   params: { classId: string; moduleId: string };
 }): React.ReactElement {
-  const moduleData = api.canvas.getModules.useQuery(params.classId);
+  const moduleData = api.canvas.getModules.useQuery(params.classId, queryOpts);
   const [searchString, setSearchString] = useState("");
   const [accordionValue, setAccordionValue] = useState<string[]>([]);
 

@@ -15,22 +15,15 @@ import {
 } from "../_components/ui/select";
 import { Separator } from "../_components/ui/separator";
 import { api } from "@/trpc/react";
+import { queryOpts } from "@/lib/utils";
 
 export function StepTwo({
   onSubmit,
 }: {
   onSubmit?: () => void;
 }): React.ReactElement {
-  const canvasData = api.canvas.getClasses.useQuery(undefined, {
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-  });
-  const aspenData = api.aspen.getClasses.useQuery(undefined, {
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-  });
+  const canvasData = api.canvas.getClasses.useQuery(undefined, queryOpts);
+  const aspenData = api.aspen.getClasses.useQuery(undefined, queryOpts);
 
   const [classData, setClassData] = useState<Record<string, string>>({});
   const [isValid, setIsValid] = useState(false);

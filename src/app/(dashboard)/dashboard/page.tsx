@@ -2,14 +2,11 @@
 
 import { ClassCard } from "./class-card";
 import { Separator } from "@/app/_components/ui/separator";
+import { queryOpts } from "@/lib/utils";
 import { api } from "@/trpc/react";
 
 export default function Page(): React.ReactElement {
-  const classFetcher = api.user.getClasses.useQuery(undefined, {
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-  });
+  const classFetcher = api.user.getClasses.useQuery(undefined, queryOpts);
 
   return (
     <div className="p-8 py-10">
