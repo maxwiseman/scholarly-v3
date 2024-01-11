@@ -38,7 +38,8 @@ const config = {
     ],
     "no-console": ["warn", { allow: ["warn", "error"] }],
     "no-return-await": "off",
-    "import/no-default-export": "off"
+    "import/no-default-export": "off",
+    "import/no-extraneous-dependencies": "off"
   },
 };
 

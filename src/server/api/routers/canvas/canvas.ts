@@ -7,8 +7,8 @@ import { getPage } from "./get-page";
 import { getQuiz } from "./get-quiz";
 import { createQuizSubmission } from "./create-quiz-submission";
 import { getQuizSubmissions } from "./get-quiz-submissions";
-import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 import { getQuizQuestions } from "./get-quiz-questions";
+import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
 export const canvasRouter = createTRPCRouter({
   getClasses: protectedProcedure.query(async () => {

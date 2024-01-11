@@ -115,7 +115,72 @@
   a {
     @apply underline;
   }
-  img {
-    @apply rounded-md;
+  img,
+  iframe {
+    @apply rounded-xl;
   }
+}
+
+.tiptap {
+  padding: 1rem;
+  border-radius: 0px 0px 0.75rem 0.75rem;
+  word-wrap: break-word;
+  min-height: 10.25rem;
+}
+.tiptap:focus {
+  outline: 1px solid hsl(var(--accent-foreground));
+}
+.tiptap h1 {
+  @apply scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl;
+}
+.tiptap h2 {
+  @apply scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0;
+}
+.tiptap h3 {
+  @apply scroll-m-20 text-2xl font-semibold tracking-tight;
+}
+.tiptap h4 {
+  @apply scroll-m-20 text-xl font-semibold tracking-tight;
+}
+.tiptap p {
+  @apply leading-7 [&:not(:first-child)]:mt-6;
+}
+.tiptap ul[data-type="taskList"] {
+  @apply list-none;
+}
+.tiptap ul[data-type="taskList"] label,
+.tiptap ul[data-type="taskList"] li {
+  @apply flex flex-row gap-1;
+}
+.tiptap ul[data-type="taskList"] label {
+  @apply mt-[0.3125rem] min-w-max;
+}
+.tiptap ul {
+  @apply my-6 ml-6 list-disc [&>li]:mt-2;
+}
+.tiptap ol {
+  @apply my-6 ml-6 list-decimal [&>li]:mt-2;
+}
+.tiptap code {
+  @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+}
+.tiptap pre code {
+  color: inherit;
+  padding: 0;
+  background: none;
+  font-size: 0.8rem;
+}
+.tiptap img {
+  @apply h-auto max-w-full;
+}
+.tiptap blockquote {
+  @apply mt-6 border-l-2 pl-6;
+}
+.tiptap hr {
+  border: none;
+  border-top: 2px solid hsl(var(--border));
+  margin: 2rem 0;
+}
+.tiptap input[type="checkbox"] {
+  @apply h-4 w-4 min-w-[16px] shrink-0 rounded-sm border border-primary shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground;
 }

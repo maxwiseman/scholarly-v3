@@ -31,7 +31,7 @@ export async function getPage({
   ).then((res) => res.json() as Promise<Page>);
   return data;
 }
-interface Page {
+export interface Page {
   title: string;
   created_at: string;
   url: string;

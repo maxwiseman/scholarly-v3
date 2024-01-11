@@ -1,3 +1,4 @@
+import { Actions } from "./client";
 import { api } from "@/trpc/server";
 import { Separator } from "@/app/_components/ui/separator";
 
@@ -11,8 +12,11 @@ export default async function Page({
   return (
     <div className="flex w-full justify-center">
       <div className="w-full max-w-4xl">
-        <div className="flex flex-col gap-2">
-          <h1 className="mt-0 text-3xl font-bold">{pageData.title}</h1>
+        <div className="flex w-full flex-row items-center justify-between">
+          <div className="flex flex-col gap-2">
+            <h1 className="mt-0 text-3xl font-bold">{pageData.title}</h1>
+          </div>
+          <Actions page={pageData} />
         </div>
         <Separator className="my-6" />
         <div

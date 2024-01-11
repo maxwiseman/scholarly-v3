@@ -31,7 +31,7 @@ export async function getAssignment({
   ).then((res) => res.json() as Promise<Assignment>);
   return data;
 }
-interface Assignment {
+export interface Assignment {
   id: number;
   description: string;
   due_at: string;
