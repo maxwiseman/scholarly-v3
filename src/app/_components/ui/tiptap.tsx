@@ -18,6 +18,7 @@ import {
   default as Blockquote,
   default as OrderedList,
 } from "@tiptap/extension-blockquote";
+import Code from "@tiptap/extension-code";
 import { Color } from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
 import Subscript from "@tiptap/extension-subscript";
@@ -28,11 +29,10 @@ import TextAlign from "@tiptap/extension-text-align";
 import TextStyle from "@tiptap/extension-text-style";
 import Typography from "@tiptap/extension-typography";
 import Underline from "@tiptap/extension-underline";
-import Code from "@tiptap/extension-code";
 import {
   EditorProvider,
-  type EditorProviderProps,
   useCurrentEditor,
+  type EditorProviderProps,
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import {
@@ -55,7 +55,7 @@ function MenuBar(): React.ReactElement {
   if (!editor) return <>Loading...</>;
 
   return (
-    <div className="w-full overflow-x-scroll">
+    <div className="no-scrollbar w-full overflow-x-scroll">
       <div className="p-2">
         <div className="flex w-full gap-3 p-2">
           <ToggleGroup

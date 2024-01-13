@@ -45,7 +45,7 @@ export default async function Page({
           }}
         />
         {assignmentData.description !== "" && <Separator className="my-6" />}
-        <Submission />
+        <Submission assignment={assignmentData} />
       </div>
     </div>
   );

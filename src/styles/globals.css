@@ -70,6 +70,10 @@
   }
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 .typography {
   h1,
   h2 {

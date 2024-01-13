@@ -62,30 +62,40 @@ export function Actions({
   );
 }
 
-export function Submission(): React.ReactElement {
+export function Submission({
+  assignment,
+}: {
+  assignment: Assignment;
+}): React.ReactElement {
   return (
-    <Tabs className="w-full" defaultValue="account">
+    <Tabs className="w-full" defaultValue={assignment.submission_types[0]}>
       <TabsList>
-        <TabsTrigger value="text">
-          <IconCursorText className="mr-2 h-4 w-4" />
-          Text Entry
-        </TabsTrigger>
-        <TabsTrigger value="url">
-          <IconLink className="mr-2 h-4 w-4" />
-          Web URL
-        </TabsTrigger>
-        <TabsTrigger value="file">
-          <IconFileUpload className="mr-2 h-4 w-4" />
-          File Upload
-        </TabsTrigger>
+        {assignment.submission_types.includes("online_text_entry") && (
+          <TabsTrigger value="online_text_entry">
+            <IconCursorText className="mr-2 h-4 w-4" />
+            Text Entry
+          </TabsTrigger>
+        )}
+        {assignment.submission_types.includes("online_url") && (
+          <TabsTrigger value="online_url">
+            <IconLink className="mr-2 h-4 w-4" />
+            Web URL
+          </TabsTrigger>
+        )}
+        {assignment.submission_types.includes("online_upload") && (
+          <TabsTrigger value="online_upload">
+            <IconFileUpload className="mr-2 h-4 w-4" />
+            File Upload
+          </TabsTrigger>
+        )}
       </TabsList>
-      <TabsContent className="min-h-[18.75rem]" value="text">
+      <TabsContent className="min-h-[18.75rem]" value="online_text_entry">
         <TextSubmission />
       </TabsContent>
-      <TabsContent className="min-h-[18.75rem]" value="url">
+      <TabsContent className="min-h-[18.75rem]" value="online_url">
         <UrlSubmission />
       </TabsContent>
-      <TabsContent className="min-h-[18.75rem]" value="file">
+      <TabsContent className="min-h-[18.75rem]" value="online_upload">
         {/* <Card className="flex flex-col">
           <CardHeader className="">
             <CardTitle>Submit a File</CardTitle>
