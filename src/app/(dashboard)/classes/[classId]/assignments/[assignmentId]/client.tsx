@@ -5,11 +5,18 @@ import {
   IconDotsVertical,
   IconExternalLink,
   IconFileUpload,
+  IconHistory,
   IconLink,
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { Button } from "@/app/_components/ui/button";
-import { Card, CardHeader, CardTitle } from "@/app/_components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/app/_components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,6 +32,8 @@ import {
 import { TipTap } from "@/app/_components/ui/tiptap";
 import { type Assignment } from "@/server/api/routers/canvas/get-assignment";
 import { Separator } from "@/app/_components/ui/separator";
+import { Input } from "@/app/_components/ui/input";
+import { DropZone } from "@/app/_components/ui/dropzone";
 
 export function Actions({
   assignment,
@@ -66,31 +75,49 @@ export function Submission(): React.ReactElement {
           File Upload
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="text">
+      <TabsContent className="min-h-[18.75rem]" value="text">
         <TipTap
           slotAfter={
             <>
               <Separator />
-              <div className="flex flex-row p-4">
+              <div className="flex flex-row items-center justify-between p-4">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <IconHistory className="h-5 w-5" /> Last saved 1 min ago
+                </div>
                 <Button>Submit</Button>
               </div>
             </>
           }
         />
       </TabsContent>
-      <TabsContent value="url">
-        <Card>
-          <CardHeader>
-            <CardTitle>Url</CardTitle>
+      <TabsContent className="min-h-[18.75rem]" value="url">
+        <Card className="flex flex-col">
+          <CardHeader className="">
+            <CardTitle>Submit a URL</CardTitle>
           </CardHeader>
+          <CardContent className="">
+            <Input placeholder="https://" />
+          </CardContent>
+          <Separator />
+          <CardFooter className="justify-end p-4 px-6">
+            <Button>Submit</Button>
+          </CardFooter>
         </Card>
       </TabsContent>
-      <TabsContent value="file">
-        <Card>
-          <CardHeader>
-            <CardTitle>File upload</CardTitle>
+      <TabsContent className="min-h-[18.75rem]" value="file">
+        {/* <Card className="flex flex-col">
+          <CardHeader className="">
+            <CardTitle>Submit a File</CardTitle>
           </CardHeader>
-        </Card>
+          <CardContent className="p-6">
+            <DropZone />
+            </CardContent>
+            <Separator />
+            <CardFooter className="justify-end p-4 px-6">
+            <Button>Submit</Button>
+            </CardFooter>
+          </Card> */}
+        <DropZone />
       </TabsContent>
     </Tabs>
   );

@@ -336,7 +336,7 @@ export function TipTap(
   const testContent = "<p>Hello, World!</p>";
 
   return (
-    <Card>
+    <Card className="transition-[border-color] focus-within:border-accent-foreground">
       <EditorProvider
         content={testContent}
         extensions={extensions}

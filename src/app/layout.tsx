@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
+import { Toaster } from "sonner";
 import { ServerSessionProvider } from "./_components/server-session-provider";
 import { ThemeProvider } from "./_components/theme-provider";
 import { NextUIClientProvider } from "./_components/next-ui-provider";
@@ -44,6 +45,7 @@ export default async function RootLayout({
             </TRPCReactProvider>
           </ServerSessionProvider>
         </ThemeProvider>
+        <Toaster richColors />
       </body>
     </html>
   );

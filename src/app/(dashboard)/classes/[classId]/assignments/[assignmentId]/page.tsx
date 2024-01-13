@@ -44,7 +44,7 @@ export default async function Page({
               ) || "",
           }}
         />
-        <Separator className="my-6" />
+        {assignmentData.description !== "" && <Separator className="my-6" />}
         <Submission />
       </div>
     </div>
