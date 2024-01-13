@@ -52,7 +52,7 @@ export function Actions({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <Link href={assignment.html_url}>
+        <Link href={assignment.html_url} target="_blank">
           <DropdownMenuItem>
             <IconExternalLink className="mr-2 h-4 w-4" /> Show on Canvas
           </DropdownMenuItem>
