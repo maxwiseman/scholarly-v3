@@ -8,6 +8,7 @@ import { getQuiz } from "./get-quiz";
 import { createQuizSubmission } from "./create-quiz-submission";
 import { getQuizSubmissions } from "./get-quiz-submissions";
 import { getQuizQuestions } from "./get-quiz-questions";
+import { submitAssignment } from "./submit-assignment";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
 export const canvasRouter = createTRPCRouter({
@@ -51,5 +52,21 @@ export const canvasRouter = createTRPCRouter({
     .input(z.object({ classId: z.string(), quizId: z.string() }))
     .mutation(async ({ input }) => {
       return await createQuizSubmission(input);
+    }),
+  submitAssignment: protectedProcedure
+    .input(
+      z.object({
+        type: z.union([
+          z.literal("online_text_entry"),
+          z.literal("online_url"),
+          z.literal("online_upload"),
+        ]),
+        classId: z.string(),
+        assignmentId: z.string(),
+        body: z.string(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      return await submitAssignment(input);
     }),
 });

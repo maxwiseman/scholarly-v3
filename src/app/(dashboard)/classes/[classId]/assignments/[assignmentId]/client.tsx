@@ -38,6 +38,7 @@ import { type Assignment } from "@/server/api/routers/canvas/get-assignment";
 import { Separator } from "@/app/_components/ui/separator";
 import { Input } from "@/app/_components/ui/input";
 import { DropZone } from "@/app/_components/ui/dropzone";
+import { api } from "@/trpc/react";
 
 export function Actions({
   assignment,
@@ -62,27 +63,29 @@ export function Actions({
   );
 }
 
-export function Submission({
-  assignment,
-}: {
+export function Submission(props: {
+  classId: string;
   assignment: Assignment;
 }): React.ReactElement {
   return (
-    <Tabs className="w-full" defaultValue={assignment.submission_types[0]}>
+    <Tabs
+      className="w-full"
+      defaultValue={props.assignment.submission_types[0]}
+    >
       <TabsList>
-        {assignment.submission_types.includes("online_text_entry") && (
+        {props.assignment.submission_types.includes("online_text_entry") && (
           <TabsTrigger value="online_text_entry">
             <IconCursorText className="mr-2 h-4 w-4" />
             Text Entry
           </TabsTrigger>
         )}
-        {assignment.submission_types.includes("online_url") && (
+        {props.assignment.submission_types.includes("online_url") && (
           <TabsTrigger value="online_url">
             <IconLink className="mr-2 h-4 w-4" />
             Web URL
           </TabsTrigger>
         )}
-        {assignment.submission_types.includes("online_upload") && (
+        {props.assignment.submission_types.includes("online_upload") && (
           <TabsTrigger value="online_upload">
             <IconFileUpload className="mr-2 h-4 w-4" />
             File Upload
@@ -90,10 +93,10 @@ export function Submission({
         )}
       </TabsList>
       <TabsContent className="min-h-[18.75rem]" value="online_text_entry">
-        <TextSubmission />
+        <TextSubmission props={props} />
       </TabsContent>
       <TabsContent className="min-h-[18.75rem]" value="online_url">
-        <UrlSubmission />
+        <UrlSubmission props={props} />
       </TabsContent>
       <TabsContent className="min-h-[18.75rem]" value="online_upload">
         {/* <Card className="flex flex-col">
@@ -114,8 +117,16 @@ export function Submission({
   );
 }
 
-function UrlSubmission(): React.ReactElement {
+function UrlSubmission({
+  props,
+}: {
+  props: {
+    classId: string;
+    assignment: Assignment;
+  };
+}): React.ReactElement {
   const [url, setUrl] = useState("");
+  const submitAssignment = api.canvas.submitAssignment.useMutation();
 
   return (
     <Card className="flex flex-col">
@@ -160,9 +171,18 @@ function UrlSubmission(): React.ReactElement {
         </div>
         <Button
           onClick={() => {
-            toast.warning("You're early!", {
-              description: "This feature hasn't been implemented yet.",
-            });
+            toast.promise(
+              submitAssignment.mutateAsync({
+                classId: props.classId,
+                assignmentId: props.assignment.id.toString(),
+                body: url,
+                type: "online_url",
+              }),
+              {
+                success: "Submitted!",
+                error: "Failed to submit!",
+              },
+            );
           }}
         >
           Submit
@@ -172,21 +192,44 @@ function UrlSubmission(): React.ReactElement {
   );
 }
 
-function TextSubmission(): React.ReactElement {
+function TextSubmission({
+  props,
+}: {
+  props: {
+    classId: string;
+    assignment: Assignment;
+  };
+}): React.ReactElement {
+  const [content, setContent] = useState("");
+  const submitAssignment = api.canvas.submitAssignment.useMutation();
+
   return (
     <TipTap
+      content={content}
+      onUpdate={({ editor }) => {
+        setContent(editor.getHTML());
+      }}
       slotAfter={
         <>
           <Separator />
           <div className="flex flex-row items-center justify-between p-4">
             <div className="flex items-center gap-2 text-muted-foreground">
-              <IconHistory className="h-5 w-5" /> Last saved 1 min ago
+              <IconHistory className="h-5 w-5" /> Not saved
             </div>
             <Button
               onClick={() => {
-                toast.warning("You're early!", {
-                  description: "This feature hasn't been implemented yet.",
-                });
+                toast.promise(
+                  submitAssignment.mutateAsync({
+                    classId: props.classId,
+                    assignmentId: props.assignment.id.toString(),
+                    body: content,
+                    type: "online_text_entry",
+                  }),
+                  {
+                    success: "Submitted!",
+                    error: "Failed to submit!",
+                  },
+                );
               }}
             >
               Submit
