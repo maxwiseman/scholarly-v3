@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1704224449898,
+      "tag": "0000_parallel_inhumans",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1704567068506,
+      "tag": "0001_breezy_captain_midlands",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1704579445588,
+      "tag": "0002_bumpy_the_leader",
+      "breakpoints": true
+    }
+  ]
+}

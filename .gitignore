@@ -13,7 +13,7 @@
 /prisma/db.sqlite-journal
 
 # next.js
-/.next/
+/apps/frontend/.next/
 /out/
 next-env.d.ts
 
@@ -42,3 +42,13 @@ yarn-error.log*
 *.tsbuildinfo
 
 output.png
+
+
+node_modules
+*.log*
+.nitro
+.cache
+.output
+.env
+dist
+.turbo
