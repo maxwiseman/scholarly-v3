@@ -7,6 +7,7 @@ import {
 import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
 import { sqliteTable } from "drizzle-orm/sqlite-core";
+import { type Adapter } from "next-auth/adapters";
 import { env } from "@/env";
 import { db } from "@/server/db";
 
@@ -46,7 +47,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
-  adapter: DrizzleAdapter(db, sqliteTable),
+  adapter: DrizzleAdapter(db, sqliteTable) as Adapter,
   providers: [
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
