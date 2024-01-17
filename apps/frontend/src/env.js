@@ -121,7 +121,6 @@ export const env = createEnv({
     DISCORD_CLIENT_SECRET: z.string(),
     GITHUB_CLIENT_ID: z.string(),
     GITHUB_CLIENT_SECRET: z.string(),
-    BROWSERLESS_API_KEY: z.string(),
   },
   /**
    * Specify your client-side environment variables schema here.
@@ -144,7 +143,6 @@ export const env = createEnv({
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
     GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
-    BROWSERLESS_API_KEY: process.env.BROWSERLESS_API_KEY,
     VERCEL_ENV: process.env.VERCEL_ENV,
     VERCEL_URL: process.env.VERCEL_URL,
     PORT: process.env.PORT,
