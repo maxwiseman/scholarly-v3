@@ -7,7 +7,7 @@ export default eventHandler(async (event) => {
   ).split(":");
 
   const options = {
-    args: [],
+    args: ["--no-sandbox"],
     executablePath:
       // eslint-disable-next-line no-nested-ternary -- This isn't that confusing
       process.platform === "win32"
