@@ -1,6 +1,5 @@
 import { and, eq, sql } from "drizzle-orm";
 import { v4 as uuid } from "uuid";
-import { type AspenAssignment } from "@scholarly/backend/routes/get-assignments";
 import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db";
 import { aspenAssignments, classes, users } from "@/server/db/schema";
@@ -56,5 +55,22 @@ export async function getAssignments(id: string) {
     })
     .execute();
 
-  return data;
+  return data.map((assignment: AspenAssignment) => {
+    return {
+      ...assignment,
+      dateAssigned: new Date(Date.parse(assignment.dateAssigned)),
+      dateDue: new Date(Date.parse(assignment.dateDue)),
+    };
+  });
+}
+
+export interface AspenAssignment {
+  name: string;
+  category: string;
+  pointsPossible: number;
+  dateAssigned: string;
+  dateDue: string;
+  extraCredit: boolean;
+  points: string | number;
+  feedback: string;
 }

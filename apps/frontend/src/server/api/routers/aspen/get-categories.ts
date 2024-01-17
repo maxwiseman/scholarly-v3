@@ -1,4 +1,3 @@
-import { type AspenCategory } from "@scholarly/backend/routes/get-categories";
 import { and, eq } from "drizzle-orm";
 import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db";
@@ -24,4 +23,13 @@ export async function getCategories(id: string) {
   }).then((res) => res.json() as Promise<AspenCategory[]>);
 
   return data;
+}
+
+export interface AspenCategory {
+  average: number;
+  categories: {
+    name: string;
+    weight: number;
+    value: number;
+  }[];
 }

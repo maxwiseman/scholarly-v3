@@ -7,6 +7,7 @@ export async function getAssignments(classId: string): Promise<
   {
     id: string;
     name: string | null;
+    category: string | null;
     userId: string | null;
     classId: string | null;
     pointsPossible: number | null;

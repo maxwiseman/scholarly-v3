@@ -1,4 +1,3 @@
-import { type AspenClass } from "@scholarly/backend/routes/get-classes";
 import { eq } from "drizzle-orm";
 import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db";
@@ -21,3 +20,17 @@ export async function getClasses() {
 
   return data;
 }
+
+export interface AspenClass {
+  id: string | undefined;
+  name: string;
+  schedule: string;
+  term: string;
+  teachers: string[];
+  teacherEmail: string;
+  termGrade: number;
+  absences: number;
+  tardies: number;
+  dismissals: number;
+}
+[];
