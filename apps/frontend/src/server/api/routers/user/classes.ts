@@ -7,13 +7,13 @@ import { db } from "@/server/db";
 import { classes } from "@/server/db/schema";
 
 export type ClassInfo = {
-  [K in typeof classes extends SQLiteTableWithColumns<infer U>
-    ? keyof U["columns"]
-    : never]: typeof classes extends SQLiteTableWithColumns<infer T>
-    ? T["columns"][K] extends SQLiteColumn<infer C>
-      ? C["data"]
-      : never
-    : never;
+  [K in typeof classes extends SQLiteTableWithColumns<infer U> ?
+    keyof U["columns"]
+  : never]: typeof classes extends SQLiteTableWithColumns<infer T> ?
+    T["columns"][K] extends SQLiteColumn<infer C> ?
+      C["data"]
+    : never
+  : never;
 };
 export async function addClasses(
   input: Omit<ClassInfo, "userId">[],

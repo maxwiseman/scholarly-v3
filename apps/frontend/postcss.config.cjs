@@ -1,6 +1,6 @@
 const config = {
   plugins: {
-    'tailwindcss/nesting': {},
+    "tailwindcss/nesting": {},
     tailwindcss: {},
     autoprefixer: {},
   },

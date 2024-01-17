@@ -97,12 +97,12 @@ export default function Page({
                       <LinkButton
                         className="flex flex-row justify-start gap-2 !px-2"
                         href={
-                          item.type === "ExternalUrl"
-                            ? item.external_url || ""
-                            : `/classes/${params.classId}/${item.url?.replace(
-                                /https:\/\/knoxschools\.instructure\.com\/api\/v1\/courses\/[^/]*\//,
-                                "",
-                              )}`
+                          item.type === "ExternalUrl" ?
+                            item.external_url || ""
+                          : `/classes/${params.classId}/${item.url?.replace(
+                              /https:\/\/knoxschools\.instructure\.com\/api\/v1\/courses\/[^/]*\//,
+                              "",
+                            )}`
                         }
                         key={item.id}
                         style={{ marginLeft: `${item.indent * 1.5}rem` }}

@@ -217,7 +217,7 @@ export function DataTable<T>({
   return (
     <div className="w-full">
       <div className="flex items-center pb-4">
-        {searchKey ? (
+        {searchKey ?
           <Input
             className="max-w-sm"
             onChange={(event) =>
@@ -230,7 +230,7 @@ export function DataTable<T>({
                 | undefined) ?? ""
             }
           />
-        ) : null}
+        : null}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button className="ml-auto" variant="outline">
@@ -272,8 +272,9 @@ export function DataTable<T>({
                           key={header.id}
                         >
                           {/* eslint-disable-next-line no-nested-ternary -- It's fine in this case */}
-                          {header.isPlaceholder ? null : typeof header.column
-                              .columnDef.header === "string" ? (
+                          {header.isPlaceholder ?
+                            null
+                          : typeof header.column.columnDef.header === "string" ?
                             <Button
                               className="p-0 font-bold hover:bg-transparent"
                               onClick={() => {
@@ -286,12 +287,11 @@ export function DataTable<T>({
                               {header.column.columnDef.header.toString()}
                               <CaretSortIcon className="ml-2 h-4 w-4" />
                             </Button>
-                          ) : (
-                            flexRender(
+                          : flexRender(
                               header.column.columnDef.header,
                               header.getContext(),
                             )
-                          )}
+                          }
                         </TableHead>
                       );
                     })}
@@ -320,7 +320,7 @@ export function DataTable<T>({
             </ContextMenuContent>
           </ContextMenu>
           <TableBody>
-            {table.getRowModel().rows.length ? (
+            {table.getRowModel().rows.length ?
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   data-state={row.getIsSelected() && "selected"}
@@ -339,8 +339,7 @@ export function DataTable<T>({
                   ))}
                 </TableRow>
               ))
-            ) : (
-              <TableRow>
+            : <TableRow>
                 <TableCell
                   className="h-24 text-center"
                   colSpan={columns.length}
@@ -348,7 +347,7 @@ export function DataTable<T>({
                   No results.
                 </TableCell>
               </TableRow>
-            )}
+            }
           </TableBody>
         </Table>
       </div>
@@ -357,7 +356,7 @@ export function DataTable<T>({
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>
-        {paginated ? (
+        {paginated ?
           <div className="space-x-2">
             <Button
               disabled={!table.getCanPreviousPage()}
@@ -380,7 +379,7 @@ export function DataTable<T>({
               Next
             </Button>
           </div>
-        ) : null}
+        : null}
       </div>
     </div>
   );
@@ -410,12 +409,12 @@ export function DataTableSimple<TData, TValue>({
               {headerGroup.headers.map((header) => {
                 return (
                   <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                    {header.isPlaceholder ? null : (
+                      flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )
+                    )}
                   </TableHead>
                 );
               })}
@@ -423,7 +422,7 @@ export function DataTableSimple<TData, TValue>({
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows.length ? (
+          {table.getRowModel().rows.length ?
             table.getRowModel().rows.map((row) => (
               <TableRow
                 data-state={row.getIsSelected() && "selected"}
@@ -436,13 +435,12 @@ export function DataTableSimple<TData, TValue>({
                 ))}
               </TableRow>
             ))
-          ) : (
-            <TableRow>
+          : <TableRow>
               <TableCell className="h-24 text-center" colSpan={columns.length}>
                 No results.
               </TableCell>
             </TableRow>
-          )}
+          }
         </TableBody>
       </Table>
     </div>

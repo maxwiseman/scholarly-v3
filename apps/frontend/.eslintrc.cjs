@@ -13,7 +13,7 @@ const config = {
     require.resolve("@vercel/style-guide/eslint/browser"),
     require.resolve("@vercel/style-guide/eslint/typescript"),
     require.resolve("@vercel/style-guide/eslint/react"),
-    require.resolve("@vercel/style-guide/eslint/next")
+    require.resolve("@vercel/style-guide/eslint/next"),
   ],
   rules: {
     // These opinionated rules are enabled in stylistic-type-checked above.
@@ -39,7 +39,7 @@ const config = {
     "no-console": ["warn", { allow: ["warn", "error"] }],
     "no-return-await": "off",
     "import/no-default-export": "off",
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
   },
 };
 

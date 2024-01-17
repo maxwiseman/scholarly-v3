@@ -49,23 +49,21 @@ export function ClassCard({
                 <CardTitle className="mt-0 line-clamp-1 text-xl font-semibold">
                   {classData.name}
                 </CardTitle>
-                {classData.gradeAverage ? (
+                {classData.gradeAverage ?
                   <CircularProgress
                     aria-label="Current term grade"
                     classNames={{
                       indicator:
                         // eslint-disable-next-line no-nested-ternary -- This isn't that confusing
-                        classData.gradeAverage > 85
-                          ? "stroke-success"
-                          : classData.gradeAverage > 70
-                            ? "stroke-warning"
-                            : "stroke-error",
+                        classData.gradeAverage > 85 ? "stroke-success"
+                        : classData.gradeAverage > 70 ? "stroke-warning"
+                        : "stroke-error",
                     }}
                     color="warning"
                     showValueLabel
                     value={classData.gradeAverage}
                   />
-                ) : null}
+                : null}
               </CardHeader>
               {/* <Separator className="my-2" /> */}
               <CardContent className="pb-3 text-muted-foreground">

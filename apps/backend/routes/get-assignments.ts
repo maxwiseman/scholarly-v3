@@ -11,11 +11,10 @@ export default eventHandler(async (event) => {
     args: [],
     executablePath:
       // eslint-disable-next-line no-nested-ternary -- This isn't that confusing
-      process.platform === "win32"
-        ? "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
-        : process.platform === "linux"
-          ? "/usr/bin/google-chrome"
-          : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+      process.platform === "win32" ?
+        "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+      : process.platform === "linux" ? "/usr/bin/google-chrome"
+      : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   };
   const browser = await puppeteer.launch(options);
   const context = await browser.createIncognitoBrowserContext();
@@ -87,16 +86,17 @@ export default eventHandler(async (event) => {
     (elements) => elements.map((element) => element.innerText),
   );
 
-  const data = name.map((assignmentName, index) => {
+  const data: AspenAssignment[] = name.map((assignmentName, index) => {
     return {
       name: name[index] || "",
       category: category[index] || "",
       pointsPossible: parseFloat(pointsPossible[index] ?? ""),
-      dateAssigned: new Date(Date.parse(dateAssigned[index] ?? "")),
-      dateDue: new Date(Date.parse(dateDue[index] ?? "")),
+      dateAssigned: dateAssigned[index] || "",
+      dateDue: dateDue[index] || "",
       extraCredit: extraCredit[index] === "Y",
-      points: score[index]?.match(/^0\.0.*/)
-        ? 0
+      points:
+        score[index]?.match(/^0\.0.*/) ?
+          0
         : parseFloat(score[index] ?? "") ||
           capitalize(score[index]?.toString() ?? ""),
       feedback: feedback[index] || "",
@@ -107,3 +107,14 @@ export default eventHandler(async (event) => {
 
   return data;
 });
+
+export interface AspenAssignment {
+  name: string;
+  category: string;
+  pointsPossible: number;
+  dateAssigned: string;
+  dateDue: string;
+  extraCredit: boolean;
+  points: string | number;
+  feedback: string;
+}

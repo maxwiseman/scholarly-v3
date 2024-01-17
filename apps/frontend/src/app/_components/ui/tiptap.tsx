@@ -110,14 +110,13 @@ function MenuBar(): React.ReactElement {
             type="single"
             value={
               // eslint-disable-next-line no-nested-ternary -- It's fine
-              editor.isActive("heading", { level: 1 })
-                ? "H1"
-                : // eslint-disable-next-line no-nested-ternary -- It's fine
-                  editor.isActive("heading", { level: 2 })
-                  ? "H2"
-                  : editor.isActive("heading", { level: 3 })
-                    ? "H3"
-                    : ""
+              editor.isActive("heading", { level: 1 }) ? "H1"
+                // eslint-disable-next-line no-nested-ternary -- It's fine
+              : editor.isActive("heading", { level: 2 }) ?
+                "H2"
+              : editor.isActive("heading", { level: 3 }) ?
+                "H3"
+              : ""
             }
             variant="outline"
           >

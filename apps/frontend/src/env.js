@@ -73,7 +73,7 @@
 //    * `SOME_VAR: z.string()` and `SOME_VAR=''` will throw an error.
 //    */
 //   emptyStringAsUndefined: true,
-  
+
 // });
 
 import { createEnv } from "@t3-oss/env-nextjs";
@@ -101,27 +101,27 @@ export const env = createEnv({
       .url()
       .refine(
         (str) => !str.includes("YOUR_SQLITE_URL_HERE"),
-        "You forgot to change the default URL"
+        "You forgot to change the default URL",
       ),
-    DATABASE_AUTH_TOKEN: z
-      .string(),
+    DATABASE_AUTH_TOKEN: z.string(),
+    BACKEND_URL: z.string().url(),
     NEXTAUTH_SECRET:
-      process.env.NODE_ENV === "production"
-        ? z.string()
-        : z.string().optional(),
+      process.env.NODE_ENV === "production" ?
+        z.string()
+      : z.string().optional(),
     NEXTAUTH_URL: z.preprocess(
       // This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
       // Since NextAuth.js automatically uses the VERCEL_URL if present.
       (str) => process.env.VERCEL_URL ?? str,
       // VERCEL_URL doesn't include `https` so it cant be validated as a URL
-      process.env.VERCEL ? z.string() : z.string().url()
+      process.env.VERCEL ? z.string() : z.string().url(),
     ),
     // Add ` on ID and SECRET if you want to make sure they're not empty
     DISCORD_CLIENT_ID: z.string(),
     DISCORD_CLIENT_SECRET: z.string(),
     GITHUB_CLIENT_ID: z.string(),
     GITHUB_CLIENT_SECRET: z.string(),
-    BROWSERLESS_API_KEY: z.string()
+    BROWSERLESS_API_KEY: z.string(),
   },
   /**
    * Specify your client-side environment variables schema here.
@@ -136,6 +136,7 @@ export const env = createEnv({
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
     DATABASE_AUTH_TOKEN: process.env.DATABASE_AUTH_TOKEN,
+    BACKEND_URL: process.env.BACKEND_URL,
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,

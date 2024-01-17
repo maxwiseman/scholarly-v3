@@ -37,21 +37,20 @@ const PasswordInput = React.forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         <div className="absolute right-0 top-1/2 mr-2 flex -translate-y-1/2 cursor-pointer items-center text-muted-foreground">
-          {showPassword ? (
+          {showPassword ?
             <IconEyeOff
               className="h-6 w-6 rounded-sm p-1 hover:bg-muted/75"
               onClick={() => {
                 setShowPassword(false);
               }}
             />
-          ) : (
-            <IconEye
+          : <IconEye
               className="h-6 w-6 rounded-sm p-1 hover:bg-muted/75"
               onClick={() => {
                 setShowPassword(true);
               }}
             />
-          )}
+          }
         </div>
       </div>
     );

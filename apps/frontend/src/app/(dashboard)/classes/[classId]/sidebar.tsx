@@ -19,9 +19,9 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
         className="justify-start"
         href={`/classes/${classId}/modules`}
         variant={
-          pathName.startsWith(`/classes/${classId}/modules`)
-            ? "secondary"
-            : "ghost"
+          pathName.startsWith(`/classes/${classId}/modules`) ? "secondary" : (
+            "ghost"
+          )
         }
       >
         Modules
@@ -30,9 +30,8 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
         className="justify-start"
         href={`/classes/${classId}/assignments`}
         variant={
-          pathName.startsWith(`/classes/${classId}/assignments`)
-            ? "secondary"
-            : "ghost"
+          pathName.startsWith(`/classes/${classId}/assignments`) ? "secondary"
+          : "ghost"
         }
       >
         Assignments
@@ -41,9 +40,9 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
         className="justify-start"
         href={`/classes/${classId}/grades`}
         variant={
-          pathName.startsWith(`/classes/${classId}/grades`)
-            ? "secondary"
-            : "ghost"
+          pathName.startsWith(`/classes/${classId}/grades`) ? "secondary" : (
+            "ghost"
+          )
         }
       >
         Grades
@@ -52,9 +51,9 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
         className="justify-start"
         href={`/classes/${classId}/quizzes`}
         variant={
-          pathName.startsWith(`/classes/${classId}/quizzes`)
-            ? "secondary"
-            : "ghost"
+          pathName.startsWith(`/classes/${classId}/quizzes`) ? "secondary" : (
+            "ghost"
+          )
         }
       >
         Quizzes
@@ -63,9 +62,8 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
         className="justify-start"
         href={`/classes/${classId}/discussions`}
         variant={
-          pathName.startsWith(`/classes/${classId}/discussions`)
-            ? "secondary"
-            : "ghost"
+          pathName.startsWith(`/classes/${classId}/discussions`) ? "secondary"
+          : "ghost"
         }
       >
         Discussions

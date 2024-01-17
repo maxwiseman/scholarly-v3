@@ -14,13 +14,13 @@ import { env } from "@/env";
 db.update(users);
 
 export type Settings = {
-  [K in typeof users extends SQLiteTableWithColumns<infer U>
-    ? keyof U["columns"]
-    : never]: typeof users extends SQLiteTableWithColumns<infer T>
-    ? T["columns"][K] extends SQLiteColumn<infer C>
-      ? C["data"]
-      : never
-    : never;
+  [K in typeof users extends SQLiteTableWithColumns<infer U> ?
+    keyof U["columns"]
+  : never]: typeof users extends SQLiteTableWithColumns<infer T> ?
+    T["columns"][K] extends SQLiteColumn<infer C> ?
+      C["data"]
+    : never
+  : never;
 };
 
 export async function getSettings(): Promise<
@@ -69,11 +69,10 @@ export async function updateSettings(settings: Partial<Settings>): Promise<{
       args: [],
       executablePath:
         // eslint-disable-next-line no-nested-ternary -- This isn't that confusing
-        process.platform === "win32"
-          ? "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
-          : process.platform === "linux"
-            ? "/usr/bin/google-chrome"
-            : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        process.platform === "win32" ?
+          "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+        : process.platform === "linux" ? "/usr/bin/google-chrome"
+        : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
     };
     let browser: Browser;
     if (process.env.VERCEL) {

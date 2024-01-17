@@ -36,12 +36,12 @@ export function UserButton(): React.ReactElement {
           className="rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         >
           <Avatar className="h-8 w-8">
-            {session.data.user.image ? (
+            {session.data.user.image ?
               <AvatarImage
                 alt="Profile picture"
                 src={session.data.user.image}
               />
-            ) : null}
+            : null}
             <AvatarFallback>
               <IconUser />
             </AvatarFallback>

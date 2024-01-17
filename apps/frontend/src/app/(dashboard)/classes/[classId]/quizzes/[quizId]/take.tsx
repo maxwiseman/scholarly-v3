@@ -40,15 +40,14 @@ export function Take({
 
   return (
     <>
-      {isActive ? (
+      {isActive ?
         <>
           <h1>Quiz</h1>
           {quizQuestions.data?.map((question) => {
             return JSON.stringify(question);
           })}
         </>
-      ) : (
-        <div className="flex justify-center">
+      : <div className="flex justify-center">
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button
@@ -69,7 +68,7 @@ export function Take({
                   Once you start a quiz, your teacher can see how long you take,
                   when you pause the quiz, and when you submit it.
                 </AlertDialogDescription>
-                {quiz.has_access_code ? (
+                {quiz.has_access_code ?
                   <Input
                     onChange={(e) => {
                       setAccessCode(e.target.value);
@@ -77,7 +76,7 @@ export function Take({
                     placeholder="Access code..."
                     value={accessCode}
                   />
-                ) : null}
+                : null}
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Please, no</AlertDialogCancel>
@@ -96,7 +95,7 @@ export function Take({
             </AlertDialogContent>
           </AlertDialog>
         </div>
-      )}
+      }
     </>
   );
 }

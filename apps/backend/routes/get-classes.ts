@@ -10,11 +10,10 @@ export default eventHandler(async (event) => {
     args: [],
     executablePath:
       // eslint-disable-next-line no-nested-ternary -- This isn't that confusing
-      process.platform === "win32"
-        ? "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
-        : process.platform === "linux"
-          ? "/usr/bin/google-chrome"
-          : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+      process.platform === "win32" ?
+        "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+      : process.platform === "linux" ? "/usr/bin/google-chrome"
+      : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
   };
   const browser = await puppeteer.launch(options);
 
@@ -109,3 +108,17 @@ export default eventHandler(async (event) => {
 
   return data;
 });
+
+export interface AspenClass {
+  id: string | undefined;
+  name: string;
+  schedule: string;
+  term: string;
+  teachers: string[];
+  teacherEmail: string;
+  termGrade: number;
+  absences: number;
+  tardies: number;
+  dismissals: number;
+}
+[];
