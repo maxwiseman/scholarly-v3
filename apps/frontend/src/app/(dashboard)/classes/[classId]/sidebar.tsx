@@ -19,9 +19,9 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
         className="justify-start"
         href={`/classes/${classId}/modules`}
         variant={
-          pathName.startsWith(`/classes/${classId}/modules`) ? "secondary" : (
-            "ghost"
-          )
+          pathName.startsWith(`/classes/${classId}/modules`)
+            ? "secondary"
+            : "ghost"
         }
       >
         Modules
@@ -30,8 +30,9 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
         className="justify-start"
         href={`/classes/${classId}/assignments`}
         variant={
-          pathName.startsWith(`/classes/${classId}/assignments`) ? "secondary"
-          : "ghost"
+          pathName.startsWith(`/classes/${classId}/assignments`)
+            ? "secondary"
+            : "ghost"
         }
       >
         Assignments
@@ -40,14 +41,14 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
         className="justify-start"
         href={`/classes/${classId}/grades`}
         variant={
-          pathName.startsWith(`/classes/${classId}/grades`) ? "secondary" : (
-            "ghost"
-          )
+          pathName.startsWith(`/classes/${classId}/grades`)
+            ? "secondary"
+            : "ghost"
         }
       >
         Grades
       </LinkButton>
-      <LinkButton
+      {/* <LinkButton
         className="justify-start"
         href={`/classes/${classId}/quizzes`}
         variant={
@@ -67,7 +68,7 @@ export function Sidebar({ classId }: { classId: string }): React.ReactNode {
         }
       >
         Discussions
-      </LinkButton>
+      </LinkButton> */}
     </div>
   );
 }
