@@ -1,0 +1,17 @@
+{
+  "name": "@scholarly/backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "prepare": "nitropack prepare",
+    "dev": "nitropack dev --port 3001",
+    "format": "prettier --write --experimental-ternaries . --ignore-path ../../.prettierignore",
+    "build": "nitropack build",
+    "preview": "node .output/server/index.mjs"
+  },
+  "dependencies": {
+    "nitropack": "latest",
+    "puppeteer-core": "^21.7.0"
+  }
+}

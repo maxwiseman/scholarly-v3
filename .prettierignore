@@ -4,6 +4,9 @@
 /node_modules
 /.pnp
 .pnp.js
+bun.lockb
+components.json
+.npmrc
 
 # testing
 /coverage
@@ -11,6 +14,7 @@
 # database
 /prisma/db.sqlite
 /prisma/db.sqlite-journal
+**/migrations/**
 
 # next.js
 /apps/frontend/.next/
