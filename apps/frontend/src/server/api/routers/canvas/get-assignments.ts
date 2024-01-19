@@ -16,7 +16,7 @@ export async function getAssignments(classId: string): Promise<Assignment[]> {
   });
 
   const data = await fetch(
-    `https://knoxschools.instructure.com/api/v1/courses/${classData?.canvasId}/assignments?per_page=50`,
+    `https://knoxschools.instructure.com/api/v1/courses/${classData?.canvasId}/assignments?per_page=200`,
     {
       headers: {
         Authorization: `Bearer ${user?.canvasApiKey}`,

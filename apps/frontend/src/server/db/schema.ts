@@ -94,7 +94,7 @@ export const verificationTokens = sqliteTable(
 export const classes = sqliteTable(
   "classes",
   {
-    id: text("id").notNull().primaryKey().unique(),
+    id: text("id").notNull().unique(),
     userId: text("userId", { length: 255 })
       .references(() => users.id, {
         onDelete: "cascade",
@@ -115,6 +115,9 @@ export const classes = sqliteTable(
   },
   (table) => {
     return {
+      compoundKey: primaryKey({
+        columns: [table.canvasId, table.aspenId, table.userId],
+      }),
       userIdx: index("userIdx").on(table.userId),
       aspenIdx: index("aspenIdx").on(table.aspenId),
       canvasIdx: index("canvasIdx").on(table.canvasId),

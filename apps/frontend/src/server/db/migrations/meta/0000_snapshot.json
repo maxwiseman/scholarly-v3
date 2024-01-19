@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "f6bfd976-dd3d-4005-b4f1-be83c18d6829",
+  "id": "5d54b27c-a17e-4634-aa9a-f2d78e082df3",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -127,56 +127,72 @@
           "name": "userId",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "classId": {
           "name": "classId",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "name": {
           "name": "name",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "pointsPossible": {
           "name": "pointsPossible",
           "type": "real",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "points": {
           "name": "points",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "extraCredit": {
+          "name": "extraCredit",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "category": {
+          "name": "category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
           "autoincrement": false
         },
         "feedback": {
           "name": "feedback",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
+          "notNull": true,
+          "autoincrement": false,
+          "default": "''"
         },
         "dateAssigned": {
           "name": "dateAssigned",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "dateDue": {
           "name": "dateDue",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         }
       },
@@ -185,6 +201,13 @@
           "name": "aspenAssignments_id_unique",
           "columns": [
             "id"
+          ],
+          "isUnique": true
+        },
+        "aspenAssignments_name_unique": {
+          "name": "aspenAssignments_name_unique",
+          "columns": [
+            "name"
           ],
           "isUnique": true
         },
@@ -233,7 +256,7 @@
         "id": {
           "name": "id",
           "type": "text",
-          "primaryKey": true,
+          "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
@@ -241,14 +264,14 @@
           "name": "userId",
           "type": "text(255)",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "name": {
           "name": "name",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "teachers": {
@@ -262,7 +285,7 @@
           "name": "gradeAverage",
           "type": "real",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "gradeCategories": {
@@ -270,6 +293,28 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false
+        },
+        "schedule": {
+          "name": "schedule",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "term": {
+          "name": "term",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'FY'"
+        },
+        "teacherEmail": {
+          "name": "teacherEmail",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
           "autoincrement": false
         },
         "aspenId": {
@@ -332,7 +377,16 @@
           "onUpdate": "cascade"
         }
       },
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "classes_canvasId_aspenId_userId_pk": {
+          "columns": [
+            "aspenId",
+            "canvasId",
+            "userId"
+          ],
+          "name": "classes_canvasId_aspenId_userId_pk"
+        }
+      },
       "uniqueConstraints": {}
     },
     "session": {

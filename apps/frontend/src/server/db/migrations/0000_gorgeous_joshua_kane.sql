@@ -15,27 +15,33 @@ CREATE TABLE `account` (
 --> statement-breakpoint
 CREATE TABLE `aspenAssignments` (
 	`id` text PRIMARY KEY NOT NULL,
-	`userId` text,
-	`classId` text,
-	`name` text,
-	`pointsPossible` real,
-	`points` text,
-	`feedback` text,
-	`dateAssigned` integer,
-	`dateDue` integer,
+	`userId` text NOT NULL,
+	`classId` text NOT NULL,
+	`name` text NOT NULL,
+	`pointsPossible` real NOT NULL,
+	`points` text NOT NULL,
+	`extraCredit` integer DEFAULT false NOT NULL,
+	`category` text NOT NULL,
+	`feedback` text DEFAULT '' NOT NULL,
+	`dateAssigned` integer NOT NULL,
+	`dateDue` integer NOT NULL,
 	FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON UPDATE cascade ON DELETE cascade,
 	FOREIGN KEY (`classId`) REFERENCES `classes`(`id`) ON UPDATE cascade ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE TABLE `classes` (
-	`id` text PRIMARY KEY NOT NULL,
-	`userId` text(255),
-	`name` text,
+	`id` text NOT NULL,
+	`userId` text(255) NOT NULL,
+	`name` text NOT NULL,
 	`teachers` text,
-	`gradeAverage` real,
+	`gradeAverage` real NOT NULL,
 	`gradeCategories` text,
+	`schedule` text,
+	`term` text DEFAULT 'FY',
+	`teacherEmail` text NOT NULL,
 	`aspenId` text,
 	`canvasId` text,
+	PRIMARY KEY(`aspenId`, `canvasId`, `userId`),
 	FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON UPDATE cascade ON DELETE cascade
 );
 --> statement-breakpoint
@@ -66,6 +72,7 @@ CREATE TABLE `verificationToken` (
 CREATE UNIQUE INDEX `account_userId_unique` ON `account` (`userId`);--> statement-breakpoint
 CREATE INDEX `userId_idx` ON `account` (`userId`);--> statement-breakpoint
 CREATE UNIQUE INDEX `aspenAssignments_id_unique` ON `aspenAssignments` (`id`);--> statement-breakpoint
+CREATE UNIQUE INDEX `aspenAssignments_name_unique` ON `aspenAssignments` (`name`);--> statement-breakpoint
 CREATE INDEX `userIdx` ON `aspenAssignments` (`userId`);--> statement-breakpoint
 CREATE UNIQUE INDEX `classes_id_unique` ON `classes` (`id`);--> statement-breakpoint
 CREATE INDEX `userIdx` ON `classes` (`userId`);--> statement-breakpoint

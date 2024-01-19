@@ -11,10 +11,14 @@
     "lint": "dotenv -v SKIP_ENV_VALIDATION=1 next lint",
     "start": "pnpm with-env next start",
     "typecheck": "tsc --noEmit",
-    "with-env": "dotenv -e ../../.env --"
+    "with-env": "dotenv -e ../../.env --",
+    "db:generate": "pnpm with-env drizzle-kit generate:sqlite",
+    "db:push": "pnpm with-env drizzle-kit push:sqlite",
+    "db:studio": "pnpm with-env drizzle-kit studio"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^0.3.6",
+    "@cyntler/react-doc-viewer": "^1.14.1",
     "@hookform/resolvers": "^3.3.2",
     "@libsql/client": "^0.4.0-pre.5",
     "@nextui-org/react": "^2.2.9",
