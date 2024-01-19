@@ -2,8 +2,13 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-// eslint-disable-next-line camelcase -- Nothing I can do about that really
-import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client";
+import {
+  httpLink,
+  loggerLink,
+  splitLink,
+  // eslint-disable-next-line camelcase -- Nothing I can do about that really
+  unstable_httpBatchStreamLink,
+} from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
 import { useState } from "react";
 import { getUrl, transformer } from "./shared";
@@ -26,15 +31,41 @@ export function TRPCReactProvider(props: {
             process.env.NODE_ENV === "development" ||
             (op.direction === "down" && op.result instanceof Error),
         }),
-        unstable_httpBatchStreamLink({
-          url: getUrl(),
-          headers() {
-            return {
-              cookie: props.cookies,
-              "x-trpc-source": "react",
-            };
+        splitLink({
+          condition(op) {
+            // check for context property `skipBatch`
+            return op.path.startsWith("aspen");
           },
+          // when condition is true, use normal request
+          true: httpLink({
+            url: getUrl(),
+            headers() {
+              return {
+                cookie: props.cookies,
+                "x-trpc-source": "react",
+              };
+            },
+          }),
+          // when condition is false, use batching
+          false: unstable_httpBatchStreamLink({
+            url: getUrl(),
+            headers() {
+              return {
+                cookie: props.cookies,
+                "x-trpc-source": "react",
+              };
+            },
+          }),
         }),
+        // unstable_httpBatchStreamLink({
+        //   url: getUrl(),
+        //   headers() {
+        //     return {
+        //       cookie: props.cookies,
+        //       "x-trpc-source": "react",
+        //     };
+        //   },
+        // }),
       ],
     }),
   );
