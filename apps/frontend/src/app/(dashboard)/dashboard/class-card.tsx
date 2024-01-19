@@ -69,10 +69,17 @@ export function ClassCard({
                 ) : null}
               </CardHeader>
               {/* <Separator className="my-2" /> */}
-              <CardContent className="pb-3 text-muted-foreground">
-                Content here <br />
-                Content here <br />
-                Content here <br />
+              <CardContent className="min-h-[84px] pb-3 text-muted-foreground">
+                <span className="line-clamp-1">
+                  {`${classData.term} - ${classData.schedule}`} <br />
+                </span>
+                <span className="line-clamp-1">
+                  {classData.teachers?.join(", ")}
+                  <br />
+                </span>
+                <span className="line-clamp-1">
+                  {classData.teacherEmail} <br />
+                </span>
               </CardContent>
             </Card>
           </Link>
