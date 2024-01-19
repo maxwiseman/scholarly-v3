@@ -1,5 +1,5 @@
 import React from "react";
-import { FilePreview } from "./client";
+import { Actions, FilePreview } from "./client";
 import { api } from "@/trpc/server";
 import { Separator } from "@/app/_components/ui/separator";
 
@@ -18,6 +18,7 @@ export default async function Page({
             <h1 className="mt-0 text-3xl font-bold">{fileData.display_name}</h1>
             <div>Size: {formatBytes(fileData.size)}</div>
           </div>
+          <Actions file={fileData} />
         </div>
         <Separator className="my-6" />
         <FilePreview url={fileData.previewUrl} />

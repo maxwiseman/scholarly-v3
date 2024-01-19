@@ -9,7 +9,7 @@ export async function getFile({
 }: {
   classId: string;
   fileId: string;
-}): Promise<File & { previewUrl: string }> {
+}): Promise<CanvasFile & { previewUrl: string }> {
   const session = await getServerAuthSession();
   const user = await db.query.users.findFirst({
     where: eq(users.id, session?.user.id || ""),
@@ -28,7 +28,7 @@ export async function getFile({
         Authorization: `Bearer ${user?.canvasApiKey}`,
       },
     },
-  ).then((res) => res.json() as Promise<File>);
+  ).then((res) => res.json() as Promise<CanvasFile>);
   const previewUrl = await fetch(
     `https://knoxschools.instructure.com/api/v1/files/${data.id}/public_url`,
     {
@@ -40,7 +40,7 @@ export async function getFile({
   return { ...data, previewUrl: previewUrl.public_url };
 }
 
-interface File {
+export interface CanvasFile {
   id: number;
   uuid: string;
   folder_id: number;
