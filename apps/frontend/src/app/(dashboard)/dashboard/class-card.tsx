@@ -71,14 +71,17 @@ export function ClassCard({
               {/* <Separator className="my-2" /> */}
               <CardContent className="min-h-[84px] pb-3 text-muted-foreground">
                 <span className="line-clamp-1">
-                  {`${classData.term} - ${classData.schedule}`} <br />
-                </span>
-                <span className="line-clamp-1">
                   {classData.teachers?.join(", ")}
                   <br />
                 </span>
                 <span className="line-clamp-1">
                   {classData.teacherEmail} <br />
+                </span>
+                <span className="line-clamp-1">
+                  {classData.term && classData.schedule
+                    ? `${classData.term} - ${classData.schedule}`
+                    : ""}{" "}
+                  <br />
                 </span>
               </CardContent>
             </Card>
