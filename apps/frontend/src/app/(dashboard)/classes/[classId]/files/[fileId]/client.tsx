@@ -1,16 +1,6 @@
 "use client";
-import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
+import GoogleDocsViewer from "react-google-docs-viewer";
 
-export function FilePreview({
-  documents,
-}: {
-  documents: { uri: string }[];
-}): React.ReactElement {
-  return (
-    <DocViewer
-      documents={documents}
-      initialActiveDocument={documents[0]}
-      pluginRenderers={DocViewerRenderers}
-    />
-  );
+export function FilePreview({ url }: { url: string }): React.ReactElement {
+  return <GoogleDocsViewer fileUrl={url} height="780px" width="100%" />;
 }

@@ -20,7 +20,7 @@ export default async function Page({
           </div>
         </div>
         <Separator className="my-6" />
-        <FilePreview documents={[{ uri: fileData.url }]} />
+        <FilePreview url={fileData.previewUrl} />
       </div>
     </div>
   );
