@@ -11,10 +11,11 @@ export async function getAssignments(id: string) {
   const aspenIdData = await db.query.classes.findFirst({
     where: and(eq(classes.id, id), eq(classes.userId, session?.user.id || "")),
   });
+  if (!aspenIdData?.aspenId) return [];
   const aspenCredentials = await db.query.users.findFirst({
     where: eq(users.id, session?.user.id || ""),
   });
-  const aspenId = aspenIdData?.aspenId || "";
+  const aspenId = aspenIdData.aspenId || "";
 
   const data = await fetch(`${env.BACKEND_URL}/get-assignments?id=${aspenId}`, {
     headers: {

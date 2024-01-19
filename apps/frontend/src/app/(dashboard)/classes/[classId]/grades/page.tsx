@@ -150,7 +150,7 @@ export default function Home({
       </Table>
       <Separator className="my-8" />
 
-      {classData.data && classData.isFetched ?
+      {classData.data && classData.isFetched ? (
         <DataTable
           columns={columns}
           data={assignmentAspenData.data || assignmentData.data || []}
@@ -161,7 +161,7 @@ export default function Home({
           }}
           searchKey="Name"
         />
-      : null}
+      ) : null}
       {!classData.isFetched && (
         <p className="text-muted-foreground">Loading...</p>
       )}
