@@ -18,7 +18,7 @@ export async function getModules(
   });
 
   const data = await fetch(
-    `https://knoxschools.instructure.com/api/v1/courses/${classData?.canvasId}/modules?include=items?per_page=50`,
+    `https://knoxschools.instructure.com/api/v1/courses/${classData?.canvasId}/modules?include=items&per_page=50`,
     {
       headers: {
         Authorization: `Bearer ${user?.canvasApiKey}`,
