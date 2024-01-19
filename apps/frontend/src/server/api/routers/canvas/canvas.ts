@@ -9,6 +9,7 @@ import { createQuizSubmission } from "./create-quiz-submission";
 import { getQuizSubmissions } from "./get-quiz-submissions";
 import { getQuizQuestions } from "./get-quiz-questions";
 import { submitAssignment } from "./submit-assignment";
+import { getFile } from "./get-file";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
 export const canvasRouter = createTRPCRouter({
@@ -27,6 +28,11 @@ export const canvasRouter = createTRPCRouter({
     .input(z.object({ classId: z.string(), assignmentId: z.string() }))
     .query(async ({ input }) => {
       return await getAssignment(input);
+    }),
+  getFile: protectedProcedure
+    .input(z.object({ classId: z.string(), fileId: z.string() }))
+    .query(async ({ input }) => {
+      return await getFile(input);
     }),
   getPage: protectedProcedure
     .input(z.object({ classId: z.string(), pageId: z.string() }))
