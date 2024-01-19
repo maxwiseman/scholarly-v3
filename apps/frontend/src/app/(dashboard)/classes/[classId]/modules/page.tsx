@@ -83,7 +83,7 @@ export default function Page({
             <AccordionItem className="py-2" key={module.id} value={module.name}>
               <AccordionTrigger>{module.name}</AccordionTrigger>
               <AccordionContent className="flex flex-col gap-1">
-                {module.items.map((item) => {
+                {module.items?.map((item) => {
                   if (
                     searchString.length > 0 &&
                     !item.title
@@ -97,12 +97,12 @@ export default function Page({
                       <LinkButton
                         className="flex flex-row justify-start gap-2 !px-2"
                         href={
-                          item.type === "ExternalUrl" ?
-                            item.external_url || ""
-                          : `/classes/${params.classId}/${item.url?.replace(
-                              /https:\/\/knoxschools\.instructure\.com\/api\/v1\/courses\/[^/]*\//,
-                              "",
-                            )}`
+                          item.type === "ExternalUrl"
+                            ? item.external_url || ""
+                            : `/classes/${params.classId}/${item.url?.replace(
+                                /https:\/\/knoxschools\.instructure\.com\/api\/v1\/courses\/[^/]*\//,
+                                "",
+                              )}`
                         }
                         key={item.id}
                         style={{ marginLeft: `${item.indent * 1.5}rem` }}

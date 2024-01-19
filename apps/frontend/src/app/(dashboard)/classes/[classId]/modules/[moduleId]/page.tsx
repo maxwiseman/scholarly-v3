@@ -85,7 +85,7 @@ export default function Page({
             <AccordionItem key={module.id} value={module.id.toString()}>
               <AccordionTrigger>{module.name}</AccordionTrigger>
               <AccordionContent className="flex flex-col gap-1">
-                {module.items.map((item) => {
+                {module.items?.map((item) => {
                   if (
                     searchString.length > 0 &&
                     !item.title

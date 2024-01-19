@@ -3,7 +3,9 @@ import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db";
 import { classes, users } from "@/server/db/schema";
 
-export async function getModules(classId: string): Promise<Module[]> {
+export async function getModules(
+  classId: string,
+): Promise<Module[] | undefined> {
   const session = await getServerAuthSession();
   const user = await db.query.users.findFirst({
     where: eq(users.id, session?.user.id || ""),
@@ -11,7 +13,7 @@ export async function getModules(classId: string): Promise<Module[]> {
   const classData = await db.query.classes.findFirst({
     where: and(
       eq(classes.id, classId),
-      eq(classes.userId, session?.user.id || "")
+      eq(classes.userId, session?.user.id || ""),
     ),
   });
 
@@ -21,8 +23,8 @@ export async function getModules(classId: string): Promise<Module[]> {
       headers: {
         Authorization: `Bearer ${user?.canvasApiKey}`,
       },
-    }
-  ).then(res => res.json() as Promise<Module[]>);
+    },
+  ).then((res) => res.json() as Promise<Module[] | undefined>);
   return data;
 }
 interface Module {
@@ -37,7 +39,7 @@ interface Module {
   completed_at: string;
   items_count: number;
   items_url: string;
-  items: Item[];
+  items?: Item[];
 }
 interface Item {
   id: number;
