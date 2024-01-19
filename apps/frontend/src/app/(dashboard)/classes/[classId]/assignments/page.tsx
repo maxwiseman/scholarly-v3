@@ -12,7 +12,7 @@ export default function Page({
   params: { classId: string };
 }): React.ReactElement {
   const assignmentData = api.canvas.getAssignments.useQuery(
-    params.classId,
+    { classId: params.classId },
     queryOpts,
   );
   const [searchString, setSearchString] = useState("");

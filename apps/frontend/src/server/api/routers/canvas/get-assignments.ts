@@ -3,9 +3,20 @@ import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db";
 import { classes, users } from "@/server/db/schema";
 
-export async function getAssignments(
-  classId: string,
-): Promise<Assignment[] | undefined> {
+export async function getAssignments({
+  classId,
+  bucket,
+}: {
+  classId: string;
+  bucket?:
+    | "past"
+    | "overdue"
+    | "undated"
+    | "ungraded"
+    | "unsubmitted"
+    | "upcoming"
+    | "future";
+}): Promise<Assignment[] | undefined> {
   const session = await getServerAuthSession();
   const user = await db.query.users.findFirst({
     where: eq(users.id, session?.user.id || ""),
@@ -18,7 +29,7 @@ export async function getAssignments(
   });
 
   const data = await fetch(
-    `https://knoxschools.instructure.com/api/v1/courses/${classData?.canvasId}/assignments?per_page=200`,
+    `https://knoxschools.instructure.com/api/v1/courses/${classData?.canvasId}/assignments?per_page=200${bucket ? `&bucket=${bucket}` : ""}`,
     {
       headers: {
         Authorization: `Bearer ${user?.canvasApiKey}`,

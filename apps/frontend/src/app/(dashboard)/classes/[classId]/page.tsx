@@ -26,6 +26,11 @@ export default function Page({
     queryOpts,
   );
 
+  const assignmentCanvasData = api.canvas.getAssignments.useQuery(
+    { classId: params.classId, bucket: "upcoming" },
+    queryOpts,
+  );
+
   if (!assignmentData.isFetched) {
     return <main className="text-muted-foreground">Loading...</main>;
   }
@@ -67,19 +72,9 @@ export default function Page({
         </CardHeader>
         <CardContent>
           <ul>
-            {assignmentAspenData.data?.map((assignment) => {
-              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- its ok
-              if (assignment.dateDue && assignment.dateDue > new Date()) {
-                return <li key={assignment.name}>{assignment.name}</li>;
-              }
-              return null;
-            }) ||
-              assignmentData.data?.map((assignment) => {
-                if (assignment.dateDue && assignment.dateDue > new Date()) {
-                  return <li key={assignment.name}>{assignment.name}</li>;
-                }
-                return null;
-              })}
+            {assignmentCanvasData.data?.map((assignment) => {
+              return <li key={assignment.id}>{assignment.name}</li>;
+            })}
           </ul>
         </CardContent>
       </Card>

@@ -11,7 +11,7 @@ export function ClassInfo({ classId }: { classId: string }): React.ReactNode {
     return singleClass.id === classId;
   });
 
-  api.canvas.getAssignments.useQuery(classId, queryOpts);
+  api.canvas.getAssignments.useQuery({ classId }, queryOpts);
   api.canvas.getModules.useQuery(classId, queryOpts);
 
   if (!classFetcher.isFetched)

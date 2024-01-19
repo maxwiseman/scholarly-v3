@@ -20,7 +20,22 @@ export const canvasRouter = createTRPCRouter({
     return await getModules(input);
   }),
   getAssignments: protectedProcedure
-    .input(z.string())
+    .input(
+      z.object({
+        classId: z.string(),
+        bucket: z
+          .enum([
+            "past",
+            "overdue",
+            "undated",
+            "ungraded",
+            "unsubmitted",
+            "upcoming",
+            "future",
+          ])
+          .optional(),
+      }),
+    )
     .query(async ({ input }) => {
       return await getAssignments(input);
     }),
