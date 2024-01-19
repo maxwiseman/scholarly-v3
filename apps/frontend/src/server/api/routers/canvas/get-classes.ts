@@ -10,13 +10,13 @@ export async function getClasses(): Promise<Course[]> {
   });
 
   const data = await fetch(
-    "https://knoxschools.instructure.com/api/v1/courses?enrollment_state=active",
+    "https://knoxschools.instructure.com/api/v1/courses?enrollment_state=active&per_page=50",
     {
       headers: {
         Authorization: `Bearer ${user?.canvasApiKey}`,
       },
-    },
-  ).then((res) => res.json() as Promise<Course[]>);
+    }
+  ).then(res => res.json() as Promise<Course[]>);
   return data;
 }
 

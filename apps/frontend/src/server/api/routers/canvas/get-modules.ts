@@ -11,18 +11,18 @@ export async function getModules(classId: string): Promise<Module[]> {
   const classData = await db.query.classes.findFirst({
     where: and(
       eq(classes.id, classId),
-      eq(classes.userId, session?.user.id || ""),
+      eq(classes.userId, session?.user.id || "")
     ),
   });
 
   const data = await fetch(
-    `https://knoxschools.instructure.com/api/v1/courses/${classData?.canvasId}/modules?include=items`,
+    `https://knoxschools.instructure.com/api/v1/courses/${classData?.canvasId}/modules?include=items?per_page=50`,
     {
       headers: {
         Authorization: `Bearer ${user?.canvasApiKey}`,
       },
-    },
-  ).then((res) => res.json() as Promise<Module[]>);
+    }
+  ).then(res => res.json() as Promise<Module[]>);
   return data;
 }
 interface Module {
