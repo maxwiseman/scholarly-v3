@@ -105,7 +105,7 @@ export const classes = sqliteTable(
     teachers: text("teachers", { mode: "json" }).$type<string[]>(),
     gradeAverage: real("gradeAverage").notNull(),
     gradeCategories: text("gradeCategories", { mode: "json" }).$type<
-      { name: string; weight: number; value: number }[]
+      { name: string; weight: number; value: number | null }[]
     >(),
     schedule: text("schedule"),
     term: text("term").default("FY"),

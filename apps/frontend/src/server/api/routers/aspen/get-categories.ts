@@ -20,7 +20,15 @@ export async function getCategories(id: string) {
         `${aspenCredentials?.aspenUsername}:${aspenCredentials?.aspenPassword}`,
       )}`,
     },
-  }).then((res) => res.json() as Promise<AspenCategory[]>);
+  }).then((res) => res.json() as Promise<AspenCategory>);
+
+  await db
+    .update(classes)
+    .set({
+      gradeCategories: data.categories,
+      gradeAverage: data.average,
+    })
+    .where(eq(classes.id, id));
 
   return data;
 }
@@ -30,6 +38,6 @@ export interface AspenCategory {
   categories: {
     name: string;
     weight: number;
-    value: number;
+    value: number | null;
   }[];
 }

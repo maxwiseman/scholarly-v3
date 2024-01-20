@@ -99,7 +99,7 @@ export default eventHandler(async (event) => {
       term: term[index],
       teachers: formattedTeachers[index],
       teacherEmail: teacherEmails[index],
-      termGrade: parseInt(termGrades[index] ?? "") || 100,
+      termGrade: parseFloat(termGrades[index] ?? "") || 100,
       absences: parseInt(absences[index] ?? ""),
       tardies: parseInt(tardies[index] ?? ""),
       dismissals: parseInt(dismissals[index] ?? ""),

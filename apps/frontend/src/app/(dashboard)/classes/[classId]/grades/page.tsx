@@ -41,6 +41,11 @@ export default function Home({
     queryOpts,
   );
 
+  const categoryData = api.aspen.getCategories.useQuery(
+    { id: params.classId },
+    queryOpts,
+  );
+
   const columns: ColumnDef<{
     name: string | null;
     pointsPossible: number | null;
@@ -118,31 +123,41 @@ export default function Home({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {classData.data
-            ?.filter((singleClass) => {
-              return singleClass.id === params.classId;
-            })[0]
-            ?.gradeCategories?.map((category) => {
-              return (
-                <TableRow key={category.name}>
-                  <TableCell>{category.name}</TableCell>
-                  <TableCell>{category.weight * 100}%</TableCell>
-                  <TableCell>
-                    {isNaN(category.value) ? "" : `${category.value}%`}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+          {categoryData.data?.categories.map((category) => {
+            return (
+              <TableRow key={category.name}>
+                <TableCell>{category.name}</TableCell>
+                <TableCell>${category.weight * 100}%</TableCell>
+                <TableCell>
+                  {category.value ? `${category.value}%` : ""}
+                </TableCell>
+              </TableRow>
+            );
+          }) ||
+            classData.data
+              ?.filter((singleClass) => {
+                return singleClass.id === params.classId;
+              })[0]
+              ?.gradeCategories?.map((category) => {
+                return (
+                  <TableRow key={category.name}>
+                    <TableCell>{category.name}</TableCell>
+                    <TableCell>{category.weight * 100}%</TableCell>
+                    <TableCell>
+                      {category.value ? `${category.value}%` : ""}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
         </TableBody>
         <TableFooter>
           <TableRow>
             <TableCell colSpan={2}>Gradebook Average</TableCell>
             <TableCell>
-              {
+              {categoryData.data?.average ||
                 classData.data?.filter((singleClass) => {
                   return singleClass.id === params.classId;
-                })[0]?.gradeAverage
-              }
+                })[0]?.gradeAverage}
               %
             </TableCell>
           </TableRow>
