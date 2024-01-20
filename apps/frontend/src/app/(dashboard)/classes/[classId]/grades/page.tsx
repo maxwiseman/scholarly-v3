@@ -127,7 +127,7 @@ export default function Home({
             return (
               <TableRow key={category.name}>
                 <TableCell>{category.name}</TableCell>
-                <TableCell>${category.weight * 100}%</TableCell>
+                <TableCell>{category.weight * 100}%</TableCell>
                 <TableCell>
                   {category.value ? `${category.value}%` : ""}
                 </TableCell>
