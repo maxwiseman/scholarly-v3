@@ -11,7 +11,7 @@ export async function login(
   await page.type("#password", credentials.password);
   await page.click("#logonButton");
   try {
-    await page.waitForSelector(".navTab", { timeout: 10000 });
+    await page.waitForSelector(".navTab", { timeout: 2000 });
   } catch {
     try {
       await page.waitForSelector(".errorMessageH1", { timeout: 500 });

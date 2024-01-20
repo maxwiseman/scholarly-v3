@@ -42,7 +42,7 @@ export function StepOne({
     },
   });
   const [loading, setLoading] = useState(false);
-  const updateSettings = api.user.updateSettings.useMutation({});
+  const updateSettings = api.user.updateSettings.useMutation();
 
   useEffect(() => {
     if (!updateSettings.isLoading) {

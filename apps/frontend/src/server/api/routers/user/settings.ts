@@ -7,6 +7,7 @@ import { type Course } from "../canvas/get-classes";
 import { getServerAuthSession } from "@/server/auth";
 import { db } from "@/server/db";
 import { users } from "@/server/db/schema";
+import { api } from "@/trpc/server";
 
 db.update(users);
 
@@ -60,6 +61,16 @@ export async function updateSettings(settings: Partial<Settings>): Promise<{
         >,
     );
     if (!Array.isArray(res)) errors.canvasApiKey = true;
+  }
+  if (settings.aspenUsername || settings.aspenPassword) {
+    const aspenVerification = await api.aspen.verifyCredentials.query({
+      username: settings.aspenUsername,
+      password: settings.aspenPassword,
+    });
+    if (!aspenVerification.valid) {
+      errors.aspenUsername = true;
+      errors.aspenPassword = true;
+    }
   }
   return errors;
 }
