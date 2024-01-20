@@ -13,7 +13,7 @@ export interface CourseData {
     | {
         name: string;
         weight: number;
-        value: number;
+        value: number | null;
       }[]
     | null;
   schedule: string | null;
