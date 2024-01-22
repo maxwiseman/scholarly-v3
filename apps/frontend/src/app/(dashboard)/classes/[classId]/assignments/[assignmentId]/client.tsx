@@ -172,13 +172,17 @@ function UrlSubmission({
         <Button
           onClick={() => {
             toast.promise(
-              submitAssignment.mutateAsync({
-                classId: props.classId,
-                assignmentId: props.assignment.id.toString(),
-                body: url,
-                type: "online_url",
-              }),
+              async () => {
+                await submitAssignment.mutateAsync({
+                  classId: props.classId,
+                  assignmentId: props.assignment.id.toString(),
+                  body: url,
+                  type: "online_url",
+                });
+                setUrl("");
+              },
               {
+                loading: "Submitting...",
                 success: "Submitted!",
                 error: "Failed to submit!",
               },
@@ -219,13 +223,17 @@ function TextSubmission({
             <Button
               onClick={() => {
                 toast.promise(
-                  submitAssignment.mutateAsync({
-                    classId: props.classId,
-                    assignmentId: props.assignment.id.toString(),
-                    body: content,
-                    type: "online_text_entry",
-                  }),
+                  async () => {
+                    await submitAssignment.mutateAsync({
+                      classId: props.classId,
+                      assignmentId: props.assignment.id.toString(),
+                      body: content,
+                      type: "online_text_entry",
+                    });
+                    setContent("");
+                  },
                   {
+                    loading: "Submitting...",
                     success: "Submitted!",
                     error: "Failed to submit!",
                   },
