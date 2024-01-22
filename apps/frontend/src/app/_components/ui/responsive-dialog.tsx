@@ -58,7 +58,8 @@ export function ResponsiveDialogTrigger(
 }
 
 export function ResponsiveDialogContent(
-  props: React.ComponentProps<typeof DrawerContent>,
+  props: React.ComponentProps<typeof DrawerContent> &
+    React.ComponentProps<typeof DialogContent>,
 ): React.ReactElement {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   if (isDesktop) return <DialogContent {...props} />;
