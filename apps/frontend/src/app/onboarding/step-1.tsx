@@ -4,6 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { IconPlus } from "@tabler/icons-react";
 import {
   Form,
   FormControl,
@@ -16,15 +18,25 @@ import {
 import { Input, PasswordInput } from "../_components/ui/input";
 import { Button } from "../_components/ui/button";
 import { Separator } from "../_components/ui/separator";
+import {
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+  ResponsiveDialogTrigger,
+} from "../_components/ui/responsive-dialog";
 import { api } from "@/trpc/react";
 
 const formSchema = z.object({
   canvasApiKey: z.string().length(69, {
-    message: "API keys should by 69 characters (nice).",
+    message: "Tokens should be 69 characters (nice).",
   }),
-  aspenUsername: z.string().min(7, {
-    message: "Username should be 7 characters",
-  }),
+  aspenUsername: z
+    .string()
+    .min(7, {
+      message: "Username should be 7-8 characters.",
+    })
+    .max(8, { message: "Username should be 7-8 characters." }),
   aspenPassword: z.string().min(2, {
     message: "Password must be at least 2 characters.",
   }),
@@ -96,22 +108,54 @@ export function StepOne({
             updateSettings.mutate(input);
           })}
         >
-          <FormField
-            control={form.control}
-            name="canvasApiKey"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Canvas API Key</FormLabel>
-                <FormControl>
-                  <PasswordInput placeholder="0910392403" {...field} />
-                </FormControl>
-                <FormDescription>
-                  You can generate this in your Canvas settings
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <ResponsiveDialog>
+            <FormField
+              control={form.control}
+              name="canvasApiKey"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Canvas Access Token</FormLabel>
+                  <FormControl>
+                    <PasswordInput placeholder="0910392403" {...field} />
+                  </FormControl>
+                  <ResponsiveDialogTrigger>
+                    <FormDescription className="w-max cursor-pointer">
+                      Click here for instructions on how to get your access
+                      token
+                    </FormDescription>
+                  </ResponsiveDialogTrigger>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <ResponsiveDialogContent>
+              <ResponsiveDialogHeader>
+                <ResponsiveDialogTitle>
+                  Canvas Access Token Instructions
+                </ResponsiveDialogTitle>
+              </ResponsiveDialogHeader>
+              <ol>
+                <li>
+                  1. Head to{" "}
+                  <Link href="https://knoxschools.instructure.com/login/saml">
+                    Canvas
+                  </Link>{" "}
+                  and log in
+                </li>
+                <li>2. Click your profile picture in the sidebar</li>
+                <li>
+                  3. Click <span style={LinkStyle}>Settings</span>
+                </li>
+                <li>
+                  4. Click{" "}
+                  <span style={ButtonStyle}>
+                    <IconPlus />
+                    New Access Token
+                  </span>
+                </li>
+              </ol>
+            </ResponsiveDialogContent>
+          </ResponsiveDialog>
           <FormField
             control={form.control}
             name="aspenUsername"
@@ -157,3 +201,66 @@ export function StepOne({
     </div>
   );
 }
+
+const LinkStyle = {
+  BoxSizing: "border-box",
+  fontFamily:
+    'LatoWeb, "Lato Extended", Lato, "Helvetica Neue", Helvetica, Arial, sans-serif',
+  fontWeight: "400",
+  transition: "outline-color 0.2s ease 0s",
+  verticalAlign: "baseline",
+  outline: "transparent solid 0.125rem",
+  borderRadius: "0.125rem",
+  outlineOffset: "0.25rem",
+  cursor: "pointer",
+  color: "rgb(73, 128, 230)",
+  textDecoration: "none",
+};
+
+const ButtonStyle: {
+  background: "#33599f";
+  color: "#ffffff";
+  border: "1px solid";
+  borderColor: "#2C4C88";
+  borderRadius: "3px";
+  transition: "background-color .2s ease-in-out";
+  display: "inline-flex";
+  alignItems: "center";
+  justifyContent: "center";
+  gap: "0.5rem";
+  position: "relative";
+  padding: "8px 14px";
+  marginBottom: "0";
+  fontSize: "1rem";
+  lineHeight: "20px";
+  textAlign: "center";
+  verticalAlign: "middle";
+  cursor: "pointer";
+  textDecoration: "none";
+  overflow: "hidden";
+  textShadow: "none";
+  userSelect: "none";
+} = {
+  background: "#33599f",
+  color: "#ffffff",
+  border: "1px solid",
+  borderColor: "#2C4C88",
+  borderRadius: "3px",
+  transition: "background-color .2s ease-in-out",
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "0.5rem",
+  position: "relative",
+  padding: "8px 14px",
+  marginBottom: "0",
+  fontSize: "1rem",
+  lineHeight: "20px",
+  textAlign: "center",
+  verticalAlign: "middle",
+  cursor: "pointer",
+  textDecoration: "none",
+  overflow: "hidden",
+  textShadow: "none",
+  userSelect: "none",
+};
