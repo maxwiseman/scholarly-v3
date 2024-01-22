@@ -1,14 +1,15 @@
-import * as React from "react";
+import { useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
+import { DialogClose } from "@radix-ui/react-dialog";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "./dialog";
-import { Button } from "./button";
 import {
   Drawer,
   DrawerClose,
@@ -19,72 +20,86 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "./drawer";
-import { Label } from "./label";
-import { Input } from "./input";
-import { cn } from "@/lib/utils";
 
-export function DrawerDialogDemo(): React.ReactElement {
-  const [open, setOpen] = React.useState(false);
+export function ResponsiveDialog(
+  props: React.ComponentProps<typeof Drawer> &
+    React.ComponentProps<typeof Dialog>,
+): React.ReactElement {
+  const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
-
-  if (isDesktop) {
+  if (isDesktop)
     return (
-      <Dialog onOpenChange={setOpen} open={open}>
-        <DialogTrigger asChild>
-          <Button variant="outline">Edit Profile</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>
-              Make changes to your profile here. Click save when you&lsquo;re
-              done.
-            </DialogDescription>
-          </DialogHeader>
-          <ProfileForm />
-        </DialogContent>
-      </Dialog>
+      <Dialog
+        onOpenChange={(val) => {
+          setOpen(val);
+        }}
+        open={open}
+        {...props}
+      />
     );
-  }
-
   return (
-    <Drawer onOpenChange={setOpen} open={open}>
-      <DrawerTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader className="text-left">
-          <DrawerTitle>Edit profile</DrawerTitle>
-          <DrawerDescription>
-            Make changes to your profile here. Click save when you&lsquo;re
-            done.
-          </DrawerDescription>
-        </DrawerHeader>
-        <ProfileForm className="px-4" />
-        <DrawerFooter className="pt-2">
-          <DrawerClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+    <Drawer
+      onOpenChange={(val) => {
+        setOpen(val);
+      }}
+      open={open}
+      shouldScaleBackground
+      {...props}
+    />
   );
 }
 
-function ProfileForm({
-  className,
-}: React.ComponentProps<"form">): React.ReactElement {
-  return (
-    <form className={cn("grid items-start gap-4", className)}>
-      <div className="grid gap-2">
-        <Label htmlFor="email">Email</Label>
-        <Input defaultValue="shadcn@example.com" id="email" type="email" />
-      </div>
-      <div className="grid gap-2">
-        <Label htmlFor="username">Username</Label>
-        <Input defaultValue="@shadcn" id="username" />
-      </div>
-      <Button type="submit">Save changes</Button>
-    </form>
-  );
+export function ResponsiveDialogTrigger(
+  props: React.ComponentProps<typeof DrawerTrigger>,
+): React.ReactElement {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  if (isDesktop) return <DialogTrigger {...props} />;
+  return <DrawerTrigger {...props} />;
+}
+
+export function ResponsiveDialogContent(
+  props: React.ComponentProps<typeof DrawerContent>,
+): React.ReactElement {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  if (isDesktop) return <DialogContent {...props} />;
+  return <DrawerContent className="min-h-[50vh] px-8" {...props} />;
+}
+
+export function ResponsiveDialogHeader(
+  props: React.ComponentProps<typeof DrawerHeader>,
+): React.ReactElement {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  if (isDesktop) return <DialogHeader {...props} />;
+  return <DrawerHeader className="px-0" {...props} />;
+}
+
+export function ResponsiveDialogTitle(
+  props: React.ComponentProps<typeof DrawerTitle>,
+): React.ReactElement {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  if (isDesktop) return <DialogTitle {...props} />;
+  return <DrawerTitle {...props} />;
+}
+
+export function ResponsiveDialogDescription(
+  props: React.ComponentProps<typeof DrawerDescription>,
+): React.ReactElement {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  if (isDesktop) return <DialogDescription {...props} />;
+  return <DrawerDescription {...props} />;
+}
+
+export function ResponsiveDialogClose(
+  props: React.ComponentProps<typeof DrawerClose>,
+): React.ReactElement {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  if (isDesktop) return <DialogClose {...props} />;
+  return <DrawerClose {...props} />;
+}
+export function ResponsiveDialogFooter(
+  props: React.ComponentProps<typeof DrawerFooter>,
+): React.ReactElement {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  if (isDesktop) return <DialogFooter {...props} />;
+  return <DrawerFooter {...props} />;
 }
