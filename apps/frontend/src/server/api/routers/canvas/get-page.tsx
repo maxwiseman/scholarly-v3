@@ -29,9 +29,11 @@ export async function getPage({
       },
     },
   ).then((res) => res.json() as Promise<Page>);
-  console.log("data:", data);
-  console.log("input classid:", classId);
-  console.log("input pageid:", pageId);
+  console.log("with:", `Bearer ${user?.canvasApiKey}`);
+  console.log(
+    "fetching:",
+    `https://knoxschools.instructure.com/api/v1/courses/${classData?.canvasId}/pages/${pageId}`,
+  );
   return data;
 }
 export interface Page {
