@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 import { UserButton } from "../_components/ui/user-button";
 import { Search } from "./client";
 import { cn } from "@/lib/utils";
@@ -12,9 +13,11 @@ export function Navbar(): React.ReactElement {
   const router = useRouter();
   const session = useSession();
 
-  if (session.status === "unauthenticated") {
-    router.push("/");
-  }
+  useEffect(() => {
+    if (session.status === "unauthenticated") {
+      router.replace("/");
+    }
+  }, [router, session.status]);
 
   return (
     <header className="sticky top-0 z-40 flex h-14 items-center justify-center border-b border-border bg-background/95 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-background/75">

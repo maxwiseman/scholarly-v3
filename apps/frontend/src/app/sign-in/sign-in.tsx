@@ -3,6 +3,7 @@
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { Button } from "../_components/ui/button";
 
 export function SignIn(): React.ReactElement {
@@ -11,9 +12,11 @@ export function SignIn(): React.ReactElement {
   const session = useSession();
   const router = useRouter();
 
-  if (session.status === "authenticated") {
-    router.replace("/dashboard");
-  }
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      router.replace("/dashboard");
+    }
+  }, [router, session.status]);
 
   return (
     <div className="overflow-scroll">

@@ -2,15 +2,18 @@
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import HomePage from "./home/page";
 
 export default function Page(): React.ReactElement {
   const session = useSession();
   const router = useRouter();
 
-  if (session.status === "authenticated") {
-    router.replace("/dashboard");
-  }
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      router.replace("/dashboard");
+    }
+  }, [router, session.status]);
 
   return <HomePage />;
 
