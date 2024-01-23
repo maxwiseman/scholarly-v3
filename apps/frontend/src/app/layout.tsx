@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 
-import { Inter } from "next/font/google";
+// import { Inter } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
 import { cookies } from "next/headers";
 import { Toaster } from "sonner";
 import { ServerSessionProvider } from "./_components/server-session-provider";
@@ -9,10 +10,10 @@ import { NextUIClientProvider } from "./_components/next-ui-provider";
 import { getServerAuthSession } from "@/server/auth";
 import { TRPCReactProvider } from "@/trpc/react";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
+// const inter = Inter({
+//   subsets: ["latin"],
+//   variable: "--font-sans",
+// });
 
 export const metadata = {
   title: "Scholarly",
@@ -31,7 +32,7 @@ export default async function RootLayout({
     <html lang="en">
       <head />
       <body
-        className={`min-h-screen bg-background font-sans antialiased ${inter.variable}`}
+        className={`min-h-screen bg-background font-sans antialiased ${GeistSans.className}`}
       >
         <ThemeProvider
           attribute="class"

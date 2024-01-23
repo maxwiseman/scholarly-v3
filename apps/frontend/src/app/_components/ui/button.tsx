@@ -54,9 +54,8 @@ export interface LinkButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const StyledIcon =
-      props.icon ?
-        React.cloneElement(props.icon, { className: "h-4 w-4 mr-2" })
+    const StyledIcon = props.icon
+      ? React.cloneElement(props.icon, { className: "h-4 w-4 mr-2" })
       : null;
     const Comp = asChild ? Slot : "button";
     return (
@@ -74,7 +73,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         >
           <IconLoader className={cn("h-4 w-4 animate-spin")} />
         </div>
-        {props.icon ?
+        {props.icon ? (
           <div
             className={cn(
               "overflow-hidden transition-[width]",
@@ -83,7 +82,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           >
             {!props.loading && StyledIcon}
           </div>
-        : null}
+        ) : null}
         {props.children}
       </Comp>
     );
@@ -94,9 +93,8 @@ Button.displayName = "Button";
 const LinkButton = React.forwardRef<HTMLButtonElement, LinkButtonProps>(
   ({ href, className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
-    const StyledIcon =
-      props.icon ?
-        React.cloneElement(props.icon, { className: "h-4 w-4 mr-2" })
+    const StyledIcon = props.icon
+      ? React.cloneElement(props.icon, { className: "h-4 w-4 mr-2" })
       : null;
     return (
       <Link href={href} tabIndex={-1}>
@@ -114,7 +112,7 @@ const LinkButton = React.forwardRef<HTMLButtonElement, LinkButtonProps>(
           >
             <IconLoader className={cn("h-4 w-4 animate-spin")} />
           </div>
-          {props.icon ?
+          {props.icon ? (
             <div
               className={cn(
                 "overflow-hidden transition-[width]",
@@ -123,7 +121,7 @@ const LinkButton = React.forwardRef<HTMLButtonElement, LinkButtonProps>(
             >
               {!props.loading && StyledIcon}
             </div>
-          : null}
+          ) : null}
           {props.children}
         </Comp>
       </Link>
