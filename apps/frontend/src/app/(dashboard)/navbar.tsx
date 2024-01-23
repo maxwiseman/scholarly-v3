@@ -11,7 +11,7 @@ export function Navbar(): React.ReactElement {
 
   return (
     <header className="sticky top-0 z-40 flex h-14 items-center justify-center border-b border-border bg-background/95 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-background/75">
-      <nav className="flex w-full max-w-screen-2xl items-center justify-between px-8">
+      <nav className="flex w-full items-center justify-between px-8">
         <div className="flex flex-row items-center justify-start gap-6">
           <Link href="/dashboard">
             <span className="block font-bold">Scholarly</span>
