@@ -9,10 +9,6 @@ export default async function Page({
 }): Promise<React.ReactElement> {
   const pageData = await api.canvas.getPage.query(params);
 
-  if (!pageData.body) {
-    console.log("params:", params);
-  }
-
   return (
     <div className="flex w-full justify-center">
       <div className="w-full max-w-4xl">
