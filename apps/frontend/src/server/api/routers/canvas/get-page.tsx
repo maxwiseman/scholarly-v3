@@ -5,7 +5,7 @@ import { classes, users } from "@/server/db/schema";
 
 export async function getPage({
   classId,
-  pageId: assignmentId,
+  pageId,
 }: {
   classId: string;
   pageId: string;
@@ -22,13 +22,16 @@ export async function getPage({
   });
 
   const data = await fetch(
-    `https://knoxschools.instructure.com/api/v1/courses/${classData?.canvasId}/pages/${assignmentId}`,
+    `https://knoxschools.instructure.com/api/v1/courses/${classData?.canvasId}/pages/${pageId}`,
     {
       headers: {
         Authorization: `Bearer ${user?.canvasApiKey}`,
       },
     },
   ).then((res) => res.json() as Promise<Page>);
+  console.log("data:", data);
+  console.log("input classid:", classId);
+  console.log("input pageid:", pageId);
   return data;
 }
 export interface Page {
