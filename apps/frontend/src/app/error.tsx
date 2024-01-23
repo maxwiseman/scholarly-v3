@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Button, LinkButton } from "./_components/ui/button";
 
-export default function Page() {
+export default function Page(): React.ReactElement {
   const router = useRouter();
 
   return (

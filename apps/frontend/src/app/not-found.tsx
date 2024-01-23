@@ -1,6 +1,6 @@
 import { Button, LinkButton } from "./_components/ui/button";
 
-export default function Page() {
+export default function Page(): React.ReactElement {
   return (
     <main>
       <div className="flex h-screen w-screen flex-col items-center justify-center gap-2">

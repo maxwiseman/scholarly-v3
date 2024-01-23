@@ -1,7 +1,7 @@
 "use client";
 
-import { Button, LinkButton } from "@/app/_components/ui/button";
 import { ClassCard } from "./class-card";
+import { LinkButton } from "@/app/_components/ui/button";
 import { Separator } from "@/app/_components/ui/separator";
 import { queryOpts } from "@/lib/utils";
 import { api } from "@/trpc/react";
@@ -19,7 +19,7 @@ export default function Page(): React.ReactElement {
         <div className="flex h-full w-full flex-col items-center justify-center py-8">
           <div className="flex flex-col items-center justify-center gap-2">
             <h2 className="text-xl text-muted-foreground">No classes found!</h2>
-            <LinkButton variant={"secondary"} href="/onboarding">
+            <LinkButton href="/onboarding" variant="secondary">
               Add your classes
             </LinkButton>
           </div>
