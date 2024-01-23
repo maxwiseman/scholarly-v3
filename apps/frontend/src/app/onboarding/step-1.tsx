@@ -119,7 +119,7 @@ export function StepOne({
                     <PasswordInput placeholder="0910392403" {...field} />
                   </FormControl>
                   <ResponsiveDialogTrigger>
-                    <FormDescription className="w-max cursor-pointer">
+                    <FormDescription className="w-max cursor-pointer underline">
                       Click here for instructions on how to get your access
                       token
                     </FormDescription>
@@ -137,17 +137,20 @@ export function StepOne({
               <ol>
                 <li>
                   1. Head to{" "}
-                  <Link href="https://knoxschools.instructure.com/login/saml">
+                  <Link
+                    className="underline"
+                    href="https://knoxschools.instructure.com/login/saml"
+                  >
                     Canvas
                   </Link>{" "}
                   and log in
                 </li>
                 <li>2. Click your profile picture in the sidebar</li>
                 <li>
-                  3. Click <span style={LinkStyle}>Settings</span>
+                  3. Click the <span style={LinkStyle}>Settings</span> link
                 </li>
                 <li>
-                  4. Click{" "}
+                  4. Scroll down, and click{" "}
                   <span style={ButtonStyle}>
                     <IconPlus />
                     New Access Token

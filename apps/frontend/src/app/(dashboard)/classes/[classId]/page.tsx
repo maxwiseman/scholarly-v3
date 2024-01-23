@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -73,7 +74,16 @@ export default function Page({
         <CardContent>
           <ul>
             {assignmentCanvasData.data?.map((assignment) => {
-              return <li key={assignment.id}>{assignment.name}</li>;
+              return (
+                <li key={assignment.id}>
+                  <Link
+                    className="underline"
+                    href={`/classes/${params.classId}/assignments/${assignment.id}`}
+                  >
+                    {assignment.name}
+                  </Link>
+                </li>
+              );
             })}
           </ul>
         </CardContent>
