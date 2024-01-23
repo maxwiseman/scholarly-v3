@@ -81,7 +81,7 @@ export function Search(): React.ReactElement {
                 <CommandItem
                   key={course.id}
                   onSelect={() => {
-                    router.replace(`/classes/${course.id}`);
+                    router.push(`/classes/${course.id}`);
                     setOpen(false);
                   }}
                 >

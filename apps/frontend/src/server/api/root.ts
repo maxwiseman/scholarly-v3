@@ -1,5 +1,6 @@
 import { aspenRouter } from "./routers/aspen/aspen";
 import { canvasRouter } from "./routers/canvas/canvas";
+import { miscRouter } from "./routers/misc/misc";
 import { userRouter } from "./routers/user/user";
 import { createTRPCRouter } from "@/server/api/trpc";
 
@@ -12,6 +13,7 @@ export const appRouter = createTRPCRouter({
   aspen: aspenRouter,
   canvas: canvasRouter,
   user: userRouter,
+  misc: miscRouter,
 });
 
 // export type definition of API

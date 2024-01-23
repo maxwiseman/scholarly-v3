@@ -1,13 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { UserButton } from "../_components/ui/user-button";
 import { Search } from "./client";
 import { cn } from "@/lib/utils";
 
 export function Navbar(): React.ReactElement {
   const pathname = usePathname();
+  const router = useRouter();
+  const session = useSession();
+
+  if (session.status === "unauthenticated") {
+    router.push("/");
+  }
 
   return (
     <header className="sticky top-0 z-40 flex h-14 items-center justify-center border-b border-border bg-background/95 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-background/75">
