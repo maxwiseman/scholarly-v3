@@ -9,7 +9,7 @@ import { queryOpts } from "@/lib/utils";
 export function UnsplashImage({ ...props }): React.ReactElement {
   const [loading, setLoading] = useState<boolean>(true);
   const imageData = api.misc.getUnsplashImage.useQuery(undefined, queryOpts);
-  const unsplashUTM = `?utm_source=${process.env.NEXT_PUBLIC_UNSPLASH_NAME}&utm_medium=referral&utm_campaign=api-credit`;
+  const unsplashUTM = `?utm_source=Scholarly&utm_medium=referral&utm_campaign=api-credit`;
 
   useEffect(() => {
     if (imageData.isFetched) {
