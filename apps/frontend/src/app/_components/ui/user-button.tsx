@@ -101,8 +101,8 @@ export function UserButton(): React.ReactElement {
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={async () => {
-              await signOut();
               router.push("/");
+              await signOut();
             }}
           >
             <IconLogout className="mr-2 h-4 w-4" />
