@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { updateSettings } from "./settings";
-import { addClasses } from "./classes";
+import { addClasses, updateClasses } from "./classes";
 import { getAssignments } from "./get-assignments";
 import { getClasses } from "./get-classes";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
@@ -55,4 +55,30 @@ export const userRouter = createTRPCRouter({
   getClasses: protectedProcedure.query(async () => {
     return await getClasses();
   }),
+  updateClasses: protectedProcedure
+    .input(
+      z.array(
+        z.object({
+          id: z.string(),
+          name: z.string().optional(),
+          teachers: z.array(z.string()).optional(),
+          gradeAverage: z.number().optional(),
+          gradeCategories: z
+            .array(
+              z.object({
+                name: z.string(),
+                weight: z.number(),
+                value: z.number(),
+              }),
+            )
+            .optional(),
+          schedule: z.string().optional(),
+          term: z.string().optional(),
+          teacherEmail: z.string().optional(),
+        }),
+      ),
+    )
+    .mutation(async ({ input }) => {
+      await updateClasses(input);
+    }),
 });

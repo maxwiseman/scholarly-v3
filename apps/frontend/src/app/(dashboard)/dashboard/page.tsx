@@ -22,6 +22,9 @@ export default function Page(): React.ReactElement {
                 ...classData,
               }}
               key={classData.id}
+              onUpdate={async () => {
+                await classFetcher.refetch();
+              }}
             />
           );
         })}

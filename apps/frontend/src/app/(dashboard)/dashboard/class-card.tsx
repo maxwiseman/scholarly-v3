@@ -1,6 +1,8 @@
 import { CircularProgress } from "@nextui-org/react";
 import { IconPencil } from "@tabler/icons-react";
 import Link from "next/link";
+import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/app/_components/ui/button";
 import {
   Card,
@@ -25,14 +27,27 @@ import {
 } from "@/app/_components/ui/dialog";
 import { Input } from "@/app/_components/ui/input";
 import { type CourseData } from "@/server/api/routers/user/get-classes";
+import { Label } from "@/app/_components/ui/label";
+import { api } from "@/trpc/react";
 
 export function ClassCard({
   classData,
+  onUpdate,
 }: {
   classData: CourseData;
+  onUpdate?: () => void;
 }): React.ReactElement {
+  const [open, setOpen] = useState(false);
+  const [name, setName] = useState<string>(classData.name || "");
+  const updateName = api.user.updateClasses.useMutation();
+
   return (
-    <Dialog>
+    <Dialog
+      onOpenChange={(val) => {
+        setOpen(val);
+      }}
+      open={open}
+    >
       <ContextMenu>
         <ContextMenuTrigger>
           <Link
@@ -102,9 +117,34 @@ export function ClassCard({
             Make changes to the class here. Click save when you&lsquo;re done.
           </DialogDescription>
         </DialogHeader>
-        <Input />
+        <Label>Class Name</Label>
+        <Input
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+          placeholder="Type something..."
+          value={name}
+        />
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button
+            onClick={() => {
+              toast.promise(
+                async () => {
+                  await updateName.mutateAsync([{ id: classData.id, name }]);
+                  if (onUpdate) onUpdate();
+                  setOpen(false);
+                },
+                {
+                  loading: "Saving...",
+                  success: "Saved!",
+                  error: "Failed to save.",
+                },
+              );
+            }}
+            type="submit"
+          >
+            Save changes
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
