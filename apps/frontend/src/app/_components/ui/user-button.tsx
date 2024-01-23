@@ -9,6 +9,7 @@ import {
 } from "@tabler/icons-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import {
   DropdownMenu,
@@ -27,6 +28,7 @@ import {
 export function UserButton(): React.ReactElement {
   const session = useSession();
   const { theme, setTheme } = useTheme();
+  const router = useRouter();
 
   if (session.data)
     return (
@@ -36,12 +38,12 @@ export function UserButton(): React.ReactElement {
           className="rounded-full focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         >
           <Avatar className="h-8 w-8">
-            {session.data.user.image ?
+            {session.data.user.image ? (
               <AvatarImage
                 alt="Profile picture"
                 src={session.data.user.image}
               />
-            : null}
+            ) : null}
             <AvatarFallback>
               <IconUser />
             </AvatarFallback>
@@ -100,6 +102,7 @@ export function UserButton(): React.ReactElement {
           <DropdownMenuItem
             onClick={async () => {
               await signOut();
+              router.push("/");
             }}
           >
             <IconLogout className="mr-2 h-4 w-4" />

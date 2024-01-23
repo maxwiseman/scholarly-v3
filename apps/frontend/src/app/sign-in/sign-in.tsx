@@ -59,10 +59,14 @@ export function SignIn(): React.ReactElement {
         </Button>
         <Button
           className="h-12 w-full"
-          disabled
+          onClick={async () => {
+            await signIn("google", {
+              redirect: true,
+              callbackUrl: callbackURL || "/dashboard",
+            });
+          }}
           size="icon"
           variant="outline"
-          // onClick={() => {}}
         >
           <Image
             alt="Google Logo"
