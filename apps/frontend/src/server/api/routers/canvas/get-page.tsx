@@ -10,6 +10,7 @@ export async function getPage({
   classId: string;
   pageId: string;
 }): Promise<Page> {
+  console.log("pageId:", pageId);
   const session = await getServerAuthSession();
   const user = await db.query.users.findFirst({
     where: eq(users.id, session?.user.id || ""),

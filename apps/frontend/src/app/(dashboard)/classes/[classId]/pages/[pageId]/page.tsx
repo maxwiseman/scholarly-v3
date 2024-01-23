@@ -10,7 +10,7 @@ export default async function Page({
   const pageData = await api.canvas.getPage.query(params);
 
   if (!pageData.body) {
-    console.log(pageData);
+    console.log("params:", params);
   }
 
   return (
