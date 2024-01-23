@@ -99,10 +99,12 @@ export default function Page({
                         href={
                           item.type === "ExternalUrl"
                             ? item.external_url || ""
-                            : `/classes/${params.classId}/${item.url?.replace(
-                                /https:\/\/knoxschools\.instructure\.com\/api\/v1\/courses\/[^/]*\//,
-                                "",
-                              )}`
+                            : `/classes/${params.classId}/${item.url
+                                ?.replace(
+                                  /https:\/\/knoxschools\.instructure\.com\/api\/v1\/courses\/[^/]*\//,
+                                  "",
+                                )
+                                .replaceAll("+", "%2B")}`
                         }
                         key={item.id}
                         style={{ marginLeft: `${item.indent * 1.5}rem` }}
