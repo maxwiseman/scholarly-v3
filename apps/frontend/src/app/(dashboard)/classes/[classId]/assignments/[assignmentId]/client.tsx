@@ -265,7 +265,7 @@ export function Chat(): React.ReactElement {
     <>
       <div className="relative h-full">
         <ResizableHandle
-          className="sticky top-[5.5rem] mx-4 h-[calc(100vh-8rem)]"
+          className="sticky top-[5.5rem] mx-4 h-[calc(100vh-7.5rem)] rounded-full"
           withHandle
         />
       </div>
@@ -284,7 +284,7 @@ export function Chat(): React.ReactElement {
         style={{ overflow: "visible" }}
       >
         {chatOpen ? (
-          <Card className="sticky top-[5.5rem] flex h-full max-h-[calc(100vh-8rem)] min-h-48 max-w-full flex-col overflow-hidden">
+          <Card className="sticky top-[5.5rem] flex h-full max-h-[calc(100vh-7.5rem)] min-h-48 max-w-full flex-col overflow-hidden">
             <CardHeader className="py-6">
               <CardTitle className="items-between flex flex-row justify-between gap-2">
                 <div className="flex w-max flex-row items-center gap-2">
