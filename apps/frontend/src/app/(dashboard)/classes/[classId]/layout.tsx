@@ -17,7 +17,7 @@ export default function Layout({
         <div>
           <Sidebar classId={params.classId} />
         </div>
-        <div className="max-w-full grow overflow-x-scroll">{children}</div>
+        <div className="max-w-full grow">{children}</div>
       </div>
     </div>
   );

@@ -48,6 +48,7 @@ import {
 import { Card } from "./card";
 import { Separator } from "./separator";
 import { ToggleGroup, ToggleGroupItem } from "./toggle-group";
+import { cn } from "@/lib/utils";
 
 function MenuBar(): React.ReactElement {
   const { editor } = useCurrentEditor();
@@ -110,13 +111,14 @@ function MenuBar(): React.ReactElement {
             type="single"
             value={
               // eslint-disable-next-line no-nested-ternary -- It's fine
-              editor.isActive("heading", { level: 1 }) ? "H1"
-                // eslint-disable-next-line no-nested-ternary -- It's fine
-              : editor.isActive("heading", { level: 2 }) ?
-                "H2"
-              : editor.isActive("heading", { level: 3 }) ?
-                "H3"
-              : ""
+              editor.isActive("heading", { level: 1 })
+                ? "H1"
+                : // eslint-disable-next-line no-nested-ternary -- It's fine
+                  editor.isActive("heading", { level: 2 })
+                  ? "H2"
+                  : editor.isActive("heading", { level: 3 })
+                    ? "H3"
+                    : ""
             }
             variant="outline"
           >
@@ -305,7 +307,7 @@ function MenuBar(): React.ReactElement {
 }
 
 export function TipTap(
-  props: Partial<EditorProviderProps>,
+  props: Partial<EditorProviderProps & { className?: string }>,
 ): React.ReactElement {
   const extensions = [
     Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -335,7 +337,12 @@ export function TipTap(
   const testContent = "<p>Hello, World!</p>";
 
   return (
-    <Card className="transition-[border-color] focus-within:border-accent-foreground">
+    <Card
+      className={cn(
+        "transition-[border-color] focus-within:border-accent-foreground",
+        props.className,
+      )}
+    >
       <EditorProvider
         content={testContent}
         extensions={extensions}

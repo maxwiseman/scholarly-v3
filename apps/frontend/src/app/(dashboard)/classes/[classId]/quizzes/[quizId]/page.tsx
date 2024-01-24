@@ -1,51 +1,33 @@
-"use client";
-
 import React from "react";
 import { Take } from "./take";
-import { api } from "@/trpc/react";
+import { api } from "@/trpc/server";
 import { Separator } from "@/app/_components/ui/separator";
-import { Skeleton } from "@/app/_components/ui/skeleton";
-import { queryOpts } from "@/lib/utils";
 
-export default function Page({
+export default async function Page({
   params,
 }: {
   params: { classId: string; quizId: string };
-}): React.ReactElement {
-  const quizData = api.canvas.getQuiz.useQuery(params, queryOpts);
+}): Promise<React.ReactElement> {
+  const quizData = await api.canvas.getQuiz.query(params);
 
   return (
     <div className="flex w-full justify-center">
-      <div className="w-full max-w-4xl">
+      <div className="w-full">
         <div className="flex flex-col gap-2">
-          {quizData.isFetched ?
-            <h1 className="mt-0 text-3xl font-bold">{quizData.data?.title}</h1>
-          : <Skeleton className="h-9 w-96" />}
-          <div>
-            Points Possible:{" "}
-            {quizData.isFetched ?
-              quizData.data?.points_possible
-            : <Skeleton className="inline-block h-[1.125rem] w-4" />}
-          </div>
+          <h1 className="mt-0 text-3xl font-bold">{quizData.title}</h1>
+          <div>Points Possible: {quizData.points_possible}</div>
           <div>
             Date Due:{" "}
-            {quizData.isFetched ?
-              new Date(quizData.data?.due_at || 0).toLocaleDateString("en-us", {
-                weekday: "short",
-                day: "numeric",
-                month: "short",
-                year: "numeric",
-              })
-            : <Skeleton className="inline-block h-[1.125rem] w-28" />}
+            {new Date(quizData.due_at || 0).toLocaleDateString("en-us", {
+              weekday: "short",
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })}
           </div>
           <div>
-            Allowed Attempts:{" "}
-            {/* eslint-disable-next-line no-nested-ternary -- It's fine */}
-            {quizData.isFetched ?
-              quizData.data?.allowed_attempts === 0 ?
-                "∞"
-              : quizData.data?.allowed_attempts
-            : <Skeleton className="inline-block h-[1.125rem] w-4" />}
+            Allowed Attempts: {}
+            {quizData.allowed_attempts === 0 ? "∞" : quizData.allowed_attempts}
           </div>
         </div>
         <Separator className="my-4" />
@@ -53,16 +35,14 @@ export default function Page({
           className="typography"
           dangerouslySetInnerHTML={{
             __html:
-              quizData.data?.description.replaceAll(
+              quizData.description.replaceAll(
                 /href="https:\/\/knoxschools\.instructure\.com\/courses\/[^/]*/g,
                 `href="/classes/${params.classId}`,
               ) || "",
           }}
         />
-        {quizData.data?.description ?? <Separator className="my-4" />}
-        {quizData.data !== undefined && (
-          <Take params={params} quiz={quizData.data} />
-        )}
+        {quizData.description !== "" && <Separator className="my-4" />}
+        <Take params={params} quiz={quizData} />
       </div>
     </div>
   );

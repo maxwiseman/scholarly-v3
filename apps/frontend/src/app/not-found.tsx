@@ -1,4 +1,4 @@
-import { Button, LinkButton } from "./_components/ui/button";
+import { LinkButton } from "./_components/ui/button";
 
 export default function Page(): React.ReactElement {
   return (

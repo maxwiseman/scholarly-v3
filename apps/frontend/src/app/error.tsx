@@ -19,7 +19,7 @@ export default function Page(): React.ReactElement {
           >
             Reload the page
           </Button>
-          <LinkButton variant={"secondary"} href="mailto:max@maxwiseman.io">
+          <LinkButton href="mailto:max@maxwiseman.io" variant="secondary">
             Contact us
           </LinkButton>
         </div>
