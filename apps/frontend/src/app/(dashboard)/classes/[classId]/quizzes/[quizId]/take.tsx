@@ -58,11 +58,11 @@ export function Take({
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button
-                // disabled={
-                //   quiz.allowed_attempts !== 0 &&
-                //   quizSubmissions.data?.length !== undefined &&
-                //   quizSubmissions.data.length >= quiz.allowed_attempts
-                // }
+                disabled={
+                  quiz.allowed_attempts !== 0 &&
+                  quizSubmissions.data?.length !== undefined &&
+                  quizSubmissions.data.length >= quiz.allowed_attempts
+                }
                 loading={!quizSubmissions.isFetched}
               >
                 Take Quiz
