@@ -183,6 +183,7 @@ function QuizQuestionAnswers({
                 value={questionAnswer.id.toString()}
               />
               <Label
+                className="typography"
                 dangerouslySetInnerHTML={{
                   __html:
                     questionAnswer.html !== ""

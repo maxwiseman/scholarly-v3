@@ -4,6 +4,7 @@ import * as React from "react";
 import { type DialogProps } from "@radix-ui/react-dialog";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Command as CommandPrimitive } from "cmdk";
+import { ScrollArea } from "./scroll-area";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent } from "@/app/_components/ui/dialog";
 
@@ -63,11 +64,11 @@ const CommandList = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.List>
 >(({ className, ...props }, ref) => (
-  <CommandPrimitive.List
+  <ScrollArea
     className={cn("max-h-[300px] overflow-y-auto overflow-x-hidden", className)}
-    ref={ref}
-    {...props}
-  />
+  >
+    <CommandPrimitive.List ref={ref} {...props} />
+  </ScrollArea>
 ));
 
 CommandList.displayName = CommandPrimitive.List.displayName;

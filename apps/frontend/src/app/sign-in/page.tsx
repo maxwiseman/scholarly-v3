@@ -1,10 +1,4 @@
 import { type Metadata } from "next";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "../_components/ui/tabs";
 import { UnsplashImage } from "./image";
 import { SignIn } from "./sign-in";
 
@@ -25,22 +19,9 @@ export default async function LoginPage(): Promise<React.ReactElement> {
             don&lsquo;t have an account, you can make one.
           </p>
         </div>
-        <Tabs className="min-h-max w-[min(100%,400px)]" defaultValue="login">
-          <TabsList className="mb-4 mt-4 w-[100%]">
-            <TabsTrigger className="grow" value="login">
-              Sign in
-            </TabsTrigger>
-            <TabsTrigger className="grow" value="signup">
-              Sign up
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="login">
-            <SignIn />
-          </TabsContent>
-          <TabsContent value="signup">
-            <p>Sign up</p>
-          </TabsContent>
-        </Tabs>
+        <div className="mt-8 min-h-max w-[min(100%,400px)]">
+          <SignIn />
+        </div>
       </div>
       <UnsplashImage className="relative hidden max-h-[100%] w-0 lg:block lg:w-[75vw]" />
     </div>
