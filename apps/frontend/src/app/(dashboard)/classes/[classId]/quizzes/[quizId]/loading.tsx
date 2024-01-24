@@ -5,7 +5,7 @@ import { Skeleton } from "@/app/_components/ui/skeleton";
 export default function Page(): React.ReactElement {
   return (
     <div className="flex w-full justify-center">
-      <div className="w-full max-w-4xl">
+      <div className="w-full">
         <div className="flex flex-col gap-2">
           <Skeleton className="h-9 w-96" />
           <div>
