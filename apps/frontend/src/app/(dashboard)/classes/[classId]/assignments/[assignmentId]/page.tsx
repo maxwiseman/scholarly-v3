@@ -20,8 +20,8 @@ export default async function Page({
       direction="horizontal"
       style={{ overflow: "shown" }}
     >
-      <ResizablePanel className="flex h-max justify-center" defaultSize={75}>
-        <div className="max-w-4xl">
+      <ResizablePanel className="flex h-max justify-center">
+        <div className="min-w-0 max-w-4xl">
           <div className="flex flex-row items-center justify-between">
             <div className="flex flex-col gap-2">
               <h1 className="mt-0 text-3xl font-bold">{assignmentData.name}</h1>
@@ -43,7 +43,7 @@ export default async function Page({
           </div>
           <Separator className="my-6" />
           <div
-            className="typography"
+            className="typography break-words"
             dangerouslySetInnerHTML={{
               __html:
                 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- This is sometimes empty

@@ -273,7 +273,7 @@ export function Chat(): React.ReactElement {
         className="relative h-full"
         collapsedSize={0}
         collapsible
-        defaultSize={25}
+        defaultSize={0}
         minSize={15}
         onCollapse={() => {
           setChatOpen(false);
@@ -285,7 +285,7 @@ export function Chat(): React.ReactElement {
       >
         {chatOpen ? (
           <Card className="sticky top-[5.5rem] flex h-full max-h-[calc(100vh-7.5rem)] min-h-48 max-w-full flex-col overflow-hidden">
-            <CardHeader className="py-6">
+            <CardHeader>
               <CardTitle className="items-between flex flex-row justify-between gap-2">
                 <div className="flex w-max flex-row items-center gap-2">
                   <IconBrandOpenai className="h-4 w-4" />
@@ -309,7 +309,9 @@ export function Chat(): React.ReactElement {
                 maskImage: `linear-gradient(#000,#000,transparent 0,#000 10px,#000 calc(100% - 10px),transparent)`,
               }}
             >
-              <Markdown className="typography">{mockResponse}</Markdown>
+              <Markdown className="typography break-words">
+                {mockResponse}
+              </Markdown>
             </ScrollArea>
             <CardFooter className="flex items-center gap-2">
               <Input
