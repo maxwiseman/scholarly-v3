@@ -3,6 +3,7 @@
 import {
   IconBrandOpenai,
   IconLayoutSidebarRightCollapse,
+  IconPlus,
   IconSend,
 } from "@tabler/icons-react";
 import React, { useEffect, useRef, useState } from "react";
@@ -24,6 +25,11 @@ import { ScrollArea } from "@/app/_components/ui/scroll-area";
 import { type Assignment } from "@/server/api/routers/canvas/get-assignment";
 import { Separator } from "@/app/_components/ui/separator";
 import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/app/_components/ui/tooltip";
 
 export function Chat({
   assignment,
@@ -40,14 +46,6 @@ export function Chat({
     {
       sender: "assistant",
       message: mockResponse,
-    },
-    {
-      sender: "user",
-      message: "I don't understand what I'm supposed to do.",
-    },
-    {
-      sender: "assistant",
-      message: "Oh okay, I'll help you out.",
     },
   ]);
   console.log(generateInitialPrompt());
@@ -108,16 +106,40 @@ export function Chat({
                   <IconBrandOpenai className="h-4 w-4" />
                   AI Assistant
                 </div>
-                <Button
-                  className="aspect-square"
-                  onClick={() => {
-                    panelRef.current?.collapse();
-                  }}
-                  size="icon"
-                  variant="ghost"
-                >
-                  <IconLayoutSidebarRightCollapse className="h-4 w-4" />
-                </Button>
+                <div className="flex flex-row gap-2">
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Button
+                        className="aspect-square"
+                        onClick={() => {
+                          setMessages([
+                            { sender: "assistant", message: mockResponse },
+                          ]);
+                        }}
+                        size="icon"
+                        variant="ghost"
+                      >
+                        <IconPlus className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>New chat</TooltipContent>
+                  </Tooltip>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Button
+                        className="aspect-square"
+                        onClick={() => {
+                          panelRef.current?.collapse();
+                        }}
+                        size="icon"
+                        variant="ghost"
+                      >
+                        <IconLayoutSidebarRightCollapse className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Collapse AI panel</TooltipContent>
+                  </Tooltip>
+                </div>
               </CardTitle>
             </CardHeader>
             <ScrollArea
@@ -132,7 +154,7 @@ export function Chat({
                   return (
                     <>
                       {message.sender !== messages[i - 1]?.sender && i !== 0 ? (
-                        <div className="my-4 mt-6 flex max-w-full flex-row flex-nowrap items-center gap-1">
+                        <div className="my-4 flex max-w-full flex-row flex-nowrap items-center gap-1">
                           {message.sender === "assistant" ? (
                             <>
                               <span className="text-xs text-muted-foreground">
@@ -151,7 +173,9 @@ export function Chat({
                         </div>
                       ) : null}
                       <Markdown
-                        className="typography break-words"
+                        className={cn("typography mb-2 break-words", {
+                          "[&>*]:text-right": message.sender === "user",
+                        })}
                         key={message.message.substring(0, 10)}
                       >
                         {message.message}
@@ -161,26 +185,25 @@ export function Chat({
                 })}
               </div>
             </ScrollArea>
-            <CardFooter className="flex items-center gap-2 pt-6">
-              <Input
-                onChange={(e) => {
-                  setUserMessage(e.target.value);
-                }}
-                onSubmit={() => {
+            <CardFooter className="pt-6">
+              <form
+                className="flex w-full items-center gap-2"
+                onSubmit={(e) => {
+                  e.preventDefault();
                   sendMessage();
                 }}
-                placeholder="Type something..."
-                value={userMessage}
-              />
-              <Button
-                className="aspect-square"
-                onClick={() => {
-                  sendMessage();
-                }}
-                size="icon"
               >
-                <IconSend className="h-4 w-4" />
-              </Button>
+                <Input
+                  onChange={(e) => {
+                    setUserMessage(e.target.value);
+                  }}
+                  placeholder="Type something..."
+                  value={userMessage}
+                />
+                <Button className="aspect-square" size="icon" type="submit">
+                  <IconSend className="h-4 w-4" />
+                </Button>
+              </form>
             </CardFooter>
           </Card>
         ) : null}

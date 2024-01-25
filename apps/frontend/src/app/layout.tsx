@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 import { ServerSessionProvider } from "./_components/server-session-provider";
 import { ThemeProvider } from "./_components/theme-provider";
 import { NextUIClientProvider } from "./_components/next-ui-provider";
+import { TooltipProvider } from "./_components/ui/tooltip";
 import { getServerAuthSession } from "@/server/auth";
 import { TRPCReactProvider } from "@/trpc/react";
 
@@ -42,7 +43,9 @@ export default async function RootLayout({
         >
           <ServerSessionProvider session={session}>
             <TRPCReactProvider cookies={cookies().toString()}>
-              <NextUIClientProvider>{children}</NextUIClientProvider>
+              <NextUIClientProvider>
+                <TooltipProvider>{children}</TooltipProvider>
+              </NextUIClientProvider>
             </TRPCReactProvider>
           </ServerSessionProvider>
         </ThemeProvider>
