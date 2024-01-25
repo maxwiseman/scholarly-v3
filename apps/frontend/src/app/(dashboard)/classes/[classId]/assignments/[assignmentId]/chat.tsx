@@ -50,7 +50,7 @@ export function Chat({
       <div className="relative h-full">
         <ResizableHandle
           className={cn(
-            "sticky top-[5.5rem] z-50 ml-8 h-[calc(100vh-7.5rem)] rounded-full",
+            "sticky top-[5.5rem] z-10 ml-8 h-[calc(100vh-7.5rem)] rounded-full",
             { "bg-transparent": chatOpen },
           )}
           withHandle

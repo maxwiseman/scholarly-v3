@@ -21,7 +21,11 @@ export default async function Page({
       direction="horizontal"
       style={{ overflow: "shown" }}
     >
-      <ResizablePanel className="flex h-max justify-center">
+      <ResizablePanel
+        className="flex h-max justify-center"
+        collapsible
+        minSize={25}
+      >
         <div className="min-w-0 max-w-4xl">
           <div className="flex flex-row items-center justify-between">
             <div className="flex flex-col gap-2">
