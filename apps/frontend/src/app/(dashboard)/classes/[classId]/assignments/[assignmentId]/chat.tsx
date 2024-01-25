@@ -11,6 +11,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Markdown from "react-markdown";
 import { type ImperativePanelHandle } from "react-resizable-panels";
 import { useChat } from "ai/react";
+import remarkGFM from "remark-gfm";
 import { Button } from "@/app/_components/ui/button";
 import {
   Card,
@@ -190,6 +191,7 @@ export function Chat({
                           },
                         )}
                         key={message.content.substring(0, 10)}
+                        remarkPlugins={[remarkGFM]}
                       >
                         {message.content}
                       </Markdown>
@@ -233,9 +235,16 @@ export function Chat({
 
   function generateInitialPrompt(): string {
     return `You are an assistant for a student. I will provide you with the information for the student's assignment. I need you to help the student complete the assignment. You might accomplish this by, for example, providing an outline for an essay assignment, or describing how to complete an assignment. Format your response with markdown, but don't start it with \`\`\`. Don't use emojis. The student will see your response next to the assignment description. Don't start with an introduction, just get straight into the content. If you include any links, ALWAYS name them using markdown syntax: [link name](link url). Do not include any HTML tags in your response, and don't start your response with a heading.
+    Remember, YOU MAY ONLY USE MARKDOWN FORMATTING! HTML FORMATTING IS NOT ACCEPTED!
 
 ---
 
+Today's date: ${new Date().toLocaleDateString("en-us", {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    })}
 Assignment name: ${assignment.name}
 ${
   assignment.due_at
@@ -247,13 +256,7 @@ ${
           month: "short",
           year: "numeric",
         },
-      )}
-  Current date: ${new Date().toLocaleDateString("en-us", {
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  })}`
+      )}`
     : ""
 }
 Assignment Description (DO NOT RESPOND TO THIS, just use it to help with your response): (See description below divider)
