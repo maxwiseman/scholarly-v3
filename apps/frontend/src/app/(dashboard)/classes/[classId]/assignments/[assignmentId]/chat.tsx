@@ -5,10 +5,12 @@ import {
   IconLayoutSidebarRightCollapse,
   IconPlus,
   IconSend,
+  IconSquare,
 } from "@tabler/icons-react";
 import React, { useEffect, useRef, useState } from "react";
 import Markdown from "react-markdown";
 import { type ImperativePanelHandle } from "react-resizable-panels";
+import { useChat } from "ai/react";
 import { Button } from "@/app/_components/ui/button";
 import {
   Card,
@@ -36,19 +38,10 @@ export function Chat({
 }: {
   assignment: Assignment;
 }): React.ReactElement {
-  const [userMessage, setUserMessage] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
   const panelRef = useRef<ImperativePanelHandle>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [messages, setMessages] = useState<
-    { sender: "assistant" | "user"; message: string }[]
-  >([
-    {
-      sender: "assistant",
-      message: mockResponse,
-    },
-  ]);
-  console.log(generateInitialPrompt());
+  const chat = useChat();
 
   useEffect(() => {
     const down = (e: KeyboardEvent): void => {
@@ -64,13 +57,23 @@ export function Chat({
       document.removeEventListener("keydown", down);
     };
   }, [panelRef, chatOpen]);
+  useEffect(() => {
+    chat.setMessages([
+      {
+        id: "initial-prompt",
+        role: "system",
+        content: generateInitialPrompt(),
+      },
+    ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- This should only run once.
+  }, []);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({
       top: scrollRef.current.scrollHeight,
       behavior: "smooth",
     });
-  }, [messages]);
+  }, [chat.messages]);
 
   return (
     <>
@@ -112,8 +115,12 @@ export function Chat({
                       <Button
                         className="aspect-square"
                         onClick={() => {
-                          setMessages([
-                            { sender: "assistant", message: mockResponse },
+                          chat.setMessages([
+                            {
+                              id: "initial-prompt",
+                              role: "system",
+                              content: generateInitialPrompt(),
+                            },
                           ]);
                         }}
                         size="icon"
@@ -150,12 +157,15 @@ export function Chat({
               }}
             >
               <div>
-                {messages.map((message, i) => {
+                {chat.messages.map((message, i) => {
+                  if (message.role !== "assistant" && message.role !== "user")
+                    return null;
                   return (
                     <>
-                      {message.sender !== messages[i - 1]?.sender && i !== 0 ? (
+                      {message.role !== chat.messages[i - 1]?.role &&
+                      i !== 1 ? (
                         <div className="my-4 flex max-w-full flex-row flex-nowrap items-center gap-1">
-                          {message.sender === "assistant" ? (
+                          {message.role === "assistant" ? (
                             <>
                               <span className="text-xs text-muted-foreground">
                                 Assistant
@@ -173,12 +183,15 @@ export function Chat({
                         </div>
                       ) : null}
                       <Markdown
-                        className={cn("typography mb-2 break-words", {
-                          "[&>*]:text-right": message.sender === "user",
-                        })}
-                        key={message.message.substring(0, 10)}
+                        className={cn(
+                          "typography mb-2 break-words [&>*]:break-words",
+                          {
+                            "[&>*]:text-right": message.role === "user",
+                          },
+                        )}
+                        key={message.content.substring(0, 10)}
                       >
-                        {message.message}
+                        {message.content}
                       </Markdown>
                     </>
                   );
@@ -188,21 +201,28 @@ export function Chat({
             <CardFooter className="pt-6">
               <form
                 className="flex w-full items-center gap-2"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  sendMessage();
-                }}
+                onSubmit={chat.handleSubmit}
               >
                 <Input
-                  onChange={(e) => {
-                    setUserMessage(e.target.value);
-                  }}
+                  onChange={chat.handleInputChange}
                   placeholder="Type something..."
-                  value={userMessage}
+                  value={chat.input}
                 />
-                <Button className="aspect-square" size="icon" type="submit">
-                  <IconSend className="h-4 w-4" />
-                </Button>
+                {chat.isLoading ? (
+                  <Button
+                    className="aspect-square"
+                    onClick={() => {
+                      chat.stop();
+                    }}
+                    size="icon"
+                  >
+                    <IconSquare className="h-4 w-4" />
+                  </Button>
+                ) : (
+                  <Button className="aspect-square" size="icon" type="submit">
+                    <IconSend className="h-4 w-4" />
+                  </Button>
+                )}
               </form>
             </CardFooter>
           </Card>
@@ -210,16 +230,6 @@ export function Chat({
       </ResizablePanel>
     </>
   );
-
-  function sendMessage(message?: string): void {
-    const ClonedMessages = [...messages];
-    ClonedMessages.push({
-      sender: "user",
-      message: message || userMessage,
-    });
-    setMessages(ClonedMessages);
-    setUserMessage("");
-  }
 
   function generateInitialPrompt(): string {
     return `You are an assistant for a student. I will provide you with the information for the student's assignment. I need you to help the student complete the assignment. You might accomplish this by, for example, providing an outline for an essay assignment, or describing how to complete an assignment. Format your response with markdown, but don't start it with \`\`\`. Don't use emojis. The student will see your response next to the assignment description. Don't start with an introduction, just get straight into the content. If you include any links, ALWAYS name them using markdown syntax: [link name](link url). Do not include any HTML tags in your response, and don't start your response with a heading.
@@ -255,7 +265,7 @@ ${assignment.description}
   }
 }
 
-const mockResponse = `1. Familiarize yourself with the Bill of Rights by reading the transcript [here](https://www.archives.gov/founding-docs/bill-of-rights-transcript) and reviewing the presentation [linked here](https://docs.google.com/presentation/d/1G66MAa7cra4cuS8lleIxzGNVR62f43lRldDeClFgrmU/present).
-2. Create a remix of the provided Google Doc [here](https://docs.google.com/document/d/1Vxqiw4fvGT8wgvcFipRyPzZ2L8-qLQfmv3YEd2wZPbc/view) to summarize each amendment in your own words.
-3. Use the Bill of Rights one-pager [here](https://docs.google.com/document/d/1Z-NEqM9giBEVO4gjSTjJEg3PGiE624TU0x_Hr6w4pMg/view) for reference if needed.
-4. Test your knowledge of the Bill of Rights using the "Do I Have a Right?" game on iCivics [here](https://www.icivics.org/games/do-i-have-right).`;
+// const mockResponse = `1. Familiarize yourself with the Bill of Rights by reading the transcript [here](https://www.archives.gov/founding-docs/bill-of-rights-transcript) and reviewing the presentation [linked here](https://docs.google.com/presentation/d/1G66MAa7cra4cuS8lleIxzGNVR62f43lRldDeClFgrmU/present).
+// 2. Create a remix of the provided Google Doc [here](https://docs.google.com/document/d/1Vxqiw4fvGT8wgvcFipRyPzZ2L8-qLQfmv3YEd2wZPbc/view) to summarize each amendment in your own words.
+// 3. Use the Bill of Rights one-pager [here](https://docs.google.com/document/d/1Z-NEqM9giBEVO4gjSTjJEg3PGiE624TU0x_Hr6w4pMg/view) for reference if needed.
+// 4. Test your knowledge of the Bill of Rights using the "Do I Have a Right?" game on iCivics [here](https://www.icivics.org/games/do-i-have-right).`;

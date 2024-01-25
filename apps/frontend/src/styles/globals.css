@@ -74,6 +74,11 @@
   display: none;
 }
 
+.typography * {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
 .typography {
   h1,
   h2 {
