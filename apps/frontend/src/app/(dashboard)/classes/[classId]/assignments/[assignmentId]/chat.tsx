@@ -1,8 +1,13 @@
 "use client";
 
-import { IconBrandOpenai, IconSend } from "@tabler/icons-react";
-import React, { useState } from "react";
+import {
+  IconBrandOpenai,
+  IconLayoutSidebarRightCollapse,
+  IconSend,
+} from "@tabler/icons-react";
+import React, { useEffect, useRef, useState } from "react";
 import Markdown from "react-markdown";
+import { type ImperativePanelHandle } from "react-resizable-panels";
 import { Button } from "@/app/_components/ui/button";
 import {
   Card,
@@ -27,6 +32,7 @@ export function Chat({
 }): React.ReactElement {
   const [userMessage, setUserMessage] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
+  const panelRef = useRef<ImperativePanelHandle>(null);
   const [messages, setMessages] = useState<
     { sender: "assistant" | "user"; message: string }[]
   >([
@@ -45,6 +51,21 @@ export function Chat({
   ]);
   console.log(generateInitialPrompt());
 
+  useEffect(() => {
+    const down = (e: KeyboardEvent): void => {
+      if (e.key === "j" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        if (chatOpen) panelRef.current?.collapse();
+        else panelRef.current?.expand();
+      }
+    };
+
+    document.addEventListener("keydown", down);
+    return () => {
+      document.removeEventListener("keydown", down);
+    };
+  }, [panelRef, chatOpen]);
+
   return (
     <>
       <div className="relative h-full">
@@ -61,33 +82,34 @@ export function Chat({
         collapsedSize={0}
         collapsible
         defaultSize={0}
-        minSize={15}
+        minSize={20}
         onCollapse={() => {
           setChatOpen(false);
         }}
         onExpand={() => {
           setChatOpen(true);
         }}
+        ref={panelRef}
         style={{ overflow: "visible" }}
       >
         {chatOpen ? (
           <Card className="sticky top-[5.5rem] flex h-full max-h-[calc(100vh-7.5rem)] min-h-48 max-w-full flex-col overflow-hidden">
-            <CardHeader>
+            <CardHeader className="py-3">
               <CardTitle className="items-between flex flex-row justify-between gap-2">
                 <div className="flex w-max flex-row items-center gap-2">
                   <IconBrandOpenai className="h-4 w-4" />
                   AI Assistant
                 </div>
-                {/* <Button
-                className="aspect-square"
-                onClick={() => {
-                  setChatOpen(false);
-                }}
-                size="icon"
-                variant="ghost"
-              >
-                <IconLayoutSidebarRightCollapse className="h-4 w-4" />
-              </Button> */}
+                <Button
+                  className="aspect-square"
+                  onClick={() => {
+                    panelRef.current?.collapse();
+                  }}
+                  size="icon"
+                  variant="ghost"
+                >
+                  <IconLayoutSidebarRightCollapse className="h-4 w-4" />
+                </Button>
               </CardTitle>
             </CardHeader>
             <ScrollArea
