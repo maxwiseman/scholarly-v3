@@ -33,15 +33,17 @@ export default async function Page({
               <div>Points Possible: {assignmentData.points_possible}</div>
               <div>
                 Date Due:{" "}
-                {new Date(assignmentData.due_at || 0).toLocaleDateString(
-                  "en-us",
-                  {
-                    weekday: "short",
-                    day: "numeric",
-                    month: "short",
-                    year: "numeric",
-                  },
-                )}
+                {assignmentData.due_at !== null
+                  ? new Date(assignmentData.due_at || 0).toLocaleDateString(
+                      "en-us",
+                      {
+                        weekday: "short",
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      },
+                    )
+                  : "No due date"}
               </div>
             </div>
             <Actions assignment={assignmentData} />

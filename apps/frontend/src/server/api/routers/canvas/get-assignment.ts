@@ -34,7 +34,7 @@ export async function getAssignment({
 export interface Assignment {
   id: number;
   description: string;
-  due_at: string;
+  due_at: string | null;
   unlock_at: string;
   lock_at: string;
   points_possible: number;
