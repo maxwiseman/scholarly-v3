@@ -1,5 +1,6 @@
 import React from "react";
-import { Actions, Chat, Submission } from "./client";
+import { Actions, Submission } from "./client";
+import { Chat } from "./chat";
 import { api } from "@/trpc/server";
 import { Separator } from "@/app/_components/ui/separator";
 import {
@@ -57,7 +58,7 @@ export default async function Page({
           <Submission assignment={assignmentData} classId={params.classId} />
         </div>
       </ResizablePanel>
-      <Chat />
+      <Chat assignment={assignmentData} />
     </ResizablePanelGroup>
   );
 }
