@@ -26,7 +26,7 @@ export default async function Page({
         collapsible
         minSize={25}
       >
-        <div className="min-w-0 max-w-4xl">
+        <div className="w-full min-w-0 max-w-4xl">
           <div className="flex flex-row items-center justify-between">
             <div className="flex flex-col gap-2">
               <h1 className="mt-0 text-3xl font-bold">{assignmentData.name}</h1>
