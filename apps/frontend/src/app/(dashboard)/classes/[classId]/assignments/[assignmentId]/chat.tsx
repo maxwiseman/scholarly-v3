@@ -50,7 +50,7 @@ export function Chat({
       <div className="relative h-full">
         <ResizableHandle
           className={cn(
-            "sticky top-[5.5rem] z-50 ml-4 h-[calc(100vh-7.5rem)] rounded-full",
+            "sticky top-[5.5rem] z-50 ml-8 h-[calc(100vh-7.5rem)] rounded-full",
             { "bg-transparent": chatOpen },
           )}
           withHandle
@@ -91,7 +91,7 @@ export function Chat({
               </CardTitle>
             </CardHeader>
             <ScrollArea
-              className="h-full p-6 pt-0"
+              className="h-full px-6 py-0"
               style={{
                 maskImage: `linear-gradient(#000,#000,transparent 0,#000 10px,#000 calc(100% - 10px),transparent)`,
               }}
@@ -128,7 +128,7 @@ export function Chat({
                 );
               })}
             </ScrollArea>
-            <CardFooter className="flex items-center gap-2">
+            <CardFooter className="flex items-center gap-2 pt-6">
               <Input
                 onChange={(e) => {
                   setUserMessage(e.target.value);
