@@ -50,6 +50,7 @@ export interface LinkButtonProps
   loading?: boolean;
   icon?: React.ReactElement;
   href: string;
+  target?: string;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -91,13 +92,16 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = "Button";
 
 const LinkButton = React.forwardRef<HTMLButtonElement, LinkButtonProps>(
-  ({ href, className, variant, size, asChild = false, ...props }, ref) => {
+  (
+    { href, target, className, variant, size, asChild = false, ...props },
+    ref,
+  ) => {
     const Comp = asChild ? Slot : "button";
     const StyledIcon = props.icon
       ? React.cloneElement(props.icon, { className: "h-4 w-4 mr-2" })
       : null;
     return (
-      <Link href={href} tabIndex={-1}>
+      <Link href={href} tabIndex={-1} target={target}>
         <Comp
           className={cn("w-full", buttonVariants({ variant, size, className }))}
           ref={ref}

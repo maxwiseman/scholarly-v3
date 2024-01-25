@@ -108,6 +108,7 @@ export default function Page({
                         }
                         key={item.id}
                         style={{ marginLeft: `${item.indent * 1.5}rem` }}
+                        target="_blank"
                         variant="ghost"
                       >
                         {item.type === "Assignment" && (

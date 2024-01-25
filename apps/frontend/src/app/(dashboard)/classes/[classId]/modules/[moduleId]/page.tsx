@@ -98,12 +98,15 @@ export default function Page({
                     return (
                       <LinkButton
                         className="flex flex-row justify-start gap-2"
-                        href={`/classes/${params.classId}/${item.url?.replace(
-                          /https:\/\/knoxschools\.instructure\.com\/api\/v1\/courses\/[^/]*\//,
-                          "",
-                        )}`}
+                        href={`/classes/${params.classId}/${item.url
+                          ?.replace(
+                            /https:\/\/knoxschools\.instructure\.com\/api\/v1\/courses\/[^/]*\//,
+                            "",
+                          )
+                          .replaceAll("+", "%2B")}`}
                         key={item.id}
                         style={{ marginLeft: `${item.indent * 1.5}rem` }}
+                        target="_blank"
                         variant="ghost"
                       >
                         {item.type === "Assignment" && (
