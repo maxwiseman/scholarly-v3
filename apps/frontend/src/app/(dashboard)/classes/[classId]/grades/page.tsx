@@ -14,6 +14,7 @@ import {
 } from "@/app/_components/ui/table";
 import { Separator } from "@/app/_components/ui/separator";
 import { queryOpts } from "@/lib/utils";
+import { type AspenCategories } from "@/server/api/routers/aspen/get-categories";
 
 export default function Home({
   params,
@@ -123,41 +124,53 @@ export default function Home({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {categoryData.data?.categories.map((category) => {
-            return (
-              <TableRow key={category.name}>
-                <TableCell>{category.name}</TableCell>
-                <TableCell>{category.weight * 100}%</TableCell>
-                <TableCell>
-                  {category.value ? `${category.value}%` : ""}
-                </TableCell>
-              </TableRow>
-            );
-          }) ||
-            classData.data
-              ?.filter((singleClass) => {
-                return singleClass.id === params.classId;
-              })[0]
-              ?.gradeCategories?.map((category) => {
+          {assignmentData.data && categoryData.data
+            ? calculateCategories(
+                assignmentAspenData.data || assignmentData.data,
+                categoryData.data,
+              ).categories.map((category) => {
                 return (
                   <TableRow key={category.name}>
                     <TableCell>{category.name}</TableCell>
                     <TableCell>{category.weight * 100}%</TableCell>
                     <TableCell>
-                      {category.value ? `${category.value}%` : ""}
+                      {category.value
+                        ? `${category.value.toFixed(2).replace(/\.0+$/, "")}%`
+                        : ""}
                     </TableCell>
                   </TableRow>
                 );
-              })}
+              })
+            : classData.data
+                ?.filter((singleClass) => {
+                  return singleClass.id === params.classId;
+                })[0]
+                ?.gradeCategories?.map((category) => {
+                  return (
+                    <TableRow key={category.name}>
+                      <TableCell>{category.name}</TableCell>
+                      <TableCell>{category.weight * 100}%</TableCell>
+                      <TableCell>
+                        {category.value
+                          ? `${category.value.toFixed(2).replace(/\.0+$/, "")}%`
+                          : ""}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
         </TableBody>
         <TableFooter>
           <TableRow>
             <TableCell colSpan={2}>Gradebook Average</TableCell>
             <TableCell>
-              {categoryData.data?.average ||
-                classData.data?.filter((singleClass) => {
-                  return singleClass.id === params.classId;
-                })[0]?.gradeAverage}
+              {assignmentData.data && categoryData.data
+                ? calculateCategories(
+                    assignmentAspenData.data || assignmentData.data,
+                    categoryData.data,
+                  ).average.toFixed(2)
+                : classData.data?.filter((singleClass) => {
+                    return singleClass.id === params.classId;
+                  })[0]?.gradeAverage}
               %
             </TableCell>
           </TableRow>
@@ -182,4 +195,66 @@ export default function Home({
       )}
     </main>
   );
+}
+
+export function calculateCategories(
+  assignments: {
+    pointsPossible: number | null;
+    points: number | string | null;
+    category: string | null;
+    extraCredit: boolean | null;
+  }[],
+  categories: AspenCategories,
+): AspenCategories {
+  // Duplicate the categories object so that we don't modify the original, and add some extra keys for later
+  const categoryData: {
+    name: string;
+    pointsPossible?: number;
+    points?: number;
+    weight: number;
+    value: number;
+  }[] = [...categories.categories];
+
+  // For each category, check what assignments are in that category and add up the points and pointsPossible
+  categoryData.forEach((category) => {
+    assignments.forEach((assignment) => {
+      if (
+        typeof assignment.points === "string" &&
+        assignment.points.toUpperCase() === "M"
+      )
+        assignment.points = 0;
+      if (assignment.category === category.name) {
+        if (
+          !assignment.extraCredit &&
+          typeof assignment.points === "number" &&
+          assignment.pointsPossible !== null
+        ) {
+          if (category.pointsPossible)
+            category.pointsPossible += assignment.pointsPossible;
+          else category.pointsPossible = assignment.pointsPossible;
+        }
+        if (typeof assignment.points === "number") {
+          if (category.points) category.points += assignment.points;
+          else category.points = assignment.points;
+        }
+      }
+    });
+    if (category.pointsPossible && category.points)
+      category.value = (category.points / category.pointsPossible) * 100;
+    else category.value = NaN;
+  });
+
+  // Calculate the class average, while excluding categories that have no value
+  const totalCategoryWeights = categoryData.reduce(
+    (acc, obj) => acc + (!isNaN(obj.value) ? obj.weight : 0),
+    0,
+  );
+  const average = categoryData.reduce(
+    (acc, obj) =>
+      acc +
+      (!isNaN(obj.value) ? obj.value : 0) * (obj.weight / totalCategoryWeights),
+    0,
+  );
+
+  return { average, categories: categoryData };
 }

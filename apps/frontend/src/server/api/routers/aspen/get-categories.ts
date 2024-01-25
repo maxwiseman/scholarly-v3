@@ -20,7 +20,7 @@ export async function getCategories(id: string) {
         `${aspenCredentials?.aspenUsername}:${aspenCredentials?.aspenPassword}`,
       )}`,
     },
-  }).then((res) => res.json() as Promise<AspenCategory>);
+  }).then((res) => res.json() as Promise<AspenCategories>);
 
   await db
     .update(classes)
@@ -33,11 +33,11 @@ export async function getCategories(id: string) {
   return data;
 }
 
-export interface AspenCategory {
+export interface AspenCategories {
   average: number;
   categories: {
     name: string;
     weight: number;
-    value: number | null;
+    value: number;
   }[];
 }

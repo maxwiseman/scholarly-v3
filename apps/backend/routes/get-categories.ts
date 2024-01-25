@@ -76,7 +76,7 @@ export default defineEventHandler(async (event) => {
   return data;
 });
 
-export interface AspenCategory {
+export interface AspenCategories {
   average: number;
   categories: {
     name: string;
