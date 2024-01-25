@@ -33,6 +33,7 @@ export function Chat({
   const [userMessage, setUserMessage] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
   const panelRef = useRef<ImperativePanelHandle>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<
     { sender: "assistant" | "user"; message: string }[]
   >([
@@ -65,6 +66,13 @@ export function Chat({
       document.removeEventListener("keydown", down);
     };
   }, [panelRef, chatOpen]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({
+      top: scrollRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [messages]);
 
   return (
     <>
@@ -114,41 +122,44 @@ export function Chat({
             </CardHeader>
             <ScrollArea
               className="h-full px-6 py-0"
+              ref={scrollRef}
               style={{
                 maskImage: `linear-gradient(#000,#000,transparent 0,#000 10px,#000 calc(100% - 10px),transparent)`,
               }}
             >
-              {messages.map((message, i) => {
-                return (
-                  <>
-                    {message.sender !== messages[i - 1]?.sender && i !== 0 ? (
-                      <div className="my-4 mt-6 flex max-w-full flex-row flex-nowrap items-center gap-1">
-                        {message.sender === "assistant" ? (
-                          <>
-                            <span className="text-xs text-muted-foreground">
-                              Assistant
-                            </span>
-                            <Separator />
-                          </>
-                        ) : (
-                          <>
-                            <Separator className="relative shrink" />
-                            <span className="text-xs text-muted-foreground">
-                              User
-                            </span>
-                          </>
-                        )}
-                      </div>
-                    ) : null}
-                    <Markdown
-                      className="typography break-words"
-                      key={message.message.substring(0, 10)}
-                    >
-                      {message.message}
-                    </Markdown>
-                  </>
-                );
-              })}
+              <div>
+                {messages.map((message, i) => {
+                  return (
+                    <>
+                      {message.sender !== messages[i - 1]?.sender && i !== 0 ? (
+                        <div className="my-4 mt-6 flex max-w-full flex-row flex-nowrap items-center gap-1">
+                          {message.sender === "assistant" ? (
+                            <>
+                              <span className="text-xs text-muted-foreground">
+                                Assistant
+                              </span>
+                              <Separator />
+                            </>
+                          ) : (
+                            <>
+                              <Separator className="relative shrink" />
+                              <span className="text-xs text-muted-foreground">
+                                User
+                              </span>
+                            </>
+                          )}
+                        </div>
+                      ) : null}
+                      <Markdown
+                        className="typography break-words"
+                        key={message.message.substring(0, 10)}
+                      >
+                        {message.message}
+                      </Markdown>
+                    </>
+                  );
+                })}
+              </div>
             </ScrollArea>
             <CardFooter className="flex items-center gap-2 pt-6">
               <Input
