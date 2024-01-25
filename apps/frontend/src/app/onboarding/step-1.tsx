@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { IconPlus } from "@tabler/icons-react";
+// import { IconPlus } from "@tabler/icons-react";
 import {
   Form,
   FormControl,
@@ -140,21 +140,20 @@ export function StepOne({
                   <Link
                     className="underline"
                     href="https://knoxschools.instructure.com/login/saml"
+                    target="_blank"
                   >
                     Canvas
                   </Link>{" "}
                   and log in
                 </li>
                 <li>2. Click your profile picture in the sidebar</li>
+                <li>3. Click the Settings link</li>
                 <li>
-                  3. Click the <span style={LinkStyle}>Settings</span> link
-                </li>
-                <li>
-                  4. Scroll down, and click{" "}
-                  <span style={ButtonStyle}>
+                  4. Scroll down, and click &ldquo;New Access Token&ldquo;
+                  {/* <span style={ButtonStyle}>
                     <IconPlus />
                     New Access Token
-                  </span>
+                  </span> */}
                 </li>
               </ol>
             </ResponsiveDialogContent>
@@ -205,65 +204,65 @@ export function StepOne({
   );
 }
 
-const LinkStyle = {
-  BoxSizing: "border-box",
-  fontFamily:
-    'LatoWeb, "Lato Extended", Lato, "Helvetica Neue", Helvetica, Arial, sans-serif',
-  fontWeight: "400",
-  transition: "outline-color 0.2s ease 0s",
-  verticalAlign: "baseline",
-  outline: "transparent solid 0.125rem",
-  borderRadius: "0.125rem",
-  outlineOffset: "0.25rem",
-  cursor: "pointer",
-  color: "rgb(73, 128, 230)",
-  textDecoration: "none",
-};
+// const LinkStyle = {
+//   BoxSizing: "border-box",
+//   fontFamily:
+//     'LatoWeb, "Lato Extended", Lato, "Helvetica Neue", Helvetica, Arial, sans-serif',
+//   fontWeight: "400",
+//   transition: "outline-color 0.2s ease 0s",
+//   verticalAlign: "baseline",
+//   outline: "transparent solid 0.125rem",
+//   borderRadius: "0.125rem",
+//   outlineOffset: "0.25rem",
+//   cursor: "pointer",
+//   color: "rgb(73, 128, 230)",
+//   textDecoration: "none",
+// };
 
-const ButtonStyle: {
-  background: "#33599f";
-  color: "#ffffff";
-  border: "1px solid";
-  borderColor: "#2C4C88";
-  borderRadius: "3px";
-  transition: "background-color .2s ease-in-out";
-  display: "inline-flex";
-  alignItems: "center";
-  justifyContent: "center";
-  gap: "0.5rem";
-  position: "relative";
-  padding: "8px 14px";
-  marginBottom: "0";
-  fontSize: "1rem";
-  lineHeight: "20px";
-  textAlign: "center";
-  verticalAlign: "middle";
-  cursor: "pointer";
-  textDecoration: "none";
-  overflow: "hidden";
-  textShadow: "none";
-  userSelect: "none";
-} = {
-  background: "#33599f",
-  color: "#ffffff",
-  border: "1px solid",
-  borderColor: "#2C4C88",
-  borderRadius: "3px",
-  transition: "background-color .2s ease-in-out",
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: "0.5rem",
-  position: "relative",
-  padding: "8px 14px",
-  marginBottom: "0",
-  fontSize: "1rem",
-  lineHeight: "20px",
-  textAlign: "center",
-  verticalAlign: "middle",
-  cursor: "pointer",
-  textDecoration: "none",
-  overflow: "hidden",
-  textShadow: "none",
-  userSelect: "none",
-};
+// const ButtonStyle: {
+//   background: "#33599f";
+//   color: "#ffffff";
+//   border: "1px solid";
+//   borderColor: "#2C4C88";
+//   borderRadius: "3px";
+//   transition: "background-color .2s ease-in-out";
+//   display: "inline-flex";
+//   alignItems: "center";
+//   justifyContent: "center";
+//   gap: "0.5rem";
+//   position: "relative";
+//   padding: "8px 14px";
+//   marginBottom: "0";
+//   fontSize: "1rem";
+//   lineHeight: "20px";
+//   textAlign: "center";
+//   verticalAlign: "middle";
+//   cursor: "pointer";
+//   textDecoration: "none";
+//   overflow: "hidden";
+//   textShadow: "none";
+//   userSelect: "none";
+// } = {
+//   background: "#33599f",
+//   color: "#ffffff",
+//   border: "1px solid",
+//   borderColor: "#2C4C88",
+//   borderRadius: "3px",
+//   transition: "background-color .2s ease-in-out",
+//   display: "inline-flex",
+//   alignItems: "center",
+//   justifyContent: "center",
+//   gap: "0.5rem",
+//   position: "relative",
+//   padding: "8px 14px",
+//   marginBottom: "0",
+//   fontSize: "1rem",
+//   lineHeight: "20px",
+//   textAlign: "center",
+//   verticalAlign: "middle",
+//   cursor: "pointer",
+//   textDecoration: "none",
+//   overflow: "hidden",
+//   textShadow: "none",
+//   userSelect: "none",
+// };
