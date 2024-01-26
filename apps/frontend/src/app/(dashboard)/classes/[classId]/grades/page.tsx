@@ -197,7 +197,7 @@ export default function Home({
   );
 }
 
-export function calculateCategories(
+function calculateCategories(
   assignments: {
     pointsPossible: number | null;
     points: number | string | null;
