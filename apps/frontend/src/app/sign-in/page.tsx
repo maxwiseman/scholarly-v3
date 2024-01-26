@@ -1,4 +1,5 @@
 import { type Metadata } from "next";
+import { Badge } from "../_components/ui/badge";
 import { UnsplashImage } from "./image";
 import { SignIn } from "./sign-in";
 
@@ -12,7 +13,10 @@ export default async function LoginPage(): Promise<React.ReactElement> {
       <div className="flex max-w-[100vw] grow flex-col items-center justify-center overflow-y-scroll rounded-lg p-8 lg:min-w-[500px]">
         <div className="flex min-h-max max-w-[400px] flex-col gap-0">
           <h1 className="mb-5 mt-0 text-4xl font-bold leading-tight">
-            Welcome back to Scholarly
+            Welcome back to{" "}
+            <span className="flex items-center gap-2">
+              Scholarly<Badge variant="secondary">Beta</Badge>
+            </span>
           </h1>
           <p className="text-muted-foreground">
             Let&lsquo;s get you signed in. Please enter your details. If you
