@@ -28,7 +28,11 @@ function DropZone({
   return (
     <div
       {...props}
-      className={cn("flex h-full w-full flex-row gap-4", className)}
+      className={cn(
+        "flex h-full w-full flex-row gap-0",
+        { "gap-4": files.length > 0 },
+        className,
+      )}
     >
       <Card
         {...dropzone.getRootProps()}

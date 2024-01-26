@@ -1,5 +1,5 @@
+import { type DetailedHTMLProps, type HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
-import { DetailedHTMLProps, HTMLAttributes } from "react";
 
 export function Logo({
   className,

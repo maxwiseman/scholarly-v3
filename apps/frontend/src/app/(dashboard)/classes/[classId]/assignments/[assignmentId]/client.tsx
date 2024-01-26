@@ -37,7 +37,7 @@ import {
   TabsTrigger,
 } from "@/app/_components/ui/tabs";
 import { TipTap } from "@/app/_components/ui/tiptap";
-import { type Assignment } from "@/server/api/routers/canvas/get-assignment";
+import { type Assignment } from "@/server/api/routers/canvas/get-assignments";
 import { api } from "@/trpc/react";
 
 export function Actions({

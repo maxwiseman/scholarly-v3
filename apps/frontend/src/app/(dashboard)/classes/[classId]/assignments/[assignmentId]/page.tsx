@@ -7,6 +7,14 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/app/_components/ui/resizable";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/app/_components/ui/table";
 
 export default async function Page({
   params,
@@ -60,7 +68,47 @@ export default async function Page({
                 ) || "",
             }}
           />
-          {assignmentData.description !== "" && <Separator className="my-6" />}
+          {assignmentData.description !== "" &&
+            assignmentData.rubric === undefined && (
+              <Separator className="my-6" />
+            )}
+          {assignmentData.rubric ? (
+            <>
+              <Table className="overflow-hidden rounded-t-md">
+                <TableHeader className="bg-muted/50 font-medium">
+                  <TableRow>
+                    <TableHead>Criteria</TableHead>
+                    <TableHead>Ratings</TableHead>
+                    <TableHead>Points</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {assignmentData.rubric.map((row) => {
+                    return (
+                      <TableRow key={row.id}>
+                        <TableCell>{row.description}</TableCell>
+                        <TableCell>
+                          {row.ratings.map((rating) => {
+                            return (
+                              <TableCell key={rating.id}>
+                                <div className="flex flex-col gap-2">
+                                  <span>{`${rating.points} pts`}</span>
+                                  <span>{rating.description}</span>
+                                  <span>{rating.long_description}</span>
+                                </div>
+                              </TableCell>
+                            );
+                          })}
+                        </TableCell>
+                        <TableCell>{`${row.points} pts`}</TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+              <Separator className="mb-6" />
+            </>
+          ) : null}
           <Submission assignment={assignmentData} classId={params.classId} />
         </div>
       </ResizablePanel>

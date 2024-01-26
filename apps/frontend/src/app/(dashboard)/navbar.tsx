@@ -4,11 +4,10 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
-import Image from "next/image";
 import { UserButton } from "../_components/ui/user-button";
+import { Logo } from "../_components/logo";
 import { Search } from "./client";
 import { cn } from "@/lib/utils";
-import { Logo } from "../_components/logo";
 
 export function Navbar(): React.ReactElement {
   const pathname = usePathname();

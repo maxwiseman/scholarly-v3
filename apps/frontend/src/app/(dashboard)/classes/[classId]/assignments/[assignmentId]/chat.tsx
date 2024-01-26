@@ -25,7 +25,7 @@ import {
   ResizablePanel,
 } from "@/app/_components/ui/resizable";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
-import { type Assignment } from "@/server/api/routers/canvas/get-assignment";
+import { type Assignment } from "@/server/api/routers/canvas/get-assignments";
 import { Separator } from "@/app/_components/ui/separator";
 import { cn } from "@/lib/utils";
 import {

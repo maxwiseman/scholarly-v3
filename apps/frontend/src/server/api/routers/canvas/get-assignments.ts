@@ -38,10 +38,10 @@ export async function getAssignments({
   ).then((res) => res.json() as Promise<Assignment[] | undefined>);
   return data;
 }
-interface Assignment {
+export interface Assignment {
   id: number;
   description: string;
-  due_at: string;
+  due_at: string | null;
   unlock_at: string;
   lock_at: string;
   points_possible: number;
@@ -111,4 +111,21 @@ interface Assignment {
   anonymize_students: boolean;
   require_lockdown_browser: boolean;
   restrict_quantitative_data: boolean;
+  rubric: Rubric[] | undefined;
+}
+
+export interface Rubric {
+  id: string;
+  points: number;
+  description: string;
+  long_description: string;
+  ignore_for_scoring: null;
+  criterion_use_range: boolean;
+  ratings: Rating[];
+}
+interface Rating {
+  id: string;
+  points: number;
+  description: string;
+  long_description: string;
 }
