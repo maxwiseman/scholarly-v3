@@ -246,6 +246,7 @@ Today's date: ${new Date().toLocaleDateString("en-us", {
       year: "numeric",
     })}
 Assignment name: ${assignment.name}
+${assignment.rubric ? `Assignment rubric: ${JSON.stringify(assignment.rubric)}` : ""}
 ${
   assignment.due_at
     ? `Assignment due date: ${new Date(assignment.due_at).toLocaleDateString(
