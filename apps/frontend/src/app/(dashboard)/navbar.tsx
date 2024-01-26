@@ -4,9 +4,11 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
+import Image from "next/image";
 import { UserButton } from "../_components/ui/user-button";
 import { Search } from "./client";
 import { cn } from "@/lib/utils";
+import { Logo } from "../_components/logo";
 
 export function Navbar(): React.ReactElement {
   const pathname = usePathname();
@@ -23,8 +25,9 @@ export function Navbar(): React.ReactElement {
     <header className="sticky top-0 z-40 flex h-14 items-center justify-center border-b border-border bg-background/95 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-background/75">
       <nav className="flex w-full items-center justify-between px-8">
         <div className="flex flex-row items-center justify-start gap-6">
-          <Link href="/dashboard">
-            <span className="block font-bold">Scholarly</span>
+          <Link className="flex items-center space-x-3" href="/dashboard">
+            <Logo />
+            <span className="block font-bold sm:block">Scholarly</span>
           </Link>
           <Link
             className={cn(

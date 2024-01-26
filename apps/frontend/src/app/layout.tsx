@@ -19,7 +19,7 @@ const inter = Inter({
 export const metadata = {
   title: "Scholarly",
   description: "Aspen + Canvas = 😃",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [{ rel: "icon", url: "/favicon.svg" }],
 };
 
 export default async function RootLayout({
