@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./card";
 import { Button } from "./button";
 import { Separator } from "./separator";
-import { cn } from "@/lib/utils";
+import { cn, sendDiscordLog } from "@/lib/utils";
 
 function DropZone({
   className,
@@ -22,6 +22,7 @@ function DropZone({
       toast.error("File couldn't be uploaded!", {
         description: "Check the file size and try again.",
       });
+      sendDiscordLog(`File couldn't be uploaded!`, { ping: false });
     },
   });
   return (

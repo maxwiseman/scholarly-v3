@@ -123,6 +123,9 @@ export const env = createEnv({
     GOOGLE_CLIENT_SECRET: z.string(),
     UNSPLASH_ACCESS_KEY: z.string(),
     UNSPLASH_SECRET_KEY: z.string(),
+    DISCORD_CHANNEL_ID: z.string(),
+    DISCORD_BOT_TOKEN: z.string(),
+    DISCORD_PING_ID: z.string().optional(),
   },
   /**
    * Specify your client-side environment variables schema here.
@@ -150,6 +153,9 @@ export const env = createEnv({
     PORT: process.env.PORT,
     UNSPLASH_ACCESS_KEY: process.env.UNSPLASH_ACCESS_KEY,
     UNSPLASH_SECRET_KEY: process.env.UNSPLASH_SECRET_KEY,
+    DISCORD_CHANNEL_ID: process.env.DISCORD_CHANNEL_ID,
+    DISCORD_BOT_TOKEN: process.env.DISCORD_BOT_TOKEN,
+    DISCORD_PING_ID: process.env.DISCORD_PING_ID,
 
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
