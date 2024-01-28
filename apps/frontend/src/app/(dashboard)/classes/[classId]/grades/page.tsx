@@ -22,26 +22,16 @@ export default function Home({
   params: { classId: string };
 }): React.ReactElement {
   const classData = api.user.getClasses.useQuery(undefined, queryOpts);
-  // const categoryData = api.aspen.getCategories.useQuery(
-  //   { id: params.classId },
-  //   {
-  //     refetchOnWindowFocus: false,
-  //     refetchOnMount: false,
-  //     refetchOnReconnect: false,
-  //   },
-  // );
   const assignmentData = api.user.getAssignments.useQuery(
     {
       id: params.classId,
     },
     queryOpts,
   );
-
   const assignmentAspenData = api.aspen.getAssignments.useQuery(
     { id: params.classId },
     queryOpts,
   );
-
   const categoryData = api.aspen.getCategories.useQuery(
     { id: params.classId },
     queryOpts,
@@ -181,7 +171,15 @@ export default function Home({
       {classData.data && classData.isFetched ? (
         <DataTable
           columns={columns}
-          data={assignmentAspenData.data || assignmentData.data || []}
+          data={
+            assignmentAspenData.data ||
+            assignmentData.data?.sort((a, b): number => {
+              if (a.dateDue && b.dateDue && a.dateDue < b.dateDue) return 1;
+              if (a.dateDue && b.dateDue && a.dateDue > b.dateDue) return -1;
+              return 0;
+            }) ||
+            []
+          }
           defaultVisibility={{
             "Date Assigned": false,
             "Date Due": false,
@@ -255,6 +253,13 @@ function calculateCategories(
       (!isNaN(obj.value) ? obj.value : 0) * (obj.weight / totalCategoryWeights),
     0,
   );
+
+  if (average.toFixed(2) !== categories.average.toFixed(2)) {
+    // toast.error("Something went wrong while calculating your average!", {
+    //   duration: 10000,
+    // });
+    console.error("Coudn't calculate average!");
+  }
 
   return { average, categories: categoryData };
 }
