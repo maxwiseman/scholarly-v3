@@ -11,7 +11,7 @@ export default function Page(): React.ReactElement {
       <div className="bg-grid-white/[0.02] flex h-screen w-screen flex-col items-center justify-center gap-2">
         <Spotlight />
         <Badge variant="secondary">Beta</Badge>
-        <h1 className="h-[6.4rem] min-h-max bg-gradient-to-b from-foreground to-neutral-600 bg-clip-text text-center text-8xl font-bold  text-transparent">
+        <h1 className="h-[5rem] min-h-max bg-gradient-to-b from-foreground to-neutral-600 bg-clip-text text-center text-7xl font-bold text-transparent md:h-[6.4rem]  md:text-8xl">
           Scholarly
         </h1>
         <h2 className="text-lg text-neutral-500">Learning made easy</h2>

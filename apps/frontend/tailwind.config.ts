@@ -125,7 +125,7 @@ module.exports = {
           }),
         },
         {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call -- its ok
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call -- its fine
           values: flattenColorPalette(theme("backgroundColor")),
           type: "color",
         },
