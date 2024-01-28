@@ -1,17 +1,20 @@
+"use client";
+
 import { IconFile, IconFileUpload, IconX } from "@tabler/icons-react";
 import { useCallback, type HTMLAttributes, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "sonner";
+import { useLogger } from "next-axiom";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./card";
 import { Button } from "./button";
 import { Separator } from "./separator";
 import { cn } from "@/lib/utils";
-import { sendDiscordLog } from "@/lib/server-utils";
 
 function DropZone({
   className,
   ...props
 }: HTMLAttributes<HTMLDivElement>): React.ReactElement {
+  const log = useLogger();
   const [files, setFiles] = useState<File[]>([]);
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFiles([...files, ...acceptedFiles]);
@@ -23,11 +26,7 @@ function DropZone({
       toast.error("File couldn't be uploaded!", {
         description: "Check the file size and try again.",
       });
-      sendDiscordLog(`File couldn't be uploaded!`, { ping: false }).catch(
-        () => {
-          console.error("Couldn't send Discord log");
-        },
-      );
+      log.error("File upload failed");
     },
   });
   return (

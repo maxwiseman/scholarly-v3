@@ -18,5 +18,8 @@
   },
   "workspaces": [
     "apps/*"
-  ]
+  ],
+  "dependencies": {
+    "next-axiom": "^1.1.1"
+  }
 }

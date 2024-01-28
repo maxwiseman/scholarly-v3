@@ -1,6 +1,7 @@
 "use client";
 
 import { type ColumnDef } from "@tanstack/react-table";
+import { useLogger } from "next-axiom";
 import { DataTable } from "../../../../_components/ui/data-table";
 import { api } from "@/trpc/react";
 import {
@@ -36,6 +37,8 @@ export default function Home({
     { id: params.classId },
     queryOpts,
   );
+
+  const log = useLogger().with({ classId: params.classId });
 
   const columns: ColumnDef<{
     name: string | null;
@@ -193,73 +196,73 @@ export default function Home({
       )}
     </main>
   );
-}
+  function calculateCategories(
+    assignments: {
+      pointsPossible: number | null;
+      points: number | string | null;
+      category: string | null;
+      extraCredit: boolean | null;
+    }[],
+    categories: AspenCategories,
+  ): AspenCategories {
+    // Duplicate the categories object so that we don't modify the original, and add some extra keys for later
+    const internalCategoryData: {
+      name: string;
+      pointsPossible?: number;
+      points?: number;
+      weight: number;
+      value: number;
+    }[] = [...categories.categories];
 
-function calculateCategories(
-  assignments: {
-    pointsPossible: number | null;
-    points: number | string | null;
-    category: string | null;
-    extraCredit: boolean | null;
-  }[],
-  categories: AspenCategories,
-): AspenCategories {
-  // Duplicate the categories object so that we don't modify the original, and add some extra keys for later
-  const categoryData: {
-    name: string;
-    pointsPossible?: number;
-    points?: number;
-    weight: number;
-    value: number;
-  }[] = [...categories.categories];
-
-  // For each category, check what assignments are in that category and add up the points and pointsPossible
-  categoryData.forEach((category) => {
-    assignments.forEach((assignment) => {
-      if (
-        typeof assignment.points === "string" &&
-        assignment.points.toUpperCase() === "M"
-      )
-        assignment.points = 0;
-      if (assignment.category === category.name) {
+    // For each category, check what assignments are in that category and add up the points and pointsPossible
+    internalCategoryData.forEach((category) => {
+      assignments.forEach((assignment) => {
         if (
-          !assignment.extraCredit &&
-          typeof assignment.points === "number" &&
-          assignment.pointsPossible !== null
-        ) {
-          if (category.pointsPossible)
-            category.pointsPossible += assignment.pointsPossible;
-          else category.pointsPossible = assignment.pointsPossible;
+          typeof assignment.points === "string" &&
+          assignment.points.toUpperCase() === "M"
+        )
+          assignment.points = 0;
+        if (assignment.category === category.name) {
+          if (
+            !assignment.extraCredit &&
+            typeof assignment.points === "number" &&
+            assignment.pointsPossible !== null
+          ) {
+            if (category.pointsPossible)
+              category.pointsPossible += assignment.pointsPossible;
+            else category.pointsPossible = assignment.pointsPossible;
+          }
+          if (typeof assignment.points === "number") {
+            if (category.points) category.points += assignment.points;
+            else category.points = assignment.points;
+          }
         }
-        if (typeof assignment.points === "number") {
-          if (category.points) category.points += assignment.points;
-          else category.points = assignment.points;
-        }
-      }
+      });
+      if (category.pointsPossible && category.points)
+        category.value = (category.points / category.pointsPossible) * 100;
+      else category.value = NaN;
     });
-    if (category.pointsPossible && category.points)
-      category.value = (category.points / category.pointsPossible) * 100;
-    else category.value = NaN;
-  });
 
-  // Calculate the class average, while excluding categories that have no value
-  const totalCategoryWeights = categoryData.reduce(
-    (acc, obj) => acc + (!isNaN(obj.value) ? obj.weight : 0),
-    0,
-  );
-  const average = categoryData.reduce(
-    (acc, obj) =>
-      acc +
-      (!isNaN(obj.value) ? obj.value : 0) * (obj.weight / totalCategoryWeights),
-    0,
-  );
+    // Calculate the class average, while excluding categories that have no value
+    const totalCategoryWeights = internalCategoryData.reduce(
+      (acc, obj) => acc + (!isNaN(obj.value) ? obj.weight : 0),
+      0,
+    );
+    const average = internalCategoryData.reduce(
+      (acc, obj) =>
+        acc +
+        (!isNaN(obj.value) ? obj.value : 0) *
+          (obj.weight / totalCategoryWeights),
+      0,
+    );
 
-  if (average.toFixed(2) !== categories.average.toFixed(2)) {
-    // toast.error("Something went wrong while calculating your average!", {
-    //   duration: 10000,
-    // });
-    console.error("Coudn't calculate average!");
+    if (average.toFixed(2) !== categories.average.toFixed(2)) {
+      // toast.error("Something went wrong while calculating your average!", {
+      //   duration: 10000,
+      // });
+      log.error("Something went wrong while calculating averages!");
+    }
+
+    return { average, categories: internalCategoryData };
   }
-
-  return { average, categories: categoryData };
 }
