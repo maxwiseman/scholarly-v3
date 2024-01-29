@@ -32,8 +32,13 @@ import {
 import { Input } from "../_components/ui/input";
 import { Textarea } from "../_components/ui/textarea";
 import { api } from "@/trpc/react";
+import { cn } from "@/lib/utils";
 
-export function Search(): React.ReactElement {
+export function Search({
+  className,
+}: {
+  className?: string;
+}): React.ReactElement {
   const [open, setOpen] = useState(false);
   const classes = api.user.getClasses.useQuery();
   const router = useRouter();
@@ -54,7 +59,10 @@ export function Search(): React.ReactElement {
   return (
     <>
       <Button
-        className="relative flex w-48 justify-start text-muted-foreground"
+        className={cn(
+          "relative flex w-48 justify-start text-muted-foreground",
+          className,
+        )}
         icon={<IconSearch className="h-4 w-4" />}
         onClick={() => {
           setOpen(true);
