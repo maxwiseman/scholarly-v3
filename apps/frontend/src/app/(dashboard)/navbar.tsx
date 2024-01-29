@@ -26,7 +26,7 @@ export function Navbar(): React.ReactElement {
         <div className="flex flex-row items-center justify-start gap-6">
           <Link className="flex items-center space-x-3" href="/dashboard">
             <Logo />
-            <span className="block font-bold sm:block">Scholarly</span>
+            <span className="block font-bold hidden sm:block">Scholarly</span>
           </Link>
           <Link
             className={cn(
