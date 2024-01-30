@@ -1,4 +1,4 @@
-import puppeteer from "puppeteer-core";
+import puppeteer, { type PuppeteerLaunchOptions } from "puppeteer-core";
 import { goToAcademics, login } from "../lib";
 
 export default defineEventHandler(async (event) => {
@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   ).split(":");
   const classId = getQuery(event).id?.toString();
 
-  const options = {
+  const options: PuppeteerLaunchOptions = {
     args: ["--no-sandbox"],
     executablePath:
       // eslint-disable-next-line no-nested-ternary -- This isn't that confusing
@@ -20,8 +20,6 @@ export default defineEventHandler(async (event) => {
   const browser = await puppeteer.launch(options);
   const context = await browser.createIncognitoBrowserContext();
   const page = await context.newPage();
-
-  await page.setViewport({ width: 1920, height: 1080 });
 
   // Login
   await login(

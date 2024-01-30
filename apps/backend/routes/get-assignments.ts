@@ -1,4 +1,7 @@
-import puppeteer from "puppeteer-core";
+import puppeteer, {
+  type Page,
+  type PuppeteerLaunchOptions,
+} from "puppeteer-core";
 import { capitalize, goToAcademics, login } from "../lib";
 
 export default eventHandler(async (event) => {
@@ -7,8 +10,9 @@ export default eventHandler(async (event) => {
   ).split(":");
   const classId = getQuery(event).id?.toString();
 
-  const options = {
+  const options: PuppeteerLaunchOptions = {
     args: ["--no-sandbox"],
+    headless: false,
     executablePath:
       // eslint-disable-next-line no-nested-ternary -- This isn't that confusing
       process.platform === "win32"
@@ -20,8 +24,6 @@ export default eventHandler(async (event) => {
   const browser = await puppeteer.launch(options);
   const context = await browser.createIncognitoBrowserContext();
   const page = await context.newPage();
-
-  await page.setViewport({ width: 1920, height: 1080 });
 
   // Login
   await login(
@@ -49,6 +51,29 @@ export default eventHandler(async (event) => {
   if (!process.env.VERCEL_ENV) await page.screenshot({ path: "output.png" });
 
   // Extract data
+  const data = await extractData(page);
+
+  for (let i = 0; i < 20; i++) {
+    try {
+      // eslint-disable-next-line no-await-in-loop -- This is necessary
+      await page.waitForSelector("#topnextPageButton:not([disabled])", {
+        timeout: 500,
+      });
+      // eslint-disable-next-line no-await-in-loop -- This is necessary
+      await page.click("#topnextPageButton:not([disabled])");
+      // eslint-disable-next-line no-await-in-loop -- This is necessary
+      data.push(...(await extractData(page)));
+    } catch {
+      break;
+    }
+  }
+  await browser.close();
+
+  return data;
+});
+
+async function extractData(page: Page): Promise<AspenAssignment[]> {
+  await page.waitForSelector("#dataGrid", { timeout: 10000 });
   const name = await page.$$eval(
     "#dataGrid tr:not(:first-of-type) > td:nth-of-type(2) a",
     (elements) => elements.map((element) => element.innerText),
@@ -103,10 +128,8 @@ export default eventHandler(async (event) => {
     };
   });
 
-  await browser.close();
-
   return data;
-});
+}
 
 export interface AspenAssignment {
   name: string;
