@@ -113,9 +113,18 @@ const columns: ColumnDef<{
     id: "Points Possible",
   },
   {
-    header: "Points",
+    header: "Score",
     accessorKey: "points",
-    id: "Points",
+    id: "Score",
+    accessorFn: (data) => {
+      if (
+        data.pointsPossible === null ||
+        typeof data.points !== "number" ||
+        data.pointsPossible === 0
+      )
+        return `${data.points} pts`;
+      return `${(data.points / data.pointsPossible) * 100}% (${data.points} pts)`;
+    },
   },
   {
     header: "Feedback",
