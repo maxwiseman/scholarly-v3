@@ -1,8 +1,16 @@
 "use client";
 
+import { useLogger } from "next-axiom";
+import { useEffect } from "react";
 import { Button, LinkButton } from "./_components/ui/button";
 
 export default function Page(): React.ReactElement {
+  const log = useLogger();
+
+  useEffect(() => {
+    log.error("A client side error occurred!");
+  });
+
   return (
     <main>
       <div className="flex h-screen w-screen flex-col items-center justify-center gap-2">
