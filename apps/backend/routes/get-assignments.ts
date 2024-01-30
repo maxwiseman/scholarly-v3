@@ -12,7 +12,6 @@ export default eventHandler(async (event) => {
 
   const options: PuppeteerLaunchOptions = {
     args: ["--no-sandbox"],
-    headless: false,
     executablePath:
       // eslint-disable-next-line no-nested-ternary -- This isn't that confusing
       process.platform === "win32"
