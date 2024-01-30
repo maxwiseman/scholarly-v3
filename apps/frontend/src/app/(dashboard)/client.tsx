@@ -4,6 +4,9 @@ import { IconMessage, IconNotebook, IconSearch } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../_components/ui/button";
 import { Kbd } from "../_components/ui/kbd";
 import {
@@ -31,8 +34,17 @@ import {
 } from "../_components/ui/select";
 import { Input } from "../_components/ui/input";
 import { Textarea } from "../_components/ui/textarea";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../_components/ui/form";
 import { api } from "@/trpc/react";
 import { cn } from "@/lib/utils";
+import { sendDiscordLog } from "@/lib/server-utils";
 
 export function Search({
   className,
@@ -111,6 +123,16 @@ export function Search({
 function Feedback(): React.ReactElement {
   const [open, setOpen] = useState(false);
 
+  const formSchema = z.object({
+    type: z.enum(["bug", "feature", "question"]),
+    title: z.string(),
+    description: z.string(),
+  });
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+  });
+
   return (
     <Dialog
       onOpenChange={(val) => {
@@ -131,24 +153,15 @@ function Feedback(): React.ReactElement {
           <DialogTitle>Feedback</DialogTitle>
           <DialogDescription>Found a problem? Let us know.</DialogDescription>
         </DialogHeader>
-        <Select>
-          <SelectTrigger>
-            <SelectValue placeholder="Pick something..." />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="bug">Bug</SelectItem>
-            <SelectItem value="feature">Feature request</SelectItem>
-            <SelectItem value="question">Question</SelectItem>
-          </SelectContent>
-        </Select>
-        <Input placeholder="Type something..." />
-        <Textarea placeholder="Type something..." />
-        <DialogFooter>
-          <Button
-            onClick={() => {
+        <Form {...form}>
+          <form
+            className="space-y-4"
+            onSubmit={form.handleSubmit((data) => {
               toast.promise(
                 async () => {
-                  console.log("Submitting");
+                  await sendDiscordLog(
+                    `# ${data.type}: ${data.title} \n ${data.description}`,
+                  );
                 },
                 {
                   loading: "Submitting...",
@@ -157,11 +170,61 @@ function Feedback(): React.ReactElement {
                   description: "Thanks, we'll look into that.",
                 },
               );
-            }}
+            })}
           >
-            Submit
-          </Button>
-        </DialogFooter>
+            <FormField
+              control={form.control}
+              name="type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Type</FormLabel>
+                  <FormControl>
+                    <Select {...field} onValueChange={field.onChange}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Pick something..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="bug">Bug</SelectItem>
+                        <SelectItem value="feature">Feature request</SelectItem>
+                        <SelectItem value="question">Question</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Type something..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Type something..." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <DialogFooter>
+              <Button type="submit">Submit</Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

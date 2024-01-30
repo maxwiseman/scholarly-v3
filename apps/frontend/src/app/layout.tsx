@@ -3,8 +3,8 @@ import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 // import { GeistSans } from "geist/font/sans";
 import { cookies } from "next/headers";
-import { Toaster } from "sonner";
 import { AxiomWebVitals } from "next-axiom";
+import { Toaster } from "./_components/ui/sonner";
 import { ServerSessionProvider } from "./_components/server-session-provider";
 import { ThemeProvider } from "./_components/theme-provider";
 import { NextUIClientProvider } from "./_components/next-ui-provider";
@@ -50,7 +50,7 @@ export default async function RootLayout({
             </TRPCReactProvider>
           </ServerSessionProvider>
         </ThemeProvider>
-        <Toaster richColors />
+        <Toaster />
       </body>
       <AxiomWebVitals />
     </html>
