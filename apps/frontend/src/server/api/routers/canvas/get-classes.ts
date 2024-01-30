@@ -10,51 +10,57 @@ export async function getClasses(): Promise<Course[]> {
   });
 
   const data = await fetch(
-    "https://knoxschools.instructure.com/api/v1/courses?enrollment_state=active&per_page=50",
+    "https://knoxschools.instructure.com/api/v1/dashboard/dashboard_cards",
     {
       headers: {
         Authorization: `Bearer ${user?.canvasApiKey}`,
       },
-    }
-  ).then(res => res.json() as Promise<Course[]>);
+    },
+  ).then((res) => res.json() as Promise<Course[]>);
   return data;
 }
 
 export interface Course {
+  longName: string;
+  shortName: string;
+  originalName: string;
+  courseCode: string;
+  assetString: string;
+  href: string;
+  term: string;
+  subtitle: string;
+  enrollmentState: string;
+  enrollmentType: string;
+  observee: null;
   id: number;
-  name: string;
-  account_id: number;
-  uuid: string;
-  start_at: string | null;
-  grading_standard_id: number | null;
-  is_public: boolean | null;
-  created_at: string;
-  course_code: string;
-  default_view: string;
-  root_account_id: number;
-  enrollment_term_id: number;
-  license: string | null;
-  grade_passback_setting: string | null;
-  end_at: string | null;
-  public_syllabus: boolean;
-  public_syllabus_to_auth: boolean;
-  storage_quota_mb: number;
-  is_public_to_auth_users: boolean;
-  homeroom_course: boolean;
-  course_color: string | null;
-  friendly_name: string | null;
-  apply_assignment_group_weights: boolean;
-  calendar: {
-    ics: string;
-  };
-  time_zone: string;
-  original_name: string;
-  blueprint: boolean;
-  template: boolean;
-  enrollments: Array<{
-    // Enrollment data structure, you can specify it here if needed
-  }>;
-  hide_final_grades: boolean;
-  workflow_state: string;
-  restrict_enrollments_to_course_dates: boolean;
+  isFavorited: boolean;
+  isK5Subject: boolean;
+  isHomeroom: boolean;
+  useClassicFont: boolean;
+  canManage: boolean;
+  canReadAnnouncements: boolean;
+  image: string;
+  color: null;
+  position: null;
+  published: boolean;
+  links: [
+    {
+      css_class: string;
+      icon: string;
+      hidden: null;
+      path: string;
+      label: string;
+    },
+    {
+      css_class: string;
+      icon: string;
+      hidden: null;
+      path: string;
+      label: string;
+    },
+  ];
+  canChangeCoursePublishState: boolean;
+  defaultView: string;
+  pagesUrl: string;
+  frontPageTitle: string;
 }

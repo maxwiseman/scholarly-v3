@@ -38,8 +38,8 @@ export function StepTwo({
           if (
             aspenCourse.name
               .toUpperCase()
-              .includes(canvasCourse.name.toUpperCase()) ||
-            canvasCourse.name
+              .includes(canvasCourse.shortName.toUpperCase()) ||
+            canvasCourse.shortName
               .toUpperCase()
               .includes(aspenCourse.name.toUpperCase() || "")
           )
@@ -81,7 +81,7 @@ export function StepTwo({
                 key={canvasCourse.id}
               >
                 <span className="line-clamp-1 block w-full text-muted-foreground">
-                  {canvasCourse.name}
+                  {canvasCourse.shortName}
                 </span>
                 <IconArrowRight className="h-7 min-h-[1.75rem] w-7 min-w-[1.75rem]" />
                 <Select
@@ -90,8 +90,8 @@ export function StepTwo({
                       if (
                         aspenCourse.name
                           .toUpperCase()
-                          .includes(canvasCourse.name.toUpperCase()) ||
-                        canvasCourse.name
+                          .includes(canvasCourse.shortName.toUpperCase()) ||
+                        canvasCourse.shortName
                           .toUpperCase()
                           .includes(aspenCourse.name.toUpperCase() || "")
                       )
@@ -137,7 +137,7 @@ export function StepTwo({
                   )[0];
                   return {
                     id: uuid(),
-                    name: canvasCourse.name,
+                    name: canvasCourse.shortName,
                     teachers: aspenCourse?.teachers || [],
                     gradeAverage: aspenCourse?.termGrade || 100,
                     gradeCategories: [],
