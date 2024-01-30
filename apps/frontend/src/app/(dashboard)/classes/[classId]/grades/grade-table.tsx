@@ -123,7 +123,7 @@ const columns: ColumnDef<{
         data.pointsPossible === 0
       )
         return `${data.points} pts`;
-      return `${(data.points / data.pointsPossible) * 100}% (${data.points} pts)`;
+      return `${((data.points / data.pointsPossible) * 100).toFixed(0)}% (${data.points} pts)`;
     },
   },
   {
