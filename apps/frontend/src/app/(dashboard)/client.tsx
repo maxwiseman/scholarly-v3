@@ -160,8 +160,9 @@ function Feedback(): React.ReactElement {
               toast.promise(
                 async () => {
                   await sendDiscordLog(
-                    `# ${data.type}: ${data.title} \n ${data.description}`,
+                    `# ${data.type.charAt(0).toUpperCase() + data.type.substring(1)}: ${data.title} \n ${data.description}`,
                   );
+                  setOpen(false);
                 },
                 {
                   loading: "Submitting...",
