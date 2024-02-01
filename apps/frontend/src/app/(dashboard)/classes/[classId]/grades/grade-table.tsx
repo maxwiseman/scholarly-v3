@@ -117,12 +117,10 @@ const columns: ColumnDef<{
     accessorKey: "points",
     id: "Score",
     accessorFn: (data) => {
-      if (
-        data.pointsPossible === null ||
-        typeof data.points !== "number" ||
-        data.pointsPossible === 0
-      )
+      if (typeof data.points !== "number") return data.points;
+      if (data.pointsPossible === null || data.pointsPossible === 0)
         return `${data.points} pts`;
+
       return `${((data.points / data.pointsPossible) * 100).toFixed(0)}% (${data.points} pts)`;
     },
   },
