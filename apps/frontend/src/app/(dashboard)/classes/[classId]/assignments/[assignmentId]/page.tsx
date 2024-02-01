@@ -74,7 +74,7 @@ export default async function Page({
             )}
           {assignmentData.rubric ? (
             <>
-              <Table className="overflow-hidden rounded-t-md">
+              <Table className="mt-6 overflow-hidden rounded-t-md">
                 <TableHeader className="bg-muted/50 font-medium">
                   <TableRow>
                     <TableHead>Criteria</TableHead>

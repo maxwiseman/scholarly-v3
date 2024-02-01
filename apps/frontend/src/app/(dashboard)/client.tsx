@@ -1,6 +1,14 @@
 "use client";
 
-import { IconMessage, IconNotebook, IconSearch } from "@tabler/icons-react";
+import {
+  IconApple,
+  IconLetterB,
+  IconLetterG,
+  IconLetterQ,
+  IconMessage,
+  IconNotebook,
+  IconSearch,
+} from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -113,6 +121,53 @@ export function Search({
           </CommandGroup>
           <CommandGroup heading="Misc">
             <Feedback />
+          </CommandGroup>
+          <CommandGroup heading="Quick Links">
+            <CommandItem
+              onSelect={() => {
+                window.open(`https://joinpd.com`);
+                setOpen(false);
+              }}
+            >
+              <IconApple className="mr-2 h-4 w-4" />
+              Pear Deck
+            </CommandItem>
+            <CommandItem
+              onSelect={() => {
+                window.open(`https://app.edulastic.com`);
+                setOpen(false);
+              }}
+            >
+              <IconApple className="mr-2 h-4 w-4" />
+              Pear Assessment (Edulastic)
+            </CommandItem>
+            <CommandItem
+              onSelect={() => {
+                window.open(`https://blooket.com/play`);
+                setOpen(false);
+              }}
+            >
+              <IconLetterB className="mr-2 h-4 w-4" />
+              Blooket
+            </CommandItem>
+            <CommandItem
+              onSelect={() => {
+                window.open(`https://gimkit.com/join`);
+                setOpen(false);
+              }}
+            >
+              <IconLetterG className="mr-2 h-4 w-4" />
+              Gimkit
+            </CommandItem>
+            <CommandItem
+              onSelect={() => {
+                window.open(`https://quizlet.com`);
+                setOpen(false);
+              }}
+            >
+              <IconLetterQ className="mr-2 h-4 w-4" />
+              Quizlet
+            </CommandItem>
           </CommandGroup>
         </CommandList>
       </CommandDialog>
