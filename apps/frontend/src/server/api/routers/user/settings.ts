@@ -63,14 +63,14 @@ export async function updateSettings(settings: Partial<Settings>): Promise<{
     if (!Array.isArray(res)) errors.canvasApiKey = true;
   }
   if (settings.aspenUsername || settings.aspenPassword) {
-    // const aspenVerification = await api.aspen.verifyCredentials.query({ // ! This is broken, but only in prod for some reason. Works fine in dev.
-    //   username: settings.aspenUsername,
-    //   password: settings.aspenPassword,
-    // });
-    // if (!aspenVerification.valid) {
-    //   errors.aspenUsername = true;
-    //   errors.aspenPassword = true;
-    // }
+    const aspenVerification = await api.aspen.verifyCredentials.query({
+      username: settings.aspenUsername,
+      password: settings.aspenPassword,
+    });
+    if (!aspenVerification.valid) {
+      errors.aspenUsername = true;
+      errors.aspenPassword = true;
+    }
   }
   return errors;
 }
