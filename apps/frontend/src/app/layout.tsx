@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 // import { GeistSans } from "geist/font/sans";
 import { cookies } from "next/headers";
 import { AxiomWebVitals } from "next-axiom";
+import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "./_components/ui/sonner";
 import { ServerSessionProvider } from "./_components/server-session-provider";
 import { ThemeProvider } from "./_components/theme-provider";
@@ -53,6 +54,7 @@ export default async function RootLayout({
         <Toaster />
       </body>
       <AxiomWebVitals />
+      <Analytics />
     </html>
   );
 }
