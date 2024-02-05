@@ -52,9 +52,9 @@ export default async function RootLayout({
           </ServerSessionProvider>
         </ThemeProvider>
         <Toaster />
+        <Analytics />
       </body>
       <AxiomWebVitals />
-      <Analytics />
     </html>
   );
 }
