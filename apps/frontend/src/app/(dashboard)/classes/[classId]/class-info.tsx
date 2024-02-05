@@ -26,7 +26,9 @@ export function ClassInfo({ classId }: { classId: string }): React.ReactNode {
 
   return (
     <div className="flex h-[30vh] min-h-[12rem] flex-col justify-center bg-card p-8 shadow-[inset_0px_-3px_44px_-26px_rgba(0,0,0,0.4)] dark:shadow-none">
-      <h1 className="mt-0 text-3xl font-bold">{classInfo?.name}</h1>
+      <h1 className="mt-0 text-3xl font-extrabold lg:text-4xl">
+        {classInfo?.name}
+      </h1>
       {/* <h4 className="text-muted-foreground">Lorem ipsum dolor sit amet</h4> */}
       <div className="mt-2 flex flex-row gap-2">
         {classInfo?.teachers?.map((teacher) => {

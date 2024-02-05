@@ -46,7 +46,7 @@ export function Navbar(): React.ReactElement {
                 "text-foreground": pathname.startsWith("/learn"),
               },
             )}
-            href="/dashboard"
+            href="/study"
           >
             Study
           </Link>
