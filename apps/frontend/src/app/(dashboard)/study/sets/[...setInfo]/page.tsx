@@ -64,11 +64,7 @@ export default function Page({
   );
 }
 
-export function QuizView({
-  cardSet,
-}: {
-  cardSet: CardSet;
-}): React.ReactElement {
+function QuizView({ cardSet }: { cardSet: CardSet }): React.ReactElement {
   const [correctWord, setCorrectWord] = useState("");
   const [promptWord, setPromptWord] = useState("Prompt");
 
