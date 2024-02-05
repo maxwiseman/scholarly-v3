@@ -41,8 +41,10 @@ export default function Page({
           <CarouselContent>
             {setData.cards.map((card) => {
               return (
-                <CarouselItem className="px-10" key={card.front.heading}>
-                  <Flashcard card={card} />
+                <CarouselItem key={card.front.heading}>
+                  <div className="flex items-center justify-center px-10 py-2">
+                    <Flashcard card={card} />
+                  </div>
                 </CarouselItem>
               );
             })}
