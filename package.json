@@ -18,9 +18,5 @@
   },
   "workspaces": [
     "apps/*"
-  ],
-  "dependencies": {
-    "mini-svg-data-uri": "^1.4.4",
-    "next-axiom": "^1.1.1"
-  }
+  ]
 }
