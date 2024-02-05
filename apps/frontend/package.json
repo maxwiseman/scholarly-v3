@@ -71,6 +71,7 @@
     "cmdk": "^0.2.0",
     "drizzle-kit": "^0.20.7",
     "drizzle-orm": "^0.29.1",
+    "embla-carousel-react": "^8.0.0-rc22",
     "framer-motion": "^10.16.16",
     "geist": "^1.2.1",
     "langchain": "^0.1.7",
