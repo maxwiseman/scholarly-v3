@@ -43,7 +43,7 @@ export default function Page({
 
   return (
     <main className="flex flex-col items-center gap-8">
-      <div className="grid gap-8 lg:grid-cols-2">
+      <div className="grid w-full gap-8 lg:grid-cols-2">
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-lg font-bold">
