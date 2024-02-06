@@ -42,7 +42,7 @@ export default function Page({
   }
 
   return (
-    <main className="flex flex-col gap-8">
+    <main className="flex flex-col items-center gap-8">
       <div className="grid gap-8 lg:grid-cols-2">
         <Card>
           <CardHeader className="pb-2">
@@ -99,8 +99,14 @@ export default function Page({
         </Card>
       </div>
       <div
-        className="typography"
-        dangerouslySetInnerHTML={{ __html: frontPageData.data?.body || "" }}
+        className="typography max-w-6xl"
+        dangerouslySetInnerHTML={{
+          __html:
+            frontPageData.data?.body.replaceAll(
+              /href="https:\/\/knoxschools\.instructure\.com\/courses\/[^/]*/g,
+              `href="/classes/${params.classId}`,
+            ) || "",
+        }}
       />
     </main>
   );
