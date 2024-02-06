@@ -49,6 +49,8 @@ export default async function Page({
                         day: "numeric",
                         month: "short",
                         year: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
                       },
                     )
                   : "No due date"}
