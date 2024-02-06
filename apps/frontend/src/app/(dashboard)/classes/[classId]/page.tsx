@@ -32,30 +32,27 @@ export default function Page({
     queryOpts,
   );
 
+  const frontPageData = api.canvas.getFrontPage.useQuery(
+    { classId: params.classId },
+    queryOpts,
+  );
+
   if (!assignmentData.isFetched) {
     return <main className="text-muted-foreground">Loading...</main>;
   }
 
   return (
-    <main className="grid gap-8 lg:grid-cols-2">
-      <Card>
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-bold">
-            Missing Assignments
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul>
-            {assignmentAspenData.data?.map((assignment) => {
-              if (
-                (!assignment.extraCredit && assignment.points === "M") ||
-                assignment.points === 0
-              ) {
-                return <li key={assignment.name}>{assignment.name}</li>;
-              }
-              return null;
-            }) ||
-              assignmentData.data?.map((assignment) => {
+    <main className="flex flex-col gap-8">
+      <div className="grid gap-8 lg:grid-cols-2">
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-lg font-bold">
+              Missing Assignments
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="[&>li]:mt-2">
+              {assignmentAspenData.data?.map((assignment) => {
                 if (
                   (!assignment.extraCredit && assignment.points === "M") ||
                   assignment.points === 0
@@ -63,31 +60,48 @@ export default function Page({
                   return <li key={assignment.name}>{assignment.name}</li>;
                 }
                 return null;
+              }) ||
+                assignmentData.data?.map((assignment) => {
+                  if (
+                    (!assignment.extraCredit && assignment.points === "M") ||
+                    assignment.points === 0
+                  ) {
+                    return <li key={assignment.name}>{assignment.name}</li>;
+                  }
+                  return null;
+                })}
+            </ul>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-lg font-bold">Todo List</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="[&>li]:mt-2">
+              {assignmentCanvasData.data?.map((assignment) => {
+                return (
+                  <li key={assignment.id}>
+                    <Link
+                      className="underline"
+                      href={`/classes/${params.classId}/assignments/${assignment.id}`}
+                    >
+                      {assignment.due_at
+                        ? `${new Date(assignment.due_at).toLocaleDateString()} - `
+                        : ""}{" "}
+                      {assignment.name}
+                    </Link>
+                  </li>
+                );
               })}
-          </ul>
-        </CardContent>
-      </Card>
-      <Card>
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-bold">Todo List</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul>
-            {assignmentCanvasData.data?.map((assignment) => {
-              return (
-                <li key={assignment.id}>
-                  <Link
-                    className="underline"
-                    href={`/classes/${params.classId}/assignments/${assignment.id}`}
-                  >
-                    {assignment.name}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </CardContent>
-      </Card>
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+      <div
+        className="typography"
+        dangerouslySetInnerHTML={{ __html: frontPageData.data?.body || "" }}
+      />
     </main>
   );
 }
