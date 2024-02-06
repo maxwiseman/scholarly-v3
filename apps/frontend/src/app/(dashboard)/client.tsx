@@ -2,7 +2,9 @@
 
 import {
   IconApple,
+  IconLetterA,
   IconLetterB,
+  IconLetterE,
   IconLetterG,
   IconLetterQ,
   IconMessage,
@@ -138,8 +140,19 @@ export function Search({
                 setOpen(false);
               }}
             >
-              <IconApple className="mr-2 h-4 w-4" />
+              <IconLetterE className="mr-2 h-4 w-4" />
               Pear Assessment (Edulastic)
+            </CommandItem>
+            <CommandItem
+              onSelect={() => {
+                window.open(
+                  `https://apclassroom.collegeboard.org/33/assignments?status=assigned`,
+                );
+                setOpen(false);
+              }}
+            >
+              <IconLetterA className="mr-2 h-4 w-4" />
+              AP Classroom
             </CommandItem>
             <CommandItem
               onSelect={() => {
