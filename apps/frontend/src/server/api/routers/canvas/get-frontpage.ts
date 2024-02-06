@@ -8,7 +8,7 @@ export async function getFrontPage({
   classId,
 }: {
   classId: string;
-}): Promise<Page> {
+}): Promise<Partial<Page>> {
   const session = await getServerAuthSession();
   const user = await db.query.users.findFirst({
     where: eq(users.id, session?.user.id || ""),
@@ -27,6 +27,6 @@ export async function getFrontPage({
         Authorization: `Bearer ${user?.canvasApiKey}`,
       },
     },
-  ).then((res) => res.json() as Promise<Page>);
+  ).then((res) => res.json() as Promise<Partial<Page>>);
   return data;
 }

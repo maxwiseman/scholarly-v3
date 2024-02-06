@@ -102,10 +102,12 @@ export default function Page({
         className="typography max-w-6xl"
         dangerouslySetInnerHTML={{
           __html:
-            frontPageData.data?.body.replaceAll(
-              /href="https:\/\/knoxschools\.instructure\.com\/courses\/[^/]*/g,
-              `href="/classes/${params.classId}`,
-            ) || "",
+            typeof frontPageData.data?.body === "string"
+              ? frontPageData.data.body.replaceAll(
+                  /href="https:\/\/knoxschools\.instructure\.com\/courses\/[^/]*/g,
+                  `href="/classes/${params.classId}`,
+                )
+              : "",
         }}
       />
     </main>
