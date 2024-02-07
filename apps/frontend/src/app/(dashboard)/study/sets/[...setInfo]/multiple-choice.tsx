@@ -118,10 +118,10 @@ export function MultipleChoice({
         );
       } else {
         let proposedCard: { name: string; correct: false } = {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- This actually cannot be null
-          name: cardSet.cards[
-            Math.floor(Math.random() * cardSet.cards.length)
-          ]![direction === "backwards" ? "front" : "back"].heading,
+          name:
+            cardSet.cards[Math.floor(Math.random() * cardSet.cards.length)]?.[
+              direction === "backwards" ? "front" : "back"
+            ].heading || "",
           correct: false,
         };
         while (
@@ -130,10 +130,10 @@ export function MultipleChoice({
           proposedCard.name === promptCard?.back.heading
         ) {
           proposedCard = {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- This actually cannot be null
-            name: cardSet.cards[
-              Math.floor(Math.random() * cardSet.cards.length)
-            ]![direction === "backwards" ? "front" : "back"].heading,
+            name:
+              cardSet.cards[Math.floor(Math.random() * cardSet.cards.length)]?.[
+                direction === "backwards" ? "front" : "back"
+              ].heading || "",
             correct: false,
           };
         }
