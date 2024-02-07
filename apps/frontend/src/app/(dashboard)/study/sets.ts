@@ -169,6 +169,17 @@ export const sets: CardSet[] = [
     cards: [
       {
         front: {
+          heading: "Miller v. California",
+          subheading: "1973",
+        },
+        back: {
+          heading: "Miller Test",
+          description:
+            "A three-pronged test used to determine whether speech or expression is obscene and therefore not protected by the First Amendment.",
+        },
+      },
+      {
+        front: {
           heading: "Marbury v. Madison",
           subheading: "1803",
         },
