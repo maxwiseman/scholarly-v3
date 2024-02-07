@@ -180,6 +180,17 @@ export const sets: CardSet[] = [
       },
       {
         front: {
+          heading: "Parents v. Seattle",
+          subheading: "2007",
+        },
+        back: {
+          heading: "School Desegregation",
+          description:
+            "The Supreme Court held that the school district's use of race as a determinant for school assignments violated the Equal Protection Clause. Chief Justice Roberts, in the plurality opinion, stated that the way to stop discrimination on the basis of race is to stop discriminating on the basis of race.",
+        },
+      },
+      {
+        front: {
           heading: "Marbury v. Madison",
           subheading: "1803",
         },
@@ -1348,6 +1359,7 @@ const testSet: CardSet = {
     {
       front: {
         heading: "Front of Card 1",
+        subheading: "Subheading 1",
       },
       back: {
         heading: "Back of Card 1",
@@ -1357,6 +1369,7 @@ const testSet: CardSet = {
     {
       front: {
         heading: "Front of Card 2",
+        subheading: "Subheading 2",
       },
       back: {
         heading: "Back of Card 2",
@@ -1366,6 +1379,7 @@ const testSet: CardSet = {
     {
       front: {
         heading: "Front of Card 3",
+        subheading: "Subheading 3",
       },
       back: {
         heading: "Back of Card 3",
@@ -1375,6 +1389,7 @@ const testSet: CardSet = {
     {
       front: {
         heading: "Front of Card 4",
+        subheading: "Subheading 4",
       },
       back: {
         heading: "Back of Card 4",
@@ -1384,6 +1399,7 @@ const testSet: CardSet = {
     {
       front: {
         heading: "Front of Card 5",
+        subheading: "Subheading 5",
       },
       back: {
         heading: "Back of Card 5",
@@ -1393,6 +1409,7 @@ const testSet: CardSet = {
     {
       front: {
         heading: "Front of Card 6",
+        subheading: "Subheading 6",
       },
       back: {
         heading: "Back of Card 6",
@@ -1402,6 +1419,7 @@ const testSet: CardSet = {
     {
       front: {
         heading: "Front of Card 7",
+        subheading: "Subheading 7",
       },
       back: {
         heading: "Back of Card 7",
@@ -1411,6 +1429,7 @@ const testSet: CardSet = {
     {
       front: {
         heading: "Front of Card 8",
+        subheading: "Subheading 8",
       },
       back: {
         heading: "Back of Card 8",
@@ -1420,6 +1439,7 @@ const testSet: CardSet = {
     {
       front: {
         heading: "Front of Card 9",
+        subheading: "Subheading 9",
       },
       back: {
         heading: "Back of Card 9",
@@ -1429,6 +1449,7 @@ const testSet: CardSet = {
     {
       front: {
         heading: "Front of Card 10",
+        subheading: "Subheading 10",
       },
       back: {
         heading: "Back of Card 10",
