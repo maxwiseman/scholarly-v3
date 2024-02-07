@@ -89,10 +89,6 @@ export function MultipleChoice({
   function nextQuestion(): void {
     setValue("");
     setChoices([]);
-    // setDirection(direction === "forwards" ? "backwards" : "forwards");
-    // setPromptCard(
-    //   cardSet.cards[Math.floor(Math.random() * cardSet.cards.length)],
-    // );
     pickChoices();
   }
 

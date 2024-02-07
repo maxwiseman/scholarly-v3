@@ -1339,3 +1339,105 @@ export const sets: CardSet[] = [
     ],
   },
 ];
+
+const testSet: CardSet = {
+  title: "Test Set",
+  description: "A test set of flashcards",
+  slug: "test-set",
+  cards: [
+    {
+      front: {
+        heading: "Front of Card 1",
+      },
+      back: {
+        heading: "Back of Card 1",
+        description: "Description of Card 1",
+      },
+    },
+    {
+      front: {
+        heading: "Front of Card 2",
+      },
+      back: {
+        heading: "Back of Card 2",
+        description: "Description of Card 2",
+      },
+    },
+    {
+      front: {
+        heading: "Front of Card 3",
+      },
+      back: {
+        heading: "Back of Card 3",
+        description: "Description of Card 3",
+      },
+    },
+    {
+      front: {
+        heading: "Front of Card 4",
+      },
+      back: {
+        heading: "Back of Card 4",
+        description: "Description of Card 4",
+      },
+    },
+    {
+      front: {
+        heading: "Front of Card 5",
+      },
+      back: {
+        heading: "Back of Card 5",
+        description: "Description of Card 5",
+      },
+    },
+    {
+      front: {
+        heading: "Front of Card 6",
+      },
+      back: {
+        heading: "Back of Card 6",
+        description: "Description of Card 6",
+      },
+    },
+    {
+      front: {
+        heading: "Front of Card 7",
+      },
+      back: {
+        heading: "Back of Card 7",
+        description: "Description of Card 7",
+      },
+    },
+    {
+      front: {
+        heading: "Front of Card 8",
+      },
+      back: {
+        heading: "Back of Card 8",
+        description: "Description of Card 8",
+      },
+    },
+    {
+      front: {
+        heading: "Front of Card 9",
+      },
+      back: {
+        heading: "Back of Card 9",
+        description: "Description of Card 9",
+      },
+    },
+    {
+      front: {
+        heading: "Front of Card 10",
+      },
+      back: {
+        heading: "Back of Card 10",
+        description: "Description of Card 10",
+      },
+    },
+  ],
+};
+
+if (process.env.NODE_ENV === "development") {
+  sets.push(testSet);
+}
