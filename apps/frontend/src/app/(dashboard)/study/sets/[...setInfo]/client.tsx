@@ -56,6 +56,14 @@ export function Options({
             >
               Quiz
             </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              checked={Boolean(setInfo[1] === "quiz")}
+              onClick={() => {
+                router.push(`/study/sets/${setInfo[0]}/multiple_choice`);
+              }}
+            >
+              Multiple Choice
+            </DropdownMenuCheckboxItem>
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuItem disabled>Edit set</DropdownMenuItem>
