@@ -3,7 +3,7 @@ import { type CardSet } from "./page";
 export const sets: CardSet[] = [
   {
     title: "Bill of Rights Amendments",
-    slug: "bill-of-rights",
+    slug: "bor-amendments",
     description: "Flashcards for each of the amendments in the Bill of Rights",
     cards: [
       {
@@ -314,7 +314,7 @@ export const sets: CardSet[] = [
   },
   {
     title: "Ecology and Biology Concepts",
-    slug: "biology-test",
+    slug: "ecology-biology-concepts",
     description: "Flashcards on various ecological and biological terms",
     cards: [
       {
