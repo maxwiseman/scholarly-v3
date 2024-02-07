@@ -100,7 +100,7 @@ export function MultipleChoice({
     const newChoices: { name: string; correct: boolean }[] = [];
     const newCorrectNumber = Math.floor(Math.random() * numberOfAnswers);
 
-    if (cardSet.cards.length < numberOfAnswers) {
+    if (cardSet.cards.length <= numberOfAnswers) {
       setChoices([]);
       toast.error("Not enough cards to play multiple choice");
       return;
