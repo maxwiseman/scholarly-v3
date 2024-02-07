@@ -89,14 +89,17 @@ export function MultipleChoice({
   function nextQuestion(): void {
     setValue("");
     setChoices([]);
-    setDirection(direction === "forwards" ? "backwards" : "forwards");
-    setPromptCard(
-      cardSet.cards[Math.floor(Math.random() * cardSet.cards.length)],
-    );
+    // setDirection(direction === "forwards" ? "backwards" : "forwards");
+    // setPromptCard(
+    //   cardSet.cards[Math.floor(Math.random() * cardSet.cards.length)],
+    // );
     pickChoices();
   }
 
   function pickChoices(): void {
+    const newPromptCard =
+      cardSet.cards[Math.floor(Math.random() * cardSet.cards.length)];
+    const newDirection = direction === "forwards" ? "backwards" : "forwards";
     const newChoices: { name: string; correct: boolean }[] = [];
     const newCorrectNumber = Math.floor(Math.random() * numberOfAnswers);
 
@@ -109,10 +112,13 @@ export function MultipleChoice({
     for (let i = 0; i < numberOfAnswers; i++) {
       if (i === newCorrectNumber) {
         newChoices.push(
-          direction === "forwards"
-            ? { name: promptCard?.back.heading ?? "Loading...", correct: true }
+          newDirection === "forwards"
+            ? {
+                name: newPromptCard?.back.heading ?? "Loading...",
+                correct: true,
+              }
             : {
-                name: promptCard?.front.heading ?? "Loading...",
+                name: newPromptCard?.front.heading ?? "Loading...",
                 correct: true,
               },
         );
@@ -120,19 +126,19 @@ export function MultipleChoice({
         let proposedCard: { name: string; correct: false } = {
           name:
             cardSet.cards[Math.floor(Math.random() * cardSet.cards.length)]?.[
-              direction === "backwards" ? "front" : "back"
+              newDirection === "backwards" ? "front" : "back"
             ].heading || "",
           correct: false,
         };
         while (
           newChoices.map((choice) => choice.name).includes(proposedCard.name) ||
-          proposedCard.name === promptCard?.front.heading ||
-          proposedCard.name === promptCard?.back.heading
+          proposedCard.name === newPromptCard?.front.heading ||
+          proposedCard.name === newPromptCard?.back.heading
         ) {
           proposedCard = {
             name:
               cardSet.cards[Math.floor(Math.random() * cardSet.cards.length)]?.[
-                direction === "backwards" ? "front" : "back"
+                newDirection === "backwards" ? "front" : "back"
               ].heading || "",
             correct: false,
           };
@@ -140,6 +146,8 @@ export function MultipleChoice({
         newChoices.push(proposedCard);
       }
     }
+    setDirection(newDirection);
+    setPromptCard(newPromptCard);
     setChoices(newChoices);
   }
 }
