@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { IconRefresh } from "@tabler/icons-react";
 import { api } from "@/trpc/react";
-import { LinkButton } from "@/app/_components/ui/button";
+import { Button, LinkButton } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { queryOpts } from "@/lib/utils";
 
@@ -19,14 +20,29 @@ export default function Page({
 
   return (
     <div className="flex flex-col gap-4">
-      <Input
-        className="max-w-sm"
-        onChange={(e) => {
-          setSearchString(e.target.value);
-        }}
-        placeholder="Search..."
-        value={searchString}
-      />
+      <div className="flex flex-row gap-2">
+        <Input
+          className="max-w-sm"
+          onChange={(e) => {
+            setSearchString(e.target.value);
+          }}
+          placeholder="Search..."
+          value={searchString}
+        />
+        <Button
+          icon={<IconRefresh className="absolute h-4 w-4" />}
+          loading={
+            assignmentData.isFetching ||
+            assignmentData.isRefetching ||
+            assignmentData.isLoading
+          }
+          onClick={async () => {
+            await assignmentData.refetch();
+          }}
+          size="icon"
+          variant="outline"
+        />
+      </div>
       <div className="flex flex-col gap-1">
         {assignmentData.data?.map((assignment) => {
           if (
