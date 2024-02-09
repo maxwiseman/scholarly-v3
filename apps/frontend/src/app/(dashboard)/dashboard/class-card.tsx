@@ -64,7 +64,18 @@ export function ClassCard({
                 <CardTitle className="mt-0 line-clamp-1 text-xl font-semibold">
                   {classData.name}
                 </CardTitle>
-                {classData.gradeAverage ? (
+                {process.env.NODE_ENV === "development" ? (
+                  <CircularProgress
+                    classNames={{
+                      indicator: "stroke-success",
+                      value: "text-xs text-[0.6rem]",
+                    }}
+                    showValueLabel
+                    value={100}
+                  />
+                ) : null}
+                {process.env.NODE_ENV !== "development" &&
+                classData.gradeAverage ? (
                   <CircularProgress
                     aria-label="Current term grade"
                     classNames={{
