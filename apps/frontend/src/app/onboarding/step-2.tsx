@@ -1,6 +1,6 @@
 "use client";
 
-import { IconArrowRight, IconLoader } from "@tabler/icons-react";
+import { IconArrowRight } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { Button } from "../_components/ui/button";
@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "../_components/ui/select";
 import { Separator } from "../_components/ui/separator";
+import { Spinner } from "../_components/ui/spinner";
 import { api } from "@/trpc/react";
 import { queryOpts } from "@/lib/utils";
 
@@ -164,7 +165,7 @@ export function StepTwo({
       </h1>
       <Separator className="my-8 mt-4" />
       <div className="flex flex-row items-center justify-center gap-2 text-muted-foreground">
-        <IconLoader className="animate-spin" /> Loading...
+        <Spinner /> Loading...
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-import { IconLoader } from "@tabler/icons-react";
 import Link from "next/link";
+import { Spinner } from "./spinner";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
@@ -72,7 +72,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             props.loading ? "mr-2 w-4" : "mr-0 w-0",
           )}
         >
-          <IconLoader className={cn("h-4 w-4 animate-spin")} />
+          <Spinner className={cn("h-4 w-4")} />
         </div>
         {props.icon ? (
           <div
@@ -114,7 +114,7 @@ const LinkButton = React.forwardRef<HTMLButtonElement, LinkButtonProps>(
               props.loading ? "mr-2 w-4" : "mr-0 w-0",
             )}
           >
-            <IconLoader className={cn("h-4 w-4 animate-spin")} />
+            <Spinner className={cn("h-4 w-4")} />
           </div>
           {props.icon ? (
             <div
