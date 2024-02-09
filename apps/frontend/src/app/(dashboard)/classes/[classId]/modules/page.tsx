@@ -8,6 +8,7 @@ import {
   IconFoldDown,
   IconLink,
   IconPencil,
+  IconRefresh,
 } from "@tabler/icons-react";
 import { useState } from "react";
 import {
@@ -68,6 +69,24 @@ export default function Page({
             className="absolute h-4 w-4 transition-opacity"
             style={{ opacity: accordionValue.length === 0 ? 1 : 0 }}
           />
+        </Button>
+        <Button
+          icon={<IconRefresh className="absolute h-4 w-4" />}
+          loading={
+            moduleData.isFetching ||
+            moduleData.isRefetching ||
+            moduleData.isLoading
+          }
+          onClick={async () => {
+            await moduleData.refetch();
+          }}
+          size="icon"
+          variant="outline"
+        >
+          {/* <Spinner
+            className="absolute h-4 w-4 transition-opacity duration-500"
+            style={{ opacity: accordionValue.length === 0 ? 1 : 0 }}
+          /> */}
         </Button>
       </div>
       <Accordion
