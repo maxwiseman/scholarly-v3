@@ -70,7 +70,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           className={cn(
             "overflow-hidden transition-[width]",
             props.loading ? "mr-2 w-4" : "mr-0 w-0",
-            size === "icon" ? "mr-0" : "mr-2",
+            size === "icon" ? "mr-0" : "",
           )}
         >
           <Spinner className={cn("h-4 w-4")} />
@@ -80,7 +80,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             className={cn(
               "overflow-hidden transition-[width]",
               !props.loading ? "mr-2 w-4" : "mr-0 w-0",
-              size === "icon" ? "mr-0" : "mr-2",
+              size === "icon" ? "mr-0" : "",
             )}
           >
             {!props.loading && StyledIcon}
@@ -114,7 +114,7 @@ const LinkButton = React.forwardRef<HTMLButtonElement, LinkButtonProps>(
             className={cn(
               "overflow-hidden transition-[width]",
               props.loading ? "mr-2 w-4" : "mr-0 w-0",
-              size === "icon" ? "mr-0" : "mr-2",
+              size === "icon" ? "mr-0" : "",
             )}
           >
             <Spinner className={cn("h-4 w-4")} />
@@ -124,7 +124,7 @@ const LinkButton = React.forwardRef<HTMLButtonElement, LinkButtonProps>(
               className={cn(
                 "overflow-hidden transition-[width]",
                 !props.loading ? "mr-2 w-4" : "mr-0 w-0",
-                size === "icon" ? "mr-0" : "mr-2",
+                size === "icon" ? "mr-0" : "",
               )}
             >
               {!props.loading && StyledIcon}
