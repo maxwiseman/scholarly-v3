@@ -8,6 +8,7 @@ import {
   text,
 } from "drizzle-orm/sqlite-core";
 import { type AdapterAccount } from "next-auth/adapters";
+import { type Settings } from "@/app/(dashboard)/settings/settings";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -24,6 +25,7 @@ export const users = sqliteTable("user", {
     mode: "timestamp",
   }),
   image: text("image", { length: 255 }),
+  settings: text("settings", { mode: "json" }).$type<Settings>(),
   canvasApiKey: text("canvasApiKey", { length: 255 }),
   aspenUsername: text("aspenUsername", { length: 255 }),
   aspenPassword: text("aspenPassword", { length: 255 }),
