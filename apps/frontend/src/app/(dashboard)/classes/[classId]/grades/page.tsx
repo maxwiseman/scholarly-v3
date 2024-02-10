@@ -51,6 +51,19 @@ export default function Home({
       {classData.data && classData.isFetched ? (
         <GradeTable
           assignmentData={assignmentAspenData.data || assignmentData.data || []}
+          categoryData={
+            categoryData.isFetched && categoryData.data
+              ? categoryData.data
+              : ({
+                  average: thisClass?.gradeAverage,
+                  categories: thisClass?.gradeCategories,
+                } as AspenCategories)
+          }
+          loading={
+            assignmentData.isLoading ||
+            assignmentAspenData.isLoading ||
+            categoryData.isLoading
+          }
         />
       ) : null}
       {!classData.isFetched && (
