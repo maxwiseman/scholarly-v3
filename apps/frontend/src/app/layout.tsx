@@ -46,7 +46,10 @@ export default async function RootLayout({
           <ServerSessionProvider session={session}>
             <TRPCReactProvider cookies={cookies().toString()}>
               <NextUIClientProvider>
-                <TooltipProvider>{children}</TooltipProvider>
+                <TooltipProvider>
+                  {/* eslint-disable-next-line react/no-unknown-property -- This is for vaul */}
+                  <div vaul-drawer-wrapper="">{children}</div>
+                </TooltipProvider>
               </NextUIClientProvider>
             </TRPCReactProvider>
           </ServerSessionProvider>
