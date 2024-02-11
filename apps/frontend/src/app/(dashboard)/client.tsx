@@ -28,13 +28,13 @@ import {
   CommandList,
 } from "../_components/ui/command";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "../_components/ui/dialog";
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogFooter,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+} from "../_components/ui/responsive-dialog";
 import {
   Select,
   SelectContent,
@@ -202,7 +202,7 @@ function Feedback(): React.ReactElement {
   });
 
   return (
-    <Dialog
+    <ResponsiveDialog
       onOpenChange={(val) => {
         setOpen(val);
       }}
@@ -216,11 +216,13 @@ function Feedback(): React.ReactElement {
         <IconMessage className="mr-2 h-4 w-4" />
         Feedback
       </CommandItem>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Feedback</DialogTitle>
-          <DialogDescription>Found a problem? Let us know.</DialogDescription>
-        </DialogHeader>
+      <ResponsiveDialogContent>
+        <ResponsiveDialogHeader>
+          <ResponsiveDialogTitle>Feedback</ResponsiveDialogTitle>
+          <ResponsiveDialogDescription>
+            Found a problem? Let us know.
+          </ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
         <Form {...form}>
           <form
             className="space-y-4"
@@ -289,12 +291,12 @@ function Feedback(): React.ReactElement {
                 </FormItem>
               )}
             />
-            <DialogFooter>
+            <ResponsiveDialogFooter>
               <Button type="submit">Submit</Button>
-            </DialogFooter>
+            </ResponsiveDialogFooter>
           </form>
         </Form>
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }

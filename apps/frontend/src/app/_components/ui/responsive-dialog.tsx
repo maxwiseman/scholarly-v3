@@ -20,6 +20,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "./drawer";
+import { cn } from "@/lib/utils";
 
 export function ResponsiveDialog(
   props: React.ComponentProps<typeof Drawer> &
@@ -97,10 +98,11 @@ export function ResponsiveDialogClose(
   if (isDesktop) return <DialogClose {...props} />;
   return <DrawerClose {...props} />;
 }
-export function ResponsiveDialogFooter(
-  props: React.ComponentProps<typeof DrawerFooter>,
-): React.ReactElement {
+export function ResponsiveDialogFooter({
+  className,
+  ...props
+}: React.ComponentProps<typeof DrawerFooter>): React.ReactElement {
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  if (isDesktop) return <DialogFooter {...props} />;
-  return <DrawerFooter {...props} />;
+  if (isDesktop) return <DialogFooter className={className} {...props} />;
+  return <DrawerFooter className={cn("px-0 pb-8", className)} {...props} />;
 }

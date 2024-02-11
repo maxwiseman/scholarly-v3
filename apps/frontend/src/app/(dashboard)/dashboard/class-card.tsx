@@ -16,19 +16,19 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/app/_components/ui/context-menu";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/app/_components/ui/dialog";
 import { Input } from "@/app/_components/ui/input";
 import { type CourseData } from "@/server/api/routers/user/get-classes";
 import { Label } from "@/app/_components/ui/label";
 import { api } from "@/trpc/react";
+import {
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogFooter,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+  ResponsiveDialogTrigger,
+} from "@/app/_components/ui/responsive-dialog";
 
 export function ClassCard({
   classData,
@@ -42,7 +42,7 @@ export function ClassCard({
   const updateName = api.user.updateClasses.useMutation();
 
   return (
-    <Dialog
+    <ResponsiveDialog
       onOpenChange={(val) => {
         setOpen(val);
       }}
@@ -114,20 +114,20 @@ export function ClassCard({
           </Link>
         </ContextMenuTrigger>
         <ContextMenuContent>
-          <DialogTrigger asChild>
+          <ResponsiveDialogTrigger asChild>
             <ContextMenuItem>
               <IconPencil className="mr-2 h-4 w-4" /> Edit class
             </ContextMenuItem>
-          </DialogTrigger>
+          </ResponsiveDialogTrigger>
         </ContextMenuContent>
       </ContextMenu>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Edit class</DialogTitle>
-          <DialogDescription>
+      <ResponsiveDialogContent>
+        <ResponsiveDialogHeader>
+          <ResponsiveDialogTitle>Edit class</ResponsiveDialogTitle>
+          <ResponsiveDialogDescription>
             Make changes to the class here. Click save when you&lsquo;re done.
-          </DialogDescription>
-        </DialogHeader>
+          </ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
         <Label>Class Name</Label>
         <Input
           onChange={(e) => {
@@ -136,7 +136,7 @@ export function ClassCard({
           placeholder="Type something..."
           value={name}
         />
-        <DialogFooter>
+        <ResponsiveDialogFooter>
           <Button
             onClick={() => {
               toast.promise(
@@ -156,8 +156,8 @@ export function ClassCard({
           >
             Save changes
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </ResponsiveDialogFooter>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }
