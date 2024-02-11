@@ -191,8 +191,8 @@ function ActionsPopover(
     <Popover>
       <PopoverTrigger disabled={loading}>
         <Button
+          disabled={loading}
           icon={<IconDots />}
-          loading={loading}
           size="icon"
           variant="ghost"
         />

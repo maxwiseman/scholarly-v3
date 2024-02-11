@@ -219,7 +219,7 @@ export function DataTable<T>({
                 })}
             </ContextMenuContent>
           </ContextMenu>
-        </Table>
+          {/* </Table>
         <div
           className={cn(
             "flex w-full items-center gap-4 overflow-hidden bg-muted/50 p-2 py-2 transition-all",
@@ -231,8 +231,19 @@ export function DataTable<T>({
           <Spinner />
           Checking for new assignments...
         </div>
-        <Table>
+        <Table> */}
           <TableBody>
+            <td className="p-0" colSpan={10000}>
+              <div
+                className={cn(
+                  "flex items-center gap-2 overflow-hidden bg-muted/50 p-2 transition-all",
+                  { "h-0 p-0": !loading },
+                )}
+              >
+                <Spinner className="h-4 w-4" />
+                Checking for new assignments...
+              </div>
+            </td>
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
