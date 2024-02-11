@@ -48,7 +48,7 @@ export default async function RootLayout({
               <NextUIClientProvider>
                 <TooltipProvider>
                   <div
-                    className="overflow-hidden bg-background"
+                    className="bg-background"
                     // eslint-disable-next-line react/no-unknown-property -- This is for vaul
                     vaul-drawer-wrapper=""
                   >
