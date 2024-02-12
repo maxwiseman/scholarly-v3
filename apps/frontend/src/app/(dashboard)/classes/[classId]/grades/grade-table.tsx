@@ -99,15 +99,8 @@ export function GradeTable({
       header: "Extra Credit",
       accessorKey: "extraCredit",
       id: "Extra Credit",
-      accessorFn: (data: {
-        name: string | null;
-        pointsPossible: number | null;
-        points: string | number | null;
-        extraCredit: boolean | null;
-        feedback: string | null;
-        dateDue: Date | string | null;
-      }) => {
-        return data.extraCredit ? "Yes" : "No";
+      cell: (data) => {
+        return data.getValue() ? "Yes" : "No";
       },
     },
     {
@@ -197,7 +190,7 @@ function ActionsPopover(
           variant="ghost"
         />
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent className="mx-8">
         <div className="grid gap-4">
           <div className="space-y-2">
             <h4 className="font-medium leading-none">Edit row</h4>
@@ -218,9 +211,7 @@ function ActionsPopover(
                       {column.header.toString()}
                     </Label>
                     <Select
-                      defaultValue={
-                        (cellData.getValue() as string | undefined) || ""
-                      }
+                      defaultValue={cellData.row.getValue("Category") || ""}
                     >
                       <SelectTrigger
                         className="col-span-2 h-8"
@@ -249,7 +240,9 @@ function ActionsPopover(
                     </Label>
                     <Select
                       defaultValue={
-                        (cellData.getValue() as string | undefined) || "No"
+                        (cellData.row.getValue("Extra Credit") as boolean)
+                          ? "Yes"
+                          : "No"
                       }
                     >
                       <SelectTrigger
