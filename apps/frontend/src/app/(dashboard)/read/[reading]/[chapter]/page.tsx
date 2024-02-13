@@ -1,5 +1,4 @@
 import { promises as fs } from "node:fs";
-import { Sidebar } from "./sidebar";
 
 export async function generateStaticParams(): Promise<
   { reading: string; chapter: string }[]
@@ -22,16 +21,9 @@ export default async function Page({
   );
 
   return (
-    <div className="flex w-full gap-8 p-8">
-      <div>
-        <Sidebar />
-      </div>
-      <div className="flex max-w-full grow justify-center">
-        <div
-          className="typography max-w-prose"
-          dangerouslySetInnerHTML={{ __html: file }}
-        />
-      </div>
-    </div>
+    <div
+      className="typography max-w-prose"
+      dangerouslySetInnerHTML={{ __html: file }}
+    />
   );
 }

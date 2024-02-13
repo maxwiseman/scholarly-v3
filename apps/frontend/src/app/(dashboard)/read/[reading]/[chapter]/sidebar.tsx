@@ -2,40 +2,35 @@
 
 import { usePathname } from "next/navigation";
 import { LinkButton } from "@/app/_components/ui/button";
+import { ScrollArea } from "@/app/_components/ui/scroll-area";
 
 export function Sidebar(): React.ReactNode {
   const pathName = usePathname();
 
   return (
-    <div className="sticky top-[5.5rem] flex w-[15vw] min-w-[12rem] max-w-xs flex-col gap-2">
-      <LinkButton
-        className="justify-start"
-        href="/read/apush/ch_1"
-        variant={pathName === `/read/apush/ch_1` ? "secondary" : "ghost"}
-      >
-        Chapter 1
-      </LinkButton>
-      <LinkButton
-        className="justify-start"
-        href="/read/apush/ch_2"
-        variant={pathName === `/read/apush/ch_2` ? "secondary" : "ghost"}
-      >
-        Chapter 2
-      </LinkButton>
-      <LinkButton
-        className="justify-start"
-        href="/read/apush/ch_3"
-        variant={pathName === `/read/apush/ch_3` ? "secondary" : "ghost"}
-      >
-        Chapter 3
-      </LinkButton>
-      <LinkButton
-        className="justify-start"
-        href="/read/apush/ch_4"
-        variant={pathName === `/read/apush/ch_4` ? "secondary" : "ghost"}
-      >
-        Chapter 4
-      </LinkButton>
+    <div className="sticky top-[3.5rem] w-[15vw] min-w-[12rem] max-w-xs">
+      <ScrollArea className="flex max-h-[calc(100vh-3.5rem)] flex-col gap-2">
+        <div className="flex flex-col gap-2 py-8">
+          {Array(43)
+            .fill(" ")
+            .map((_, i) => {
+              if (i <= 0) return null;
+              return (
+                <LinkButton
+                  className="justify-start"
+                  href={`/read/apush/ch_${i}`}
+                  // eslint-disable-next-line react/no-array-index-key -- There's really no better key for this
+                  key={i}
+                  variant={
+                    pathName === `/read/apush/ch_${i}` ? "secondary" : "ghost"
+                  }
+                >
+                  Chapter {i}
+                </LinkButton>
+              );
+            })}
+        </div>
+      </ScrollArea>
     </div>
   );
 }
