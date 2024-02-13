@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { MenuCard } from "./menu-card";
 import { Separator } from "@/app/_components/ui/separator";
 import { queryOpts } from "@/lib/utils";
 import { api } from "@/trpc/react";
@@ -13,14 +14,14 @@ export default function Page(): React.ReactElement {
       <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
         Readings
       </h1>
-      <Separator className="mt-4" />
+      <Separator className="my-4" />
       {readsData.data?.map((reading) => {
         return (
           <Link
             href={`/read/${reading.slug}/${reading.chapters[0]?.slug}`}
             key={reading.id}
           >
-            {reading.name}
+            <MenuCard reading={reading} />
           </Link>
         );
       })}
