@@ -1,4 +1,4 @@
-import { promises as fs } from "node:fs";
+import { api } from "@/trpc/server";
 
 export async function generateStaticParams(): Promise<
   { reading: string; chapter: string }[]
@@ -15,15 +15,12 @@ export default async function Page({
 }: {
   params: { reading: string; chapter: string };
 }): Promise<React.ReactElement> {
-  const file = await fs.readFile(
-    `${process.cwd()}/src/app/(dashboard)/read/content/${params.reading}/${params.chapter || "1"}.html`,
-    "utf8",
-  );
+  const chapterData = await api.user.getChapter.query({ slug: params.chapter });
 
   return (
     <div
-      className="typography max-w-prose"
-      dangerouslySetInnerHTML={{ __html: file }}
+      className="typography w-full max-w-prose"
+      dangerouslySetInnerHTML={{ __html: chapterData?.content || "" }}
     />
   );
 }

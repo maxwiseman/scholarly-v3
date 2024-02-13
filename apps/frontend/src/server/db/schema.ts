@@ -185,14 +185,38 @@ export const aspenAssignmentsRelations = relations(
 
 export const readings = sqliteTable("reading", {
   id: text("id").notNull().unique().primaryKey(),
-  userId: text("userId")
-    .references(() => users.id, {
-      onDelete: "cascade",
-      onUpdate: "cascade",
-    })
+  name: text("name").notNull(),
+  slug: text("slug").notNull(),
+  description: text("description").notNull(),
+  // chapters: text("chapters", { mode: "json" })
+  //   .$type<{ name: string; id: string; description: string }[]>()
+  //   .notNull(),
+});
+
+export const readingChapters = sqliteTable("readingChapter", {
+  id: text("id").notNull().unique().primaryKey(),
+  slug: text("slug").notNull(),
+  number: text("number").notNull(),
+  readingId: text("readingId")
+    // .references(() => readings.id, {
+    //   onDelete: "cascade",
+    //   onUpdate: "cascade",
+    // })
     .notNull(),
   name: text("name").notNull(),
-  chapters: text("chapters", { mode: "json" })
-    .$type<{ name: string; id: string; description: string }[]>()
-    .notNull(),
+  content: text("content").notNull(),
 });
+
+export const readingChapterRelations = relations(
+  readingChapters,
+  ({ one }) => ({
+    reading: one(readings, {
+      fields: [readingChapters.readingId],
+      references: [readings.id],
+    }),
+  }),
+);
+
+export const readingRelations = relations(readings, ({ many }) => ({
+  chapters: many(readingChapters),
+}));

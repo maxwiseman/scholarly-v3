@@ -3,6 +3,7 @@ import { updateSettings } from "./settings";
 import { addClasses, updateClasses } from "./classes";
 import { getAssignments } from "./get-assignments";
 import { getClasses } from "./get-classes";
+import { getChapter, getRead, getReads } from "./reads";
 import { createTRPCRouter, protectedProcedure } from "@/server/api/trpc";
 
 export const userRouter = createTRPCRouter({
@@ -80,5 +81,18 @@ export const userRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       await updateClasses(input);
+    }),
+  getReads: protectedProcedure.query(async () => {
+    return await getReads();
+  }),
+  getRead: protectedProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(async ({ input }) => {
+      return await getRead(input.slug);
+    }),
+  getChapter: protectedProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(async ({ input }) => {
+      return await getChapter(input.slug);
     }),
 });
