@@ -82,7 +82,7 @@
 .typography {
   h1,
   h2 {
-    @apply scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0;
+    @apply mb-4 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0;
   }
   h3 {
     @apply scroll-m-20 text-2xl font-semibold tracking-tight;
@@ -114,6 +114,9 @@
         @apply border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right;
       }
     }
+  }
+  hr {
+    @apply my-4;
   }
   ul {
     @apply my-6 ml-6 list-disc [&>li]:mt-2;

@@ -182,3 +182,17 @@ export const aspenAssignmentsRelations = relations(
     }),
   }),
 );
+
+export const readings = sqliteTable("reading", {
+  id: text("id").notNull().unique().primaryKey(),
+  userId: text("userId")
+    .references(() => users.id, {
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    })
+    .notNull(),
+  name: text("name").notNull(),
+  chapters: text("chapters", { mode: "json" })
+    .$type<{ name: string; id: string; description: string }[]>()
+    .notNull(),
+});
