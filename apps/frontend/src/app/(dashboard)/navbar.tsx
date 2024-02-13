@@ -43,12 +43,23 @@ export function Navbar(): React.ReactElement {
             className={cn(
               "text-sm text-foreground/60 transition-colors hover:text-foreground/80",
               {
-                "text-foreground": pathname.startsWith("/learn"),
+                "text-foreground": pathname.startsWith("/study"),
               },
             )}
             href="/study"
           >
             Study
+          </Link>
+          <Link
+            className={cn(
+              "text-sm text-foreground/60 transition-colors hover:text-foreground/80",
+              {
+                "text-foreground": pathname.startsWith("/read"),
+              },
+            )}
+            href="/read"
+          >
+            Read
           </Link>
         </div>
         <div className="flex flex-row items-center justify-end gap-3">

@@ -53,7 +53,7 @@ import {
   FormMessage,
 } from "../_components/ui/form";
 import { api } from "@/trpc/react";
-import { cn } from "@/lib/utils";
+import { cn, queryOpts } from "@/lib/utils";
 import { sendDiscordLog } from "@/lib/server-utils";
 
 export function Search({
@@ -62,7 +62,7 @@ export function Search({
   className?: string;
 }): React.ReactElement {
   const [open, setOpen] = useState(false);
-  const classes = api.user.getClasses.useQuery();
+  const classes = api.user.getClasses.useQuery(undefined, queryOpts);
   const router = useRouter();
   useEffect(() => {
     const down = (e: KeyboardEvent): void => {
@@ -105,25 +105,6 @@ export function Search({
         <CommandInput placeholder="Type a command or search..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Classes">
-            {classes.data?.map((course) => {
-              return (
-                <CommandItem
-                  key={course.id}
-                  onSelect={() => {
-                    router.push(`/classes/${course.id}`);
-                    setOpen(false);
-                  }}
-                >
-                  <IconNotebook className="mr-2 h-4 w-4" />
-                  {course.name}
-                </CommandItem>
-              );
-            })}
-          </CommandGroup>
-          <CommandGroup heading="Misc">
-            <Feedback />
-          </CommandGroup>
           <CommandGroup heading="Quick Links">
             <CommandItem
               onSelect={() => {
@@ -181,6 +162,25 @@ export function Search({
               <IconLetterQ className="mr-2 h-4 w-4" />
               Quizlet
             </CommandItem>
+          </CommandGroup>
+          <CommandGroup heading="Classes">
+            {classes.data?.map((course) => {
+              return (
+                <CommandItem
+                  key={course.id}
+                  onSelect={() => {
+                    router.push(`/classes/${course.id}`);
+                    setOpen(false);
+                  }}
+                >
+                  <IconNotebook className="mr-2 h-4 w-4" />
+                  {course.name}
+                </CommandItem>
+              );
+            })}
+          </CommandGroup>
+          <CommandGroup heading="Misc">
+            <Feedback />
           </CommandGroup>
         </CommandList>
       </CommandDialog>

@@ -15,6 +15,13 @@
       "when": 1707586054957,
       "tag": "0001_clammy_hex",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1707823751365,
+      "tag": "0002_nosy_hellcat",
+      "breakpoints": true
     }
   ]
 }
