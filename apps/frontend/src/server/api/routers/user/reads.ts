@@ -37,6 +37,7 @@ export async function getRead(slug: string): Promise<
       description: string;
       slug: string;
       chapters: {
+        id: string;
         name: string;
         slug: string;
       }[];
