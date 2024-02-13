@@ -1,9 +1,22 @@
+import { db } from "@/server/db";
 import { api } from "@/trpc/server";
 
 export async function generateStaticParams(): Promise<
   { reading: string; chapter: string }[]
 > {
-  const data = await api.user.getReads.query();
+  const data = await db.query.readings.findMany({
+    columns: {
+      id: true,
+      name: true,
+      description: true,
+      slug: true,
+    },
+    with: {
+      chapters: {
+        columns: { slug: true, name: true },
+      },
+    },
+  });
   const params: { reading: string; chapter: string }[] = [];
   data.forEach((reading) => {
     reading.chapters.forEach((chapter) => {
