@@ -3,10 +3,13 @@ import { api } from "@/trpc/server";
 export async function generateStaticParams(): Promise<
   { reading: string; chapter: string }[]
 > {
-  const params = [];
-  for (let i = 1; i <= 42; i++) {
-    params.push({ reading: "apush", chapter: `ch_${i.toString()}` });
-  }
+  const data = await api.user.getReads.query();
+  const params: { reading: string; chapter: string }[] = [];
+  data.forEach((reading) => {
+    reading.chapters.forEach((chapter) => {
+      params.push({ reading: reading.slug, chapter: chapter.slug });
+    });
+  });
 
   return params;
 }
