@@ -1,5 +1,10 @@
+import { z } from "zod";
+import { eq } from "drizzle-orm";
 import { env } from "@/env";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import { db } from "@/server/db";
+import { users } from "@/server/db/schema";
+import { getServerAuthSession } from "@/server/auth";
 
 export const miscRouter = createTRPCRouter({
   getUnsplashImage: publicProcedure.query(async () => {
@@ -13,6 +18,23 @@ export const miscRouter = createTRPCRouter({
       cache: "no-cache",
     }).then((res) => res.json() as Promise<Image>);
   }),
+  getArbitraryUrl: publicProcedure
+    .input(z.object({ url: z.string(), options: z.any() }))
+    .query(async ({ input }) => {
+      const session = await getServerAuthSession();
+      const user = await db.query.users.findFirst({
+        where: eq(users.id, session?.user.id || ""),
+      });
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- it has to be any
+      return await fetch(
+        input.url,
+        (input.options as RequestInit | undefined) || {
+          headers: {
+            Authorization: `Bearer ${user?.canvasApiKey}`,
+          },
+        },
+      ).then((res) => res.json());
+    }),
 });
 
 interface Image {

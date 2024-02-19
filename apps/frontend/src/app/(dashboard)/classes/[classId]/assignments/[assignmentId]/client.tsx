@@ -67,39 +67,59 @@ export function Submission(props: {
   classId: string;
   assignment: Assignment;
 }): React.ReactElement {
-  return (
-    <Tabs
-      className="w-full"
-      defaultValue={props.assignment.submission_types[0]}
-    >
-      <TabsList>
-        {props.assignment.submission_types.includes("online_text_entry") && (
-          <TabsTrigger value="online_text_entry">
-            <IconCursorText className="mr-2 h-4 w-4" />
-            Text Entry
-          </TabsTrigger>
-        )}
-        {props.assignment.submission_types.includes("online_url") && (
-          <TabsTrigger value="online_url">
-            <IconLink className="mr-2 h-4 w-4" />
-            Web URL
-          </TabsTrigger>
-        )}
-        {props.assignment.submission_types.includes("online_upload") && (
-          <TabsTrigger value="online_upload">
-            <IconFileUpload className="mr-2 h-4 w-4" />
-            File Upload
-          </TabsTrigger>
-        )}
-      </TabsList>
-      <TabsContent className="min-h-[18.75rem]" value="online_text_entry">
-        <TextSubmission props={props} />
-      </TabsContent>
-      <TabsContent className="min-h-[18.75rem]" value="online_url">
-        <UrlSubmission props={props} />
-      </TabsContent>
-      <TabsContent className="min-h-[18.75rem]" value="online_upload">
-        {/* <Card className="flex flex-col">
+  if (
+    JSON.stringify(props.assignment.submission_types) === '["external_tool"]'
+  ) {
+    const data = api.misc.getArbitraryUrl.useQuery({
+      url: props.assignment.url,
+    });
+    return (
+      <iframe
+        className="h-96 w-full rounded-lg"
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- its ok
+        src={(data.data?.url as string) || ""}
+        title="External Tool Submission"
+      />
+    );
+  }
+  if (
+    props.assignment.submission_types.includes("online_text_entry") ||
+    props.assignment.submission_types.includes("online_url") ||
+    props.assignment.submission_types.includes("online_upload")
+  )
+    return (
+      <Tabs
+        className="w-full"
+        defaultValue={props.assignment.submission_types[0]}
+      >
+        <TabsList>
+          {props.assignment.submission_types.includes("online_text_entry") && (
+            <TabsTrigger value="online_text_entry">
+              <IconCursorText className="mr-2 h-4 w-4" />
+              Text Entry
+            </TabsTrigger>
+          )}
+          {props.assignment.submission_types.includes("online_url") && (
+            <TabsTrigger value="online_url">
+              <IconLink className="mr-2 h-4 w-4" />
+              Web URL
+            </TabsTrigger>
+          )}
+          {props.assignment.submission_types.includes("online_upload") && (
+            <TabsTrigger value="online_upload">
+              <IconFileUpload className="mr-2 h-4 w-4" />
+              File Upload
+            </TabsTrigger>
+          )}
+        </TabsList>
+        <TabsContent className="min-h-[18.75rem]" value="online_text_entry">
+          <TextSubmission props={props} />
+        </TabsContent>
+        <TabsContent className="min-h-[18.75rem]" value="online_url">
+          <UrlSubmission props={props} />
+        </TabsContent>
+        <TabsContent className="min-h-[18.75rem]" value="online_upload">
+          {/* <Card className="flex flex-col">
           <CardHeader className="">
             <CardTitle>Submit a File</CardTitle>
           </CardHeader>
@@ -111,10 +131,12 @@ export function Submission(props: {
             <Button>Submit</Button>
             </CardFooter>
           </Card> */}
-        <DropZone />
-      </TabsContent>
-    </Tabs>
-  );
+          <DropZone />
+        </TabsContent>
+      </Tabs>
+    );
+  // eslint-disable-next-line react/jsx-no-useless-fragment -- this way it returns a React.ReactElement
+  return <></>;
 }
 
 function UrlSubmission({
