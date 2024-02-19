@@ -56,8 +56,8 @@ function MenuBar(): React.ReactElement {
   if (!editor) return <>Loading...</>;
 
   return (
-    <div className="no-scrollbar w-full overflow-x-scroll">
-      <div className="p-2">
+    <div className="w-full overflow-x-hidden">
+      <div className="no-scrollbar overflow-x-scroll p-2">
         <div className="flex w-full gap-3 p-2">
           <ToggleGroup
             type="multiple"
