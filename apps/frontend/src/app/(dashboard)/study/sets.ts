@@ -2,8 +2,176 @@ import { type CardSet } from "./page";
 
 export const sets: CardSet[] = [
   {
-    title: "Biology 1 Organelles Flashcards",
-    slug: "biology-1-organelles",
+    title: "Cell Types and Characteristics",
+    slug: "cell-types-and-characteristics",
+    description:
+      "A set of flashcards describing different cell types and their characteristics.",
+    cards: [
+      {
+        front: {
+          heading: "Oldest Cell Type",
+        },
+        back: {
+          heading: "Prokaryote",
+          description:
+            "The oldest and simplest type of cell, lacking a true nucleus and organelles.",
+        },
+      },
+      {
+        front: {
+          heading: "Evolved from Prokaryotes",
+        },
+        back: {
+          heading: "Eukaryote",
+          description:
+            "A more complex type of cell that evolved from prokaryotes, containing a true nucleus and organelles.",
+        },
+      },
+      {
+        front: {
+          heading: "Have Ribosomes",
+        },
+        back: {
+          heading: "Prokaryote and Eukaryote",
+          description:
+            "Both types of cells have ribosomes, which are responsible for protein synthesis.",
+        },
+      },
+      {
+        front: {
+          heading: "Contain Nucleus",
+        },
+        back: {
+          heading: "Eukaryote",
+          description:
+            "The defining characteristic of eukaryotic cells is that they contain a true nucleus, which houses the cell's DNA.",
+        },
+      },
+      {
+        front: {
+          heading: "Single Celled",
+        },
+        back: {
+          heading: "Prokaryote and Eukaryote",
+          description:
+            "Both types of cells can exist as a single cell, although eukaryotes can also be multicellular.",
+        },
+      },
+      {
+        front: {
+          heading: "Larger and More Complex",
+        },
+        back: {
+          heading: "Eukaryote",
+          description:
+            "Compared to prokaryotic cells, eukaryotic cells are larger and more complex, with a greater variety of organelles.",
+        },
+      },
+      {
+        front: {
+          heading: "Have DNA",
+        },
+        back: {
+          heading: "Prokaryote and Eukaryote",
+          description:
+            "Both types of cells contain DNA, which carries the genetic information for the cell.",
+        },
+      },
+      {
+        front: {
+          heading: "Contain Organelles",
+        },
+        back: {
+          heading: "Eukaryote",
+          description:
+            "One of the defining features of eukaryotic cells is that they contain organelles, such as the mitochondria and endoplasmic reticulum.",
+        },
+      },
+      {
+        front: {
+          heading: "Small and Simple",
+        },
+        back: {
+          heading: "Prokaryote",
+          description:
+            "Compared to eukaryotic cells, prokaryotic cells are smaller and simpler, lacking organelles and a true nucleus.",
+        },
+      },
+      {
+        front: {
+          heading: "Contain Nucleus",
+        },
+        back: {
+          heading: "Eukaryote",
+          description:
+            "The defining characteristic of eukaryotic cells is that they contain a true nucleus, which houses the cell's DNA.",
+        },
+      },
+      {
+        front: {
+          heading: "Lack True Nucleus",
+        },
+        back: {
+          heading: "Prokaryote",
+          description:
+            "One of the defining features of prokaryotic cells is that they lack a true nucleus, with their DNA floating freely in the cytoplasm.",
+        },
+      },
+      {
+        front: {
+          heading: "Lack Organelles",
+        },
+        back: {
+          heading: "Prokaryote",
+          description:
+            "Another defining feature of prokaryotic cells is that they lack organelles, such as mitochondria and endoplasmic reticulum.",
+        },
+      },
+      {
+        front: {
+          heading: "Can Be Single Celled",
+        },
+        back: {
+          heading: "Prokaryote and Eukaryote",
+          description:
+            "Both types of cells can exist as a single cell, although eukaryotes can also be multicellular.",
+        },
+      },
+      {
+        front: {
+          heading: "Single Celled or Multicellular",
+        },
+        back: {
+          heading: "Eukaryote",
+          description:
+            "One of the defining features of eukaryotic cells is that they can exist as either a single cell or as part of a multicellular organism.",
+        },
+      },
+      {
+        front: {
+          heading: "Has Cytoplasm",
+        },
+        back: {
+          heading: "Prokaryote and Eukaryote",
+          description:
+            "Both types of cells have cytoplasm, which is the fluid that fills the cell and contains all of its organelles.",
+        },
+      },
+      {
+        front: {
+          heading: "Cell Membrane",
+        },
+        back: {
+          heading: "Prokaryote and Eukaryote",
+          description:
+            "Both types of cells have a cell membrane, which surrounds and protects the cell.",
+        },
+      },
+    ],
+  },
+  {
+    title: "Organelles",
+    slug: "organelles",
     description: "Flashcards for studying biology 1 organelles.",
     cards: [
       {
