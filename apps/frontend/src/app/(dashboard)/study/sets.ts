@@ -2,6 +2,115 @@ import { type CardSet } from "./page";
 
 export const sets: CardSet[] = [
   {
+    title: "Biology 1 Organelles Flashcards",
+    slug: "biology-1-organelles",
+    description: "Flashcards for studying biology 1 organelles.",
+    cards: [
+      {
+        front: {
+          heading: "Cell Membrane",
+          subheading: "",
+        },
+        back: {
+          heading: "Outer layer of cell",
+          description: "Controls what enters and exits the cell.",
+        },
+      },
+      {
+        front: {
+          heading: "Nucleus",
+          subheading: "",
+        },
+        back: {
+          heading: "Control center of cell",
+          description: "Contains DNA and directs cell activities.",
+        },
+      },
+      {
+        front: {
+          heading: "Mitochondria",
+          subheading: "",
+        },
+        back: {
+          heading: "Powerhouse of cell",
+          description:
+            "Produces energy for the cell through cellular respiration.",
+        },
+      },
+      {
+        front: {
+          heading: "Ribosomes",
+          subheading: "",
+        },
+        back: {
+          heading: "Protein factories",
+          description: "Makes proteins for the cell.",
+        },
+      },
+      {
+        front: {
+          heading: "Endoplasmic Reticulum",
+          subheading: "",
+        },
+        back: {
+          heading: "Transport system",
+          description: "Transports materials throughout the cell.",
+        },
+      },
+      {
+        front: {
+          heading: "Golgi Apparatus",
+          subheading: "",
+        },
+        back: {
+          heading: "Packaging center",
+          description:
+            "Packages and modifies proteins for transport out of the cell.",
+        },
+      },
+      {
+        front: {
+          heading: "Lysosomes",
+          subheading: "",
+        },
+        back: {
+          heading: "Clean-up crew",
+          description: "Breaks down waste and old cell parts.",
+        },
+      },
+      {
+        front: {
+          heading: "Vacuole",
+          subheading: "",
+        },
+        back: {
+          heading: "Storage unit",
+          description: "Stores water, food, and waste products.",
+        },
+      },
+      {
+        front: {
+          heading: "Chloroplast",
+          subheading: "",
+        },
+        back: {
+          heading: "Plant cell only",
+          description: "Uses sunlight to make glucose through photosynthesis.",
+        },
+      },
+      {
+        front: {
+          heading: "Cell Wall",
+          subheading: "",
+        },
+        back: {
+          heading: "Plant cell only",
+          description: "Provides structure and support for the cell.",
+        },
+      },
+    ],
+  },
+  {
     title: "Bill of Rights Amendments",
     slug: "bor-amendments",
     description: "Flashcards for each of the amendments in the Bill of Rights",
