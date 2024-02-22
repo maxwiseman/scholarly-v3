@@ -9,6 +9,7 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { type AdapterAccount } from "next-auth/adapters";
 import { type Settings } from "@/app/(dashboard)/settings/settings";
+import { type Card } from "@/app/(dashboard)/study/page";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -220,3 +221,11 @@ export const readingChapterRelations = relations(
 export const readingRelations = relations(readings, ({ many }) => ({
   chapters: many(readingChapters),
 }));
+
+export const studySets = sqliteTable("studySet", {
+  id: text("id").notNull().unique().primaryKey(),
+  name: text("name").notNull(),
+  slug: text("slug").notNull(),
+  description: text("description").notNull(),
+  cards: text("cards", { mode: "json" }).$type<Card[]>().notNull().default([]),
+});

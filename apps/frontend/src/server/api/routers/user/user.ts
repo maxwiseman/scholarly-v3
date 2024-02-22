@@ -4,6 +4,7 @@ import { addClasses, updateClasses } from "./classes";
 import { getAssignments } from "./get-assignments";
 import { getClasses } from "./get-classes";
 import { getChapter, getRead, getReads } from "./reads";
+import { getStudySet, getStudySets } from "./study";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -98,5 +99,13 @@ export const userRouter = createTRPCRouter({
     .input(z.object({ slug: z.string() }))
     .query(async ({ input }) => {
       return await getChapter(input.slug);
+    }),
+  getStudySets: publicProcedure.query(async () => {
+    return await getStudySets();
+  }),
+  getStudySet: publicProcedure
+    .input(z.object({ slug: z.string() }))
+    .query(async ({ input }) => {
+      return await getStudySet(input);
     }),
 });

@@ -1,15 +1,5 @@
 import { Sidebar } from "./sidebar";
 
-export async function generateStaticParams(): Promise<
-  { reading: string; chapter: string }[]
-> {
-  const params = [];
-  for (let i = 1; i <= 42; i++) {
-    params.push({ reading: "apush", chapter: `ch_${i.toString()}` });
-  }
-
-  return params;
-}
 export default function Layout({
   children,
   params,

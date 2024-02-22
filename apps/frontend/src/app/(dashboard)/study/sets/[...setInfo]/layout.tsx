@@ -1,15 +1,17 @@
-import { sets } from "../../sets";
 import { Options } from "./client";
+import { api } from "@/trpc/server";
 import { Separator } from "@/app/_components/ui/separator";
 
-export default function Layout({
+export default async function Layout({
   params,
   children,
 }: {
   params: { setInfo: string[] };
   children: React.ReactNode;
-}): React.ReactElement {
-  const setData = sets.filter((set) => set.slug === params.setInfo[0])[0];
+}): Promise<React.ReactElement> {
+  const setData = await api.user.getStudySet.query({
+    slug: params.setInfo[0] || "",
+  });
   if (!setData) {
     return <div>Set not found</div>;
   }
@@ -17,7 +19,7 @@ export default function Layout({
     <div>
       <div className="flex h-[30vh] min-h-[12rem] flex-row items-center justify-between bg-card p-8 shadow-[inset_0px_-3px_44px_-26px_rgba(0,0,0,0.4)] dark:shadow-none">
         <div className="grow">
-          <h1 className="mt-0 text-4xl font-extrabold">{setData.title}</h1>
+          <h1 className="mt-0 text-4xl font-extrabold">{setData.name}</h1>
           {/* <h4 className="text-muted-foreground">Lorem ipsum dolor sit amet</h4> */}
           <div className="mt-2 text-muted-foreground">
             {setData.description}

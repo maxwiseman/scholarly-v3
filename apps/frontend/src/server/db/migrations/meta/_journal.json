@@ -22,6 +22,13 @@
       "when": 1707823751365,
       "tag": "0002_nosy_hellcat",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1708618646437,
+      "tag": "0003_majestic_human_torch",
+      "breakpoints": true
     }
   ]
 }

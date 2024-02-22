@@ -14,7 +14,7 @@ export default function Page(): React.ReactElement {
       <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-4xl">
         Readings
       </h1>
-      <Separator className="my-4" />
+      <Separator className="my-4 mb-8" />
       {readsData.data?.map((reading) => {
         return (
           <Link

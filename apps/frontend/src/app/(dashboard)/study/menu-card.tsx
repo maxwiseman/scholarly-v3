@@ -14,7 +14,7 @@ export function MenuCard({
   return (
     <Link
       aria-description={cardSet.description}
-      aria-label={cardSet.title}
+      aria-label={cardSet.name}
       className="max-w-full"
       href={`/study/sets/${cardSet.slug}`}
     >
@@ -32,7 +32,7 @@ export function MenuCard({
         </div>
         <div>
           <CardTitle className="whitespace-break-spaces text-lg font-semibold">
-            {cardSet.title}
+            {cardSet.name}
           </CardTitle>
           <CardDescription className="line-clamp-5">
             {cardSet.description}
