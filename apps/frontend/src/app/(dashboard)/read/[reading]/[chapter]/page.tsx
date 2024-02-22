@@ -2,6 +2,11 @@ import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { LinkButton } from "@/app/_components/ui/button";
 import { db } from "@/server/db";
 import { api } from "@/trpc/server";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/app/_components/ui/tooltip";
 
 export async function generateStaticParams(): Promise<
   { reading: string; chapter: string }[]
@@ -43,45 +48,71 @@ export default async function Page({
         dangerouslySetInnerHTML={{ __html: chapterData?.content || "" }}
       />
       <div className="flex w-full justify-between">
-        <LinkButton
-          disabled={
-            readData?.chapters[
-              readData.chapters.findIndex(
-                (data) => data.slug === chapterData?.slug,
-              ) - 1
-            ]?.slug === undefined
-          }
-          href={`/read/${readData?.slug}/${
-            readData?.chapters[
-              readData.chapters.findIndex(
-                (data) => data.slug === chapterData?.slug,
-              ) - 1
-            ]?.slug || ""
-          }`}
-          variant="outline"
-        >
-          <IconArrowLeft className="mr-2 h-4 w-4" />
-          Previous
-        </LinkButton>
-        <LinkButton
-          disabled={
-            readData?.chapters[
-              readData.chapters.findIndex(
-                (data) => data.slug === chapterData?.slug,
-              ) + 1
-            ]?.slug === undefined
-          }
-          href={`/read/${readData?.slug}/${
-            readData?.chapters[
-              readData.chapters.findIndex(
-                (data) => data.slug === chapterData?.slug,
-              ) + 1
-            ]?.slug || ""
-          }`}
-          variant="outline"
-        >
-          Next <IconArrowRight className="ml-2 h-4 w-4" />
-        </LinkButton>
+        <Tooltip>
+          <TooltipContent>
+            {
+              readData?.chapters[
+                readData.chapters.findIndex(
+                  (data) => data.slug === chapterData?.slug,
+                ) - 1
+              ]?.name
+            }
+          </TooltipContent>
+          <TooltipTrigger>
+            <LinkButton
+              disabled={
+                readData?.chapters[
+                  readData.chapters.findIndex(
+                    (data) => data.slug === chapterData?.slug,
+                  ) - 1
+                ]?.slug === undefined
+              }
+              href={`/read/${readData?.slug}/${
+                readData?.chapters[
+                  readData.chapters.findIndex(
+                    (data) => data.slug === chapterData?.slug,
+                  ) - 1
+                ]?.slug || ""
+              }`}
+              variant="outline"
+            >
+              <IconArrowLeft className="mr-2 h-4 w-4" />
+              Previous
+            </LinkButton>
+          </TooltipTrigger>
+        </Tooltip>
+        <Tooltip>
+          <TooltipContent>
+            {
+              readData?.chapters[
+                readData.chapters.findIndex(
+                  (data) => data.slug === chapterData?.slug,
+                ) + 1
+              ]?.name
+            }
+          </TooltipContent>
+          <TooltipTrigger>
+            <LinkButton
+              disabled={
+                readData?.chapters[
+                  readData.chapters.findIndex(
+                    (data) => data.slug === chapterData?.slug,
+                  ) + 1
+                ]?.slug === undefined
+              }
+              href={`/read/${readData?.slug}/${
+                readData?.chapters[
+                  readData.chapters.findIndex(
+                    (data) => data.slug === chapterData?.slug,
+                  ) + 1
+                ]?.slug || ""
+              }`}
+              variant="outline"
+            >
+              Next <IconArrowRight className="ml-2 h-4 w-4" />
+            </LinkButton>
+          </TooltipTrigger>
+        </Tooltip>
       </div>
     </div>
   );
