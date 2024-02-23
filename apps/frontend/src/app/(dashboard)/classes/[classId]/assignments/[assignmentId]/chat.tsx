@@ -33,6 +33,13 @@ import {
   TooltipTrigger,
 } from "@/app/_components/ui/tooltip";
 import { Spinner } from "@/app/_components/ui/spinner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/_components/ui/select";
 
 export function Chat({
   initialPrompt,
@@ -42,7 +49,9 @@ export function Chat({
   const [chatOpen, setChatOpen] = useState(false);
   const panelRef = useRef<ImperativePanelHandle>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const chat = useChat();
+  const [model, setModel] = useState("pplx");
+  const chat = useChat({ api: `/api/chat/${model}` });
+  // const chat = useChat();
 
   useEffect(() => {
     const down = (e: KeyboardEvent): void => {
@@ -106,8 +115,21 @@ export function Chat({
             <CardHeader className="py-3">
               <CardTitle className="items-between flex flex-row justify-between gap-2">
                 <div className="flex w-max flex-row items-center gap-2">
-                  <IconBrandOpenai className="h-4 w-4" />
-                  AI Assistant
+                  <IconBrandOpenai className="h-4 w-4 min-w-4" />
+                  <Select
+                    defaultValue="pplx"
+                    onValueChange={setModel}
+                    value={model}
+                  >
+                    <SelectTrigger className="border-transparent px-2">
+                      <SelectValue placeholder="Pick something..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="pplx">Perplexity</SelectItem>
+                      <SelectItem value="3.5t">GPT-3.5 Turbo</SelectItem>
+                      <SelectItem value="4t">GPT-4 Turbo</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div className="flex flex-row gap-2">
                   <Tooltip>

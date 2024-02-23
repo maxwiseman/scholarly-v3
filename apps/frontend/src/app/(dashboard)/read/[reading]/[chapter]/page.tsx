@@ -132,7 +132,18 @@ export default async function Page({
         //   \n ---
         //   \n ${NodeHtmlMarkdown.translate(chapterData?.content || "")}
         //  `}
-        initialPrompt={`You're a helpful AI assistant who is helping a student with their studies. The student is currently reading the following content. Answer all questions in the context of this content. Feel free to use markdown formatting. Just make sure if you include any links, you name them using makdown syntax. Also, students don't like to read long text. Be concise! The reading is called ${readData?.name || "Untitled"}, and the chapter is called ${chapterData?.name || "Untitled"} \n---\n\n${NodeHtmlMarkdown.translate(chapterData?.content || "")}`.toString()}
+        // initialPrompt="You are a helpful AI assistant. I need you to help the student with whatever they ask for. You can use whatever sources you want. Todays date is February 23, 2024."
+        initialPrompt={`You're a helpful AI assistant who is helping a student with their studies. The student is currently reading the following content. Answer all questions in the context of this content. Feel free to use markdown formatting. Just make sure if you include any links, you name them using makdown syntax. Also, students don't like to read long text. Be concise! The reading is called ${readData?.name || "Untitled"}, and the chapter is called ${chapterData?.name || "Untitled"} \n Today's date is ${new Date().toLocaleDateString(
+          "en-us",
+          {
+            weekday: "short",
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+          },
+        )} \n---\n\n${NodeHtmlMarkdown.translate(chapterData?.content || "")}`.toString()}
       />
     </>
   );
