@@ -121,7 +121,7 @@ export function Chat({
                     onValueChange={setModel}
                     value={model}
                   >
-                    <SelectTrigger className="border-transparent px-2">
+                    <SelectTrigger className="border-transparent px-2 shadow-none">
                       <SelectValue placeholder="Pick something..." />
                     </SelectTrigger>
                     <SelectContent>
