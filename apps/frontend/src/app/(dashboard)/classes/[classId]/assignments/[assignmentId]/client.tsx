@@ -13,7 +13,7 @@ import {
 import Link from "next/link";
 import React, { useState } from "react";
 import { toast } from "sonner";
-import { Button } from "@/app/_components/ui/button";
+import { Button, LinkButton } from "@/app/_components/ui/button";
 import {
   Card,
   CardContent,
@@ -74,12 +74,13 @@ export function Submission(props: {
       url: props.assignment.url,
     });
     return (
-      <iframe
-        className="h-96 w-full rounded-lg"
+      <LinkButton
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- its ok
-        src={(data.data?.url as string) || ""}
-        title="External Tool Submission"
-      />
+        href={(data.data?.url as string) || ""}
+        icon={<IconExternalLink />}
+      >
+        Launch External Tool
+      </LinkButton>
     );
   }
   if (
