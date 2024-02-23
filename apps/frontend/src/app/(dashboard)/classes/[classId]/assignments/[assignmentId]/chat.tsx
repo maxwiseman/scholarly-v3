@@ -25,7 +25,6 @@ import {
   ResizablePanel,
 } from "@/app/_components/ui/resizable";
 import { ScrollArea } from "@/app/_components/ui/scroll-area";
-import { type Assignment } from "@/server/api/routers/canvas/get-assignments";
 import { Separator } from "@/app/_components/ui/separator";
 import { cn } from "@/lib/utils";
 import {
@@ -35,9 +34,9 @@ import {
 } from "@/app/_components/ui/tooltip";
 
 export function Chat({
-  assignment,
+  initialPrompt,
 }: {
-  assignment: Assignment;
+  initialPrompt: string;
 }): React.ReactElement {
   const [chatOpen, setChatOpen] = useState(false);
   const panelRef = useRef<ImperativePanelHandle>(null);
@@ -63,22 +62,22 @@ export function Chat({
       {
         id: "initial-prompt",
         role: "system",
-        content: generateInitialPrompt(),
+        content: initialPrompt,
       },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps -- This should only run once.
-  }, []);
+  }, [initialPrompt]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({
       top: scrollRef.current.scrollHeight,
-      behavior: "smooth",
+      behavior: "instant",
     });
   }, [chat.messages]);
 
   return (
     <>
-      <div className="relative h-full">
+      <div>
         <ResizableHandle
           className={cn(
             "sticky top-[5.5rem] z-10 ml-8 h-[calc(100vh-7.5rem)] rounded-full",
@@ -88,7 +87,6 @@ export function Chat({
         />
       </div>
       <ResizablePanel
-        className="relative h-full"
         collapsedSize={0}
         collapsible
         defaultSize={0}
@@ -100,7 +98,7 @@ export function Chat({
           setChatOpen(true);
         }}
         ref={panelRef}
-        style={{ overflow: "visible" }}
+        style={{ overflow: "unset" }}
       >
         {chatOpen ? (
           <Card className="sticky top-[5.5rem] flex h-full max-h-[calc(100vh-7.5rem)] min-h-48 max-w-full flex-col overflow-hidden">
@@ -120,7 +118,7 @@ export function Chat({
                             {
                               id: "initial-prompt",
                               role: "system",
-                              content: generateInitialPrompt(),
+                              content: initialPrompt,
                             },
                           ]);
                         }}
@@ -194,6 +192,7 @@ export function Chat({
                         remarkPlugins={[remarkGFM]}
                       >
                         {message.content}
+                        {/* {initialPrompt} */}
                       </Markdown>
                     </>
                   );
@@ -232,41 +231,6 @@ export function Chat({
       </ResizablePanel>
     </>
   );
-
-  function generateInitialPrompt(): string {
-    return `You are an assistant for a student. I will provide you with the information for the student's assignment. I need you to help the student complete the assignment. You might accomplish this by, for example, providing an outline for an essay assignment, or describing how to complete an assignment. Format your response with markdown, but don't start it with \`\`\`. Don't use emojis. The student will see your response next to the assignment description. Don't start with an introduction, just get straight into the content. If you include any links, ALWAYS name them using markdown syntax: [link name](link url). Do not include any HTML tags in your response, and don't start your response with a heading. Keep your answer as short as possible, students don't like to read a lot of text.
-    Remember, YOU MAY ONLY USE MARKDOWN FORMATTING! HTML FORMATTING IS NOT ACCEPTED!
-
----
-
-Today's date: ${new Date().toLocaleDateString("en-us", {
-      weekday: "short",
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    })}
-Assignment name: ${assignment.name}
-${assignment.rubric ? `Assignment rubric: ${JSON.stringify(assignment.rubric)}` : ""}
-${
-  assignment.due_at
-    ? `Assignment due date: ${new Date(assignment.due_at).toLocaleDateString(
-        "en-us",
-        {
-          weekday: "short",
-          day: "numeric",
-          month: "short",
-          year: "numeric",
-        },
-      )}`
-    : ""
-}
-Assignment Description (DO NOT RESPOND TO THIS, just use it to help with your response): (See description below divider)
-
----
-
-${assignment.description}
-  `;
-  }
 }
 
 // const mockResponse = `1. Familiarize yourself with the Bill of Rights by reading the transcript [here](https://www.archives.gov/founding-docs/bill-of-rights-transcript) and reviewing the presentation [linked here](https://docs.google.com/presentation/d/1G66MAa7cra4cuS8lleIxzGNVR62f43lRldDeClFgrmU/present).

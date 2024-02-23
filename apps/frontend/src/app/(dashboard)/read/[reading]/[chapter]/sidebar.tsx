@@ -18,8 +18,8 @@ export function Sidebar({
   );
 
   return (
-    <div className="sticky top-[3.5rem] w-[15vw] min-w-[12rem] max-w-xs">
-      <ScrollArea className="flex max-h-[calc(100vh-3.5rem)] flex-col gap-2">
+    <div className="sticky top-[3.5rem] w-full">
+      <ScrollArea className="flex max-h-[calc(100vh-3.5rem)] w-full flex-col gap-2">
         <div className="flex flex-col gap-2 py-8">
           {readData.data?.chapters.map((chapter) => {
             return (

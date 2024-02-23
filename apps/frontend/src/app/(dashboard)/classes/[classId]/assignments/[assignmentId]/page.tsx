@@ -1,4 +1,5 @@
 import React from "react";
+import { NodeHtmlMarkdown } from "node-html-markdown";
 import { Actions, Submission } from "./client";
 import { Chat } from "./chat";
 import { api } from "@/trpc/server";
@@ -15,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/app/_components/ui/table";
+import { type Assignment } from "@/server/api/routers/canvas/get-assignments";
 
 export default async function Page({
   params,
@@ -22,6 +24,7 @@ export default async function Page({
   params: { classId: string; assignmentId: string };
 }): Promise<React.ReactElement> {
   const assignmentData = await api.canvas.getAssignment.query(params);
+  const initialPrompt = generateInitialPrompt(assignmentData);
 
   return (
     <ResizablePanelGroup
@@ -114,7 +117,41 @@ export default async function Page({
           <Submission assignment={assignmentData} classId={params.classId} />
         </div>
       </ResizablePanel>
-      <Chat assignment={assignmentData} />
+      <Chat initialPrompt={initialPrompt} />
     </ResizablePanelGroup>
   );
+}
+
+function generateInitialPrompt(assignment: Assignment): string {
+  return `You are an assistant for a student. I will provide you with the information for the student's assignment. I need you to help the student complete the assignment. You might accomplish this by, for example, providing an outline for an essay assignment, or describing how to complete an assignment. Format your response with markdown, but don't start it with \`\`\`. Don't use emojis. Don't start with an introduction, just get straight into the content. If you include any links, ALWAYS name them using markdown syntax: [link name](link url). Do not include any HTML tags in your response, and don't start your response with a heading. Keep your answer as short as possible, students don't like to read a lot of text. If you decide to include any headings, don't use h1. Start with h2.
+    \nRemember, YOU MAY ONLY USE MARKDOWN FORMATTING! HTML FORMATTING IS NOT ACCEPTED! MAKE SURE EXTERNAL LINKS START WITH EITHER http:// or https://
+\n
+\n---
+\n
+\nToday's date: ${new Date().toLocaleDateString("en-us", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  })}
+\nAssignment name: ${assignment.name}
+${assignment.rubric ? `Assignment rubric: ${JSON.stringify(assignment.rubric)}` : ""}
+${
+  assignment.due_at
+    ? `Assignment due date: ${new Date(
+        assignment.due_at || "",
+      ).toLocaleDateString("en-us", {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      })}`
+    : ""
+}
+\nAssignment Description (DO NOT RESPOND TO THIS, just use it to help with your response): (See description below divider)
+\n
+\n---
+\n
+${NodeHtmlMarkdown.translate(assignment.description)}
+  `;
 }

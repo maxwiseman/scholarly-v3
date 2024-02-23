@@ -1,4 +1,11 @@
+"use client";
+
 import { Sidebar } from "./sidebar";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/app/_components/ui/resizable";
 
 export default function Layout({
   children,
@@ -8,11 +15,23 @@ export default function Layout({
   params: { reading: string; chapter: string };
 }): React.ReactElement {
   return (
-    <div className="flex w-full gap-8 px-8">
-      <div>
+    <ResizablePanelGroup
+      className="relative h-min max-h-min w-full max-w-full overflow-auto px-8"
+      direction="horizontal"
+      style={{ overflow: "unset" }}
+    >
+      <ResizablePanel
+        defaultSize={15}
+        minSize={10}
+        style={{ overflow: "unset" }}
+      >
         <Sidebar params={params} />
-      </div>
-      <div className="flex max-w-full grow justify-center py-8">{children}</div>
-    </div>
+      </ResizablePanel>
+      <ResizableHandle
+        className="sticky top-[3.5rem] mx-8 h-[calc(100vh-3.5rem)]"
+        withHandle
+      />
+      {children}
+    </ResizablePanelGroup>
   );
 }
