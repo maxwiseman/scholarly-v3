@@ -152,6 +152,6 @@ ${
 \n
 \n---
 \n
-${NodeHtmlMarkdown.translate(assignment.description)}
+${NodeHtmlMarkdown.translate(assignment.description || "")}
   `;
 }

@@ -48,7 +48,9 @@ export default async function Page({
     <>
       <ResizablePanel
         className="flex max-w-full grow justify-center py-8"
+        collapsible
         defaultSize={85}
+        minSize={20}
       >
         <div className="flex flex-col gap-4">
           <div
@@ -130,7 +132,7 @@ export default async function Page({
         //   \n ---
         //   \n ${NodeHtmlMarkdown.translate(chapterData?.content || "")}
         //  `}
-        initialPrompt={`You're a helpful AI assistant. The user is currently reading the following content. Answer all questions in the context of this content. Feel free to use markdown formatting. Just make sure if you include any links, you name them using makdown syntax. \n---\n\n${NodeHtmlMarkdown.translate(chapterData?.content || "")}`.toString()}
+        initialPrompt={`You're a helpful AI assistant who is helping a student with their studies. The student is currently reading the following content. Answer all questions in the context of this content. Feel free to use markdown formatting. Just make sure if you include any links, you name them using makdown syntax. Also, students don't like to read long text. Be concise! The reading is called ${readData?.name || "Untitled"}, and the chapter is called ${chapterData?.name || "Untitled"} \n---\n\n${NodeHtmlMarkdown.translate(chapterData?.content || "")}`.toString()}
       />
     </>
   );

@@ -32,6 +32,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/app/_components/ui/tooltip";
+import { Spinner } from "@/app/_components/ui/spinner";
 
 export function Chat({
   initialPrompt,
@@ -191,12 +192,30 @@ export function Chat({
                         key={message.content.substring(0, 10)}
                         remarkPlugins={[remarkGFM]}
                       >
-                        {message.content}
+                        {message.role === "assistant" &&
+                        chat.isLoading &&
+                        chat.messages.indexOf(message) ===
+                          chat.messages.length - 1
+                          ? `${message.content}&#9612;`
+                          : message.content}
                         {/* {initialPrompt} */}
                       </Markdown>
                     </>
                   );
                 })}
+                {chat.isLoading &&
+                chat.messages[chat.messages.length - 1]?.role !==
+                  "assistant" ? (
+                  <>
+                    <div className="my-4 flex max-w-full flex-row flex-nowrap items-center gap-1">
+                      <span className="text-xs text-muted-foreground">
+                        Assistant
+                      </span>
+                      <Separator />
+                    </div>
+                    <Spinner />
+                  </>
+                ) : null}
               </div>
             </ScrollArea>
             <CardFooter className="pt-6">
