@@ -78,6 +78,7 @@ export function Submission(props: {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- its ok
         href={(data.data?.url as string) || ""}
         icon={<IconExternalLink />}
+        target="_blank"
       >
         Launch External Tool
       </LinkButton>
