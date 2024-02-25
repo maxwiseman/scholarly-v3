@@ -14,7 +14,7 @@ export async function POST(req: Request): Promise<StreamingTextResponse> {
 
   // Request the OpenAI-compatible API for the response based on the prompt
   const response = await perplexity.chat.completions.create({
-    model: "pplx-7b-online",
+    model: "sonar-small-online",
     stream: true,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- its fine
     messages,

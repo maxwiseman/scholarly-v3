@@ -172,7 +172,7 @@ export function Chat({
               </CardTitle>
             </CardHeader>
             {chat.messages.length < 2 ? (
-              <div className="flex h-full flex-col items-center justify-center gap-4 text-muted-foreground">
+              <div className="flex h-full cursor-default flex-col items-center justify-center gap-4 text-muted-foreground">
                 No messages yet!
               </div>
             ) : (
@@ -279,8 +279,3 @@ export function Chat({
     </>
   );
 }
-
-// const mockResponse = `1. Familiarize yourself with the Bill of Rights by reading the transcript [here](https://www.archives.gov/founding-docs/bill-of-rights-transcript) and reviewing the presentation [linked here](https://docs.google.com/presentation/d/1G66MAa7cra4cuS8lleIxzGNVR62f43lRldDeClFgrmU/present).
-// 2. Create a remix of the provided Google Doc [here](https://docs.google.com/document/d/1Vxqiw4fvGT8wgvcFipRyPzZ2L8-qLQfmv3YEd2wZPbc/view) to summarize each amendment in your own words.
-// 3. Use the Bill of Rights one-pager [here](https://docs.google.com/document/d/1Z-NEqM9giBEVO4gjSTjJEg3PGiE624TU0x_Hr6w4pMg/view) for reference if needed.
-// 4. Test your knowledge of the Bill of Rights using the "Do I Have a Right?" game on iCivics [here](https://www.icivics.org/games/do-i-have-right).`;
