@@ -171,75 +171,81 @@ export function Chat({
                 </div>
               </CardTitle>
             </CardHeader>
-            <ScrollArea
-              className="h-full px-6 py-0"
-              ref={scrollRef}
-              style={{
-                maskImage: `linear-gradient(#000,#000,transparent 0,#000 10px,#000 calc(100% - 10px),transparent)`,
-              }}
-            >
-              <div>
-                {chat.messages.map((message, i) => {
-                  if (message.role !== "assistant" && message.role !== "user")
-                    return null;
-                  return (
-                    <>
-                      {message.role !== chat.messages[i - 1]?.role &&
-                      i !== 1 ? (
-                        <div className="my-4 flex max-w-full flex-row flex-nowrap items-center gap-1">
-                          {message.role === "assistant" ? (
-                            <>
-                              <span className="text-xs text-muted-foreground">
-                                Assistant
-                              </span>
-                              <Separator />
-                            </>
-                          ) : (
-                            <>
-                              <Separator className="relative shrink" />
-                              <span className="text-xs text-muted-foreground">
-                                User
-                              </span>
-                            </>
-                          )}
-                        </div>
-                      ) : null}
-                      <Markdown
-                        className={cn(
-                          "typography mb-2 break-words [&>*]:break-words",
-                          {
-                            "[&>*]:text-right": message.role === "user",
-                          },
-                        )}
-                        key={message.content.substring(0, 10)}
-                        remarkPlugins={[remarkGFM]}
-                      >
-                        {message.role === "assistant" &&
-                        chat.isLoading &&
-                        chat.messages.indexOf(message) ===
-                          chat.messages.length - 1
-                          ? `${message.content}&#9612;`
-                          : message.content}
-                        {/* {initialPrompt} */}
-                      </Markdown>
-                    </>
-                  );
-                })}
-                {chat.isLoading &&
-                chat.messages[chat.messages.length - 1]?.role !==
-                  "assistant" ? (
-                  <>
-                    <div className="my-4 flex max-w-full flex-row flex-nowrap items-center gap-1">
-                      <span className="text-xs text-muted-foreground">
-                        Assistant
-                      </span>
-                      <Separator />
-                    </div>
-                    <Spinner />
-                  </>
-                ) : null}
+            {chat.messages.length < 2 ? (
+              <div className="flex h-full flex-col items-center justify-center gap-4 text-muted-foreground">
+                No messages yet!
               </div>
-            </ScrollArea>
+            ) : (
+              <ScrollArea
+                className="h-full px-6 py-0"
+                ref={scrollRef}
+                style={{
+                  maskImage: `linear-gradient(#000,#000,transparent 0,#000 10px,#000 calc(100% - 10px),transparent)`,
+                }}
+              >
+                <div>
+                  {chat.messages.map((message, i) => {
+                    if (message.role !== "assistant" && message.role !== "user")
+                      return null;
+                    return (
+                      <>
+                        {message.role !== chat.messages[i - 1]?.role &&
+                        i !== 1 ? (
+                          <div className="my-4 flex max-w-full flex-row flex-nowrap items-center gap-1">
+                            {message.role === "assistant" ? (
+                              <>
+                                <span className="text-xs text-muted-foreground">
+                                  Assistant
+                                </span>
+                                <Separator />
+                              </>
+                            ) : (
+                              <>
+                                <Separator className="relative shrink" />
+                                <span className="text-xs text-muted-foreground">
+                                  User
+                                </span>
+                              </>
+                            )}
+                          </div>
+                        ) : null}
+                        <Markdown
+                          className={cn(
+                            "typography mb-2 break-words [&>*]:break-words",
+                            {
+                              "[&>*]:text-right": message.role === "user",
+                            },
+                          )}
+                          key={message.content.substring(0, 10)}
+                          remarkPlugins={[remarkGFM]}
+                        >
+                          {message.role === "assistant" &&
+                          chat.isLoading &&
+                          chat.messages.indexOf(message) ===
+                            chat.messages.length - 1
+                            ? `${message.content}&#9612;`
+                            : message.content}
+                          {/* {initialPrompt} */}
+                        </Markdown>
+                      </>
+                    );
+                  })}
+                  {chat.isLoading &&
+                  chat.messages[chat.messages.length - 1]?.role !==
+                    "assistant" ? (
+                    <>
+                      <div className="my-4 flex max-w-full flex-row flex-nowrap items-center gap-1">
+                        <span className="text-xs text-muted-foreground">
+                          Assistant
+                        </span>
+                        <Separator />
+                      </div>
+                      <Spinner />
+                    </>
+                  ) : null}
+                </div>
+              </ScrollArea>
+            )}
             <CardFooter className="pt-6">
               <form
                 className="flex w-full items-center gap-2"
