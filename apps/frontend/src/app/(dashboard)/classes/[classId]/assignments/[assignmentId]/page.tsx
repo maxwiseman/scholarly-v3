@@ -1,7 +1,7 @@
 import React from "react";
 import { NodeHtmlMarkdown } from "node-html-markdown";
 import { Actions, Submission } from "./client";
-import { Chat } from "./chat";
+import { Chat } from "../../../../../_components/chat";
 import { api } from "@/trpc/server";
 import { Separator } from "@/app/_components/ui/separator";
 import {

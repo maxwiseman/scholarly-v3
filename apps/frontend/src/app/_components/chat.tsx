@@ -8,10 +8,9 @@ import {
   IconSquare,
 } from "@tabler/icons-react";
 import React, { useEffect, useRef, useState } from "react";
-import Markdown from "react-markdown";
 import { type ImperativePanelHandle } from "react-resizable-panels";
 import { useChat } from "ai/react";
-import remarkGFM from "remark-gfm";
+import { AiMessage } from "./ai-message";
 import { Button } from "@/app/_components/ui/button";
 import {
   Card,
@@ -209,24 +208,16 @@ export function Chat({
                             )}
                           </div>
                         ) : null}
-                        <Markdown
-                          className={cn(
-                            "typography mb-2 break-words [&>*]:break-words",
-                            {
-                              "[&>*]:text-right": message.role === "user",
-                            },
-                          )}
+                        <AiMessage
                           key={message.content.substring(0, 10)}
-                          remarkPlugins={[remarkGFM]}
-                        >
-                          {message.role === "assistant" &&
-                          chat.isLoading &&
-                          chat.messages.indexOf(message) ===
-                            chat.messages.length - 1
-                            ? `${message.content}&#9612;`
-                            : message.content}
-                          {/* {initialPrompt} */}
-                        </Markdown>
+                          loading={
+                            message.role === "assistant" && chat.isLoading
+                              ? chat.messages.indexOf(message) ===
+                                chat.messages.length - 1
+                              : false
+                          }
+                          message={message}
+                        />
                       </>
                     );
                   })}

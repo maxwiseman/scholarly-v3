@@ -9,7 +9,7 @@ import {
   TooltipTrigger,
 } from "@/app/_components/ui/tooltip";
 import { ResizablePanel } from "@/app/_components/ui/resizable";
-import { Chat } from "@/app/(dashboard)/classes/[classId]/assignments/[assignmentId]/chat";
+import { Chat } from "@/app/_components/chat";
 
 export async function generateStaticParams(): Promise<
   { reading: string; chapter: string }[]
