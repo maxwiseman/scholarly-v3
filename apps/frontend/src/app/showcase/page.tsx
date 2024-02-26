@@ -48,8 +48,8 @@ const demoPages: { href: string; title: string }[] = [
     title: "Assignment",
   },
   {
-    href: "/dashboard",
-    title: "Dashboard",
+    href: "/classes/5b1e16cd-b4f0-457c-8a3c-167666b2b21a/grades",
+    title: "Grades",
   },
   {
     href: "/read/american-pageant/ch-31",
