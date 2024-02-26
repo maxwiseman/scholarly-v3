@@ -31,7 +31,7 @@ type CarouselContextProps = {
 
 const CarouselContext = React.createContext<CarouselContextProps | null>(null);
 
-function useCarousel(): CarouselContextProps {
+export function useCarousel(): CarouselContextProps {
   const context = React.useContext(CarouselContext);
 
   if (!context) {
@@ -159,7 +159,7 @@ const CarouselContent = React.forwardRef<
 
   return (
     <div
-      className="relative overflow-hidden"
+      className={cn("relative overflow-hidden", className)}
       ref={carouselRef}
       style={{
         maskImage: `linear-gradient(90deg, #000,#000,transparent 0,#000 10px,#000 calc(100% - 10px),transparent)`,
