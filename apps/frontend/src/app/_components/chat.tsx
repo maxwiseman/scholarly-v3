@@ -80,9 +80,9 @@ export function Chat({
   useEffect(() => {
     scrollRef.current?.scrollTo({
       top: scrollRef.current.scrollHeight,
-      behavior: "instant",
+      behavior: "smooth",
     });
-  }, [chat.messages]);
+  }, [chat.isLoading]);
 
   return (
     <>
