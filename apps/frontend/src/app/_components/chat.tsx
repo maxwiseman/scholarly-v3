@@ -50,7 +50,6 @@ export function Chat({
   const scrollRef = useRef<HTMLDivElement>(null);
   const [model, setModel] = useState("pplx");
   const chat = useChat({ api: `/api/chat/${model}` });
-  // const chat = useChat();
 
   useEffect(() => {
     const down = (e: KeyboardEvent): void => {
