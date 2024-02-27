@@ -1,9 +1,9 @@
 "use client";
 
 import { type RefObject, useEffect, useRef, useState } from "react";
-import { IconRefresh } from "@tabler/icons-react";
+import { IconExternalLink, IconRefresh } from "@tabler/icons-react";
 import { useCarousel } from "../_components/ui/carousel";
-import { Button } from "../_components/ui/button";
+import { Button, LinkButton } from "../_components/ui/button";
 import { cn } from "@/lib/utils";
 
 export function Item({
@@ -57,15 +57,23 @@ export function Item({
         src={page.href}
         title={page.title}
       />
-      <Button
-        className="absolute bottom-4 right-4 z-50"
-        icon={<IconRefresh />}
-        onClick={() => {
-          frameRef.current?.setAttribute("src", page.href);
-        }}
-      >
-        Reset
-      </Button>
+      <div className="absolute bottom-4 right-4 z-50 flex gap-2">
+        <LinkButton
+          href={page.href}
+          icon={<IconExternalLink />}
+          size="icon"
+          target="_blank"
+          variant="secondary"
+        />
+        <Button
+          icon={<IconRefresh />}
+          onClick={() => {
+            frameRef.current?.setAttribute("src", page.href);
+          }}
+        >
+          Reset
+        </Button>
+      </div>
     </div>
   );
 }
