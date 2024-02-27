@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call -- its fine */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment -- it will be fine */
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import { Configuration, OpenAIApi } from "openai-edge";
@@ -17,14 +16,12 @@ export async function POST(req: Request): Promise<StreamingTextResponse> {
   const { messages } = await req.json();
 
   // Ask OpenAI for a streaming chat completion given the prompt
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- its fine
   const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     stream: true,
     messages,
   });
   // Convert the response into a friendly text-stream
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- its fine
   const stream = OpenAIStream(response);
   // Respond with the stream
   return new StreamingTextResponse(stream);
