@@ -144,7 +144,7 @@ export function Submission(props: {
         </TabsContent>
         <TabsContent className="min-h-[18.75rem]" value="drive">
           <Card className="flex flex-col">
-            <CardHeader className="">
+            <CardHeader>
               <CardTitle>Submit a Google Doc</CardTitle>
             </CardHeader>
             <CardContent className="text-muted-foreground">
@@ -153,9 +153,10 @@ export function Submission(props: {
               there.
             </CardContent>
             <Separator />
-            <CardFooter className="justify-end p-4 px-6">
+            <CardFooter className="p-4 px-6">
               <LinkButton
                 href={`${props.assignment.html_url}#:~:text=Choose%20a%20submission%20type`}
+                icon={<IconExternalLink />}
                 target="_blank"
               >
                 Go to Canvas
