@@ -10,6 +10,7 @@ import {
   IconLetterQ,
   IconMessage,
   IconNotebook,
+  IconSchool,
   IconSearch,
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
@@ -153,6 +154,15 @@ export function Search({
             >
               <IconLetterG className="mr-2 h-4 w-4" />
               Gimkit
+            </CommandItem>
+            <CommandItem
+              onSelect={() => {
+                window.open(`https://deltamath.com`);
+                setOpen(false);
+              }}
+            >
+              <IconSchool className="mr-2 h-4 w-4" />
+              Deltamath
             </CommandItem>
             <CommandItem
               onSelect={() => {
