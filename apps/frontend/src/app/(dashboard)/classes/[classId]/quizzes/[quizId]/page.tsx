@@ -1,7 +1,8 @@
 import React from "react";
-import { Take } from "./take";
+// import { Take } from "./take";
 import { api } from "@/trpc/server";
 import { Separator } from "@/app/_components/ui/separator";
+import { LinkButton } from "@/app/_components/ui/button";
 
 export default async function Page({
   params,
@@ -42,7 +43,15 @@ export default async function Page({
           }}
         />
         {quizData.description !== "" && <Separator className="my-4" />}
-        <Take params={params} quiz={quizData} />
+        {/* <Take params={params} quiz={quizData} /> */}
+        <div className="flex justify-center">
+          <LinkButton
+            href={`${quizData.html_url}#:~:text=Take%20the%20Quiz`}
+            target="_blank"
+          >
+            Take Quiz
+          </LinkButton>
+        </div>
       </div>
     </div>
   );
