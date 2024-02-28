@@ -26,7 +26,7 @@ export function AiMessage({
           className={cn("typography mb-2 break-words [&>*]:break-words", {
             "[&>*]:text-right": message.role === "user",
           })}
-          components={{ p: AnimatedWord }}
+          components={{ p: AnimatedWord, li: AnimatedLi }}
           remarkPlugins={[remarkGfm]}
         >
           {message.content}
@@ -62,4 +62,21 @@ function AnimatedWord(
       : props.children;
 
   return <p>{words}</p>;
+}
+function AnimatedLi(props: HTMLProps<HTMLLIElement>): React.ReactElement {
+  const words =
+    typeof props.children === "string"
+      ? props.children.split(" ").map((word) => (
+          <>
+            <span
+              className="inline-block duration-1000 animate-in fade-in-0"
+              key={word}
+            >
+              {word}
+            </span>{" "}
+          </>
+        ))
+      : props.children;
+
+  return <li>{words}</li>;
 }
