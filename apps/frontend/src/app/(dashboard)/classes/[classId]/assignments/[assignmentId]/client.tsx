@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  IconBrandGoogleDrive,
   IconCursorText,
   IconDotsVertical,
   IconExternalLink,
@@ -108,10 +109,16 @@ export function Submission(props: {
             </TabsTrigger>
           )}
           {props.assignment.submission_types.includes("online_upload") && (
-            <TabsTrigger value="online_upload">
-              <IconFileUpload className="mr-2 h-4 w-4" />
-              File Upload
-            </TabsTrigger>
+            <>
+              <TabsTrigger value="online_upload">
+                <IconFileUpload className="mr-2 h-4 w-4" />
+                File Upload
+              </TabsTrigger>
+              <TabsTrigger value="drive">
+                <IconBrandGoogleDrive className="mr-2 h-4 w-4" />
+                Google Drive
+              </TabsTrigger>
+            </>
           )}
         </TabsList>
         <TabsContent className="min-h-[18.75rem]" value="online_text_entry">
@@ -134,6 +141,27 @@ export function Submission(props: {
             </CardFooter>
           </Card> */}
           <DropZone />
+        </TabsContent>
+        <TabsContent className="min-h-[18.75rem]" value="drive">
+          <Card className="flex flex-col">
+            <CardHeader className="">
+              <CardTitle>Submit a Google Doc</CardTitle>
+            </CardHeader>
+            <CardContent className="text-muted-foreground">
+              This doesn&lsquo;t work just yet, because we&lsquo;re awaiting KCS
+              approval. In the meantime, you can go to Canvas and submit through
+              there.
+            </CardContent>
+            <Separator />
+            <CardFooter className="justify-end p-4 px-6">
+              <LinkButton
+                href={`${props.assignment.html_url}#:~:text=Choose%20a%20submission%20type`}
+                target="_blank"
+              >
+                Go to Canvas
+              </LinkButton>
+            </CardFooter>
+          </Card>
         </TabsContent>
       </Tabs>
     );

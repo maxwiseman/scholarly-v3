@@ -2,6 +2,7 @@
 
 import {
   IconApple,
+  IconFeather,
   IconLetterA,
   IconLetterB,
   IconLetterE,
@@ -161,6 +162,15 @@ export function Search({
             >
               <IconLetterQ className="mr-2 h-4 w-4" />
               Quizlet
+            </CommandItem>
+            <CommandItem
+              onSelect={() => {
+                window.open(`https://www.quill.org/classes`);
+                setOpen(false);
+              }}
+            >
+              <IconFeather className="mr-2 h-4 w-4" />
+              Quill
             </CommandItem>
           </CommandGroup>
           <CommandGroup heading="Classes">
