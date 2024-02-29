@@ -49,7 +49,7 @@ export default function Layout({
   );
 }
 
-export const SettingsConfig: {
+const SettingsConfig: {
   name: string;
   slug: string;
 }[] = [
