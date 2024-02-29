@@ -1,5 +1,5 @@
 import { ClassInfo } from "./class-info";
-import { Sidebar } from "./sidebar";
+import { Sidebar } from "@/app/_components/sidebar";
 import { Separator } from "@/app/_components/ui/separator";
 
 export default function Layout({
@@ -13,11 +13,32 @@ export default function Layout({
     <div>
       <ClassInfo classId={params.classId} />
       <Separator />
-      <div className="flex w-full gap-8 p-8">
+      <div className="flex w-full gap-8 px-8">
         <div>
-          <Sidebar classId={params.classId} />
+          <Sidebar
+            className="w-[15vw] min-w-[12rem]"
+            items={[
+              {
+                name: "Overview",
+                href: `/classes/${params.classId}`,
+                matchMethod: "equal",
+              },
+              {
+                name: "Modules",
+                href: `/classes/${params.classId}/modules`,
+              },
+              {
+                name: "Assignments",
+                href: `/classes/${params.classId}/assignments`,
+              },
+              {
+                name: "Grades",
+                href: `/classes/${params.classId}/grades`,
+              },
+            ]}
+          />
         </div>
-        <div className="max-w-full grow">{children}</div>
+        <div className="max-w-full grow py-8">{children}</div>
       </div>
     </div>
   );
