@@ -2,6 +2,7 @@
 
 import {
   IconBrandOpenai,
+  IconClipboardCopy,
   IconLayoutSidebarRightCollapse,
   IconPlus,
   IconSend,
@@ -48,7 +49,9 @@ export function Chat({
   const [chatOpen, setChatOpen] = useState(false);
   const panelRef = useRef<ImperativePanelHandle>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [model, setModel] = useState("pplx");
+  const [model, setModel] = useState(
+    process.env.NODE_ENV === "development" ? "mistral" : "pplx",
+  );
   const chat = useChat({ api: `/api/chat/${model}` });
 
   useEffect(() => {
@@ -74,7 +77,7 @@ export function Chat({
       },
     ]);
     // eslint-disable-next-line react-hooks/exhaustive-deps -- This should only run once.
-  }, [initialPrompt]);
+  }, [initialPrompt, model]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({
@@ -123,6 +126,9 @@ export function Chat({
                       <SelectValue placeholder="Pick something..." />
                     </SelectTrigger>
                     <SelectContent>
+                      {process.env.NODE_ENV === "development" ? (
+                        <SelectItem value="mistral">Mistral</SelectItem>
+                      ) : null}
                       <SelectItem value="pplx">Perplexity</SelectItem>
                       <SelectItem value="3.5t">GPT-3.5 Turbo</SelectItem>
                       <SelectItem value="4t">GPT-4 Turbo</SelectItem>
@@ -192,14 +198,27 @@ export function Chat({
                           <div className="my-4 flex max-w-full flex-row flex-nowrap items-center gap-1">
                             {message.role === "assistant" ? (
                               <>
-                                <span className="text-xs text-muted-foreground">
+                                <span className="mr-1 text-xs text-muted-foreground">
                                   Assistant
                                 </span>
-                                <Separator />
+                                <Separator className="shrink grow rounded-full" />
+                                <Button
+                                  className="aspect-square h-6 w-6 rounded-sm p-1 text-muted-foreground"
+                                  icon={
+                                    <IconClipboardCopy className="h-3 w-3" />
+                                  }
+                                  onClick={async () => {
+                                    await navigator.clipboard.writeText(
+                                      message.content,
+                                    );
+                                  }}
+                                  size="icon"
+                                  variant="ghost"
+                                />
                               </>
                             ) : (
                               <>
-                                <Separator className="relative shrink" />
+                                <Separator className="shrink grow" />
                                 <span className="text-xs text-muted-foreground">
                                   User
                                 </span>
@@ -225,10 +244,19 @@ export function Chat({
                     "assistant" ? (
                     <>
                       <div className="my-4 flex max-w-full flex-row flex-nowrap items-center gap-1">
-                        <span className="text-xs text-muted-foreground">
+                        <span className="mr-1 text-xs text-muted-foreground">
                           Assistant
                         </span>
-                        <Separator />
+                        <Separator className="shrink grow rounded-full" />
+                        <Button
+                          className="aspect-square h-6 w-6 rounded-sm p-1 text-muted-foreground"
+                          icon={<IconClipboardCopy className="h-3 w-3" />}
+                          onClick={async () => {
+                            await navigator.clipboard.writeText("Loading...");
+                          }}
+                          size="icon"
+                          variant="ghost"
+                        />
                       </div>
                       <Spinner />
                     </>

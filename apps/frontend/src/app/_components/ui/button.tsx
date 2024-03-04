@@ -56,7 +56,14 @@ export interface LinkButtonProps
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const StyledIcon = props.icon
-      ? React.cloneElement(props.icon, { className: "h-4 w-4 mr-2" })
+      ? React.cloneElement(props.icon, {
+          className: cn(
+            "h-4 w-4 mr-2",
+            { "mr-0": size === "icon" },
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- this will either be a string or it wont be defined
+            props.icon.props?.className as string | undefined,
+          ),
+        })
       : null;
     const Comp = asChild ? Slot : "button";
     return (
@@ -80,7 +87,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             className={cn(
               "overflow-hidden transition-[width]",
               !props.loading ? "mr-2 w-4" : "mr-0 w-0",
-              size === "icon" ? "mr-0" : "",
+              size === "icon" ? "mr-0 w-auto" : "",
             )}
           >
             {!props.loading && StyledIcon}
@@ -100,7 +107,14 @@ const LinkButton = React.forwardRef<HTMLButtonElement, LinkButtonProps>(
   ) => {
     const Comp = asChild ? Slot : "button";
     const StyledIcon = props.icon
-      ? React.cloneElement(props.icon, { className: "h-4 w-4 mr-2" })
+      ? React.cloneElement(props.icon, {
+          className: cn(
+            "h-4 w-4 mr-2",
+            { "mr-0": size === "icon" },
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- this will either be a string or it wont be defined
+            props.icon.props?.className as string | undefined,
+          ),
+        })
       : null;
     return (
       <Link href={href} tabIndex={-1} target={target}>
