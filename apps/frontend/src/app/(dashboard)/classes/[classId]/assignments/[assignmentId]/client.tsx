@@ -121,7 +121,10 @@ export function Submission(props: {
             </>
           )}
         </TabsList>
-        <TabsContent className="min-h-[18.75rem]" value="online_text_entry">
+        <TabsContent
+          className="min-h-[18.75rem] pb-1"
+          value="online_text_entry"
+        >
           <TextSubmission props={props} />
         </TabsContent>
         <TabsContent className="min-h-[18.75rem]" value="online_url">
