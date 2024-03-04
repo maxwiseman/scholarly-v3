@@ -14,7 +14,7 @@ export default function Page(): React.ReactElement {
         <h1 className="h-[5rem] min-h-max bg-gradient-to-b from-foreground to-neutral-400 bg-clip-text text-center text-7xl font-bold text-transparent dark:to-neutral-600 md:h-[6.4rem]  md:text-8xl">
           Scholarly
         </h1>
-        <h2 className="text-lg text-neutral-500">Learning made easy</h2>
+        <h2 className="text-lg text-neutral-500">Learning made fun</h2>
         <LinkButton className="mt-6" href="/sign-in">
           Get started <IconArrowRight className="ml-2 h-4 w-4" />
         </LinkButton>
