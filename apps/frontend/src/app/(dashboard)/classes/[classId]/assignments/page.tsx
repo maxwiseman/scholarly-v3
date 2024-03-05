@@ -30,7 +30,7 @@ export default function Page({
           value={searchString}
         />
         <Button
-          icon={<IconRefresh className="absolute h-4 w-4" />}
+          icon={<IconRefresh />}
           loading={
             assignmentData.isFetching ||
             assignmentData.isRefetching ||

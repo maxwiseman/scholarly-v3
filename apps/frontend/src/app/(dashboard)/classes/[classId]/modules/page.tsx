@@ -71,7 +71,7 @@ export default function Page({
           />
         </Button>
         <Button
-          icon={<IconRefresh className="absolute h-4 w-4" />}
+          icon={<IconRefresh />}
           loading={
             moduleData.isFetching ||
             moduleData.isRefetching ||
@@ -82,12 +82,7 @@ export default function Page({
           }}
           size="icon"
           variant="outline"
-        >
-          {/* <Spinner
-            className="absolute h-4 w-4 transition-opacity duration-500"
-            style={{ opacity: accordionValue.length === 0 ? 1 : 0 }}
-          /> */}
-        </Button>
+        />
       </div>
       <Accordion
         className="px-1"
