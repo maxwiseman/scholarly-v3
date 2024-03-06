@@ -7,6 +7,7 @@ import {
   IconLetterB,
   IconLetterE,
   IconLetterG,
+  IconLetterK,
   IconLetterQ,
   IconMessage,
   IconNotebook,
@@ -136,6 +137,15 @@ export function Search({
             >
               <IconLetterA className="mr-2 h-4 w-4" />
               AP Classroom
+            </CommandItem>
+            <CommandItem
+              onSelect={() => {
+                window.open(`https://kahoot.it`);
+                setOpen(false);
+              }}
+            >
+              <IconLetterK className="mr-2 h-4 w-4" />
+              Kahoot!
             </CommandItem>
             <CommandItem
               onSelect={() => {
