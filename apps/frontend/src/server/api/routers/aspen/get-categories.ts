@@ -36,6 +36,7 @@ export async function getCategories(id: string) {
 export interface AspenCategories {
   average: number;
   categories: {
+    accurate?: boolean;
     name: string;
     weight: number;
     value: number;

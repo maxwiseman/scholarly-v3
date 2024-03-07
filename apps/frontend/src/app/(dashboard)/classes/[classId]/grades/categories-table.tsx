@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/app/_components/ui/table";
 import { type AspenCategories } from "@/server/api/routers/aspen/get-categories";
+import { cn } from "@/lib/utils";
 
 export function CategoryTable({
   categoryData,
@@ -29,6 +30,9 @@ export function CategoryTable({
   }[];
 }): React.ReactElement {
   const log = useLogger();
+  const calculatedCategories = calculateCategories([...assignmentData], {
+    ...categoryData,
+  });
 
   return (
     <Table className="overflow-hidden rounded-md">
@@ -40,31 +44,31 @@ export function CategoryTable({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {calculateCategories(assignmentData, categoryData).categories.map(
-          (category) => {
-            return (
-              <TableRow key={category.name}>
-                <TableCell>{category.name}</TableCell>
-                <TableCell>{category.weight * 100}%</TableCell>
-                <TableCell>
-                  {category.value
-                    ? `${category.value.toFixed(2).replace(/\.0+$/, "")}%`
-                    : ""}
-                </TableCell>
-              </TableRow>
-            );
-          },
-        )}
+        {calculatedCategories.categories.map((category) => {
+          return (
+            <TableRow
+              className={cn({ "bg-yellow-500/25": !category.accurate })}
+              key={category.name}
+            >
+              <TableCell>{category.name}</TableCell>
+              <TableCell>{category.weight * 100}%</TableCell>
+              <TableCell>
+                {category.value
+                  ? `${category.value.toFixed(2).replace(/\.0+$/, "")}%`
+                  : ""}
+              </TableCell>
+            </TableRow>
+          );
+        })}
       </TableBody>
       <TableFooter>
-        <TableRow>
+        <TableRow
+          className={cn({
+            "bg-yellow-500/25": !calculatedCategories.accurate,
+          })}
+        >
           <TableCell colSpan={2}>Gradebook Average</TableCell>
-          <TableCell>
-            {calculateCategories(assignmentData, categoryData).average.toFixed(
-              2,
-            )}
-            %
-          </TableCell>
+          <TableCell>{calculatedCategories.average.toFixed(2)}%</TableCell>
         </TableRow>
       </TableFooter>
     </Table>
@@ -78,7 +82,7 @@ export function CategoryTable({
       extraCredit: boolean | null;
     }[],
     categories: AspenCategories,
-  ): AspenCategories {
+  ): AspenCategories & { accurate?: boolean } {
     // Duplicate the categories object so that we don't modify the original, and add some extra keys for later
     const internalCategoryData: {
       name: string;
@@ -86,11 +90,13 @@ export function CategoryTable({
       points?: number;
       weight: number;
       value: number;
-    }[] = [...categories.categories];
+      accurate?: boolean;
+    }[] = [...categories.categories.map((c) => ({ ...c }))];
 
     // For each category, check what assignments are in that category and add up the points and pointsPossible
     internalCategoryData.forEach((category) => {
-      assignments.forEach((assignment) => {
+      assignments.forEach((singleAssignmentData) => {
+        const assignment = { ...singleAssignmentData };
         if (
           typeof assignment.points === "string" &&
           assignment.points.toUpperCase() === "M"
@@ -115,6 +121,28 @@ export function CategoryTable({
       if (category.pointsPossible && category.points)
         category.value = (category.points / category.pointsPossible) * 100;
       else category.value = NaN;
+      if (
+        category.value.toFixed(2) ===
+        categories.categories
+          .filter((c) => c.name === category.name)[0]
+          ?.value.toFixed(2)
+      ) {
+        category.accurate = true;
+        // console.log(
+        //   "Accurate:",
+        //   category.value,
+        //   categories.categories.filter((c) => c.name === category.name)[0]
+        //     ?.value,
+        // );
+      } else {
+        category.accurate = false;
+        // console.log(
+        //   "Inaccurate:",
+        //   category.value,
+        //   categories.categories.filter((c) => c.name === category.name)[0]
+        //     ?.value,
+        // );
+      }
     });
 
     // Calculate the class average, while excluding categories that have no value
@@ -137,6 +165,10 @@ export function CategoryTable({
       log.error("Something went wrong while calculating averages!");
     }
 
-    return { average, categories: internalCategoryData };
+    return {
+      average,
+      categories: internalCategoryData,
+      accurate: average.toFixed(2) === categories.average.toFixed(2),
+    };
   }
 }
