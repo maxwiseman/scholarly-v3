@@ -182,7 +182,7 @@ function ActionsPopover(
 ): React.ReactElement {
   return (
     <Popover>
-      <PopoverTrigger disabled={loading}>
+      <PopoverTrigger asChild disabled={loading}>
         <Button
           disabled={loading}
           icon={<IconDots />}

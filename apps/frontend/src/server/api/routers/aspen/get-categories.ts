@@ -39,6 +39,6 @@ export interface AspenCategories {
     accurate?: boolean;
     name: string;
     weight: number;
-    value: number;
+    value: number | null;
   }[];
 }

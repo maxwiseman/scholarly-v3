@@ -233,17 +233,19 @@ export function DataTable<T>({
         </div>
         <Table> */}
           <TableBody>
-            <td className="p-0" colSpan={10000}>
-              <div
-                className={cn(
-                  "flex items-center gap-2 overflow-hidden bg-muted/50 p-2 transition-all",
-                  { "h-0 p-0": !loading },
-                )}
-              >
-                <Spinner className="h-4 w-4" />
-                Checking for new assignments...
-              </div>
-            </td>
+            <tr>
+              <td className="p-0" colSpan={10000}>
+                <div
+                  className={cn(
+                    "flex items-center gap-2 overflow-hidden bg-muted/50 p-2 transition-all",
+                    { "h-0 p-0": !loading },
+                  )}
+                >
+                  <Spinner className="h-4 w-4" />
+                  Checking for new assignments...
+                </div>
+              </td>
+            </tr>
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow

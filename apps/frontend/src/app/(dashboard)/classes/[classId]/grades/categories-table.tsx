@@ -89,7 +89,7 @@ export function CategoryTable({
       pointsPossible?: number;
       points?: number;
       weight: number;
-      value: number;
+      value: number | null;
       accurate?: boolean;
     }[] = [...categories.categories.map((c) => ({ ...c }))];
 
@@ -123,9 +123,12 @@ export function CategoryTable({
       else category.value = NaN;
       if (
         category.value.toFixed(2) ===
-        categories.categories
-          .filter((c) => c.name === category.name)[0]
-          ?.value.toFixed(2)
+          categories.categories
+            .filter((c) => c.name === category.name)[0]
+            ?.value?.toFixed(2) ||
+        (isNaN(category.value) &&
+          categories.categories.filter((c) => c.name === category.name)[0]
+            ?.value === null)
       ) {
         category.accurate = true;
         // console.log(
@@ -136,24 +139,27 @@ export function CategoryTable({
         // );
       } else {
         category.accurate = false;
-        // console.log(
-        //   "Inaccurate:",
-        //   category.value,
-        //   categories.categories.filter((c) => c.name === category.name)[0]
-        //     ?.value,
-        // );
+        console.warn(
+          "Inaccurate calcuation:",
+          `Calculated: ${category.value},`,
+          `Actual: ${
+            categories.categories.filter((c) => c.name === category.name)[0]
+              ?.value
+          }`,
+        );
       }
     });
 
     // Calculate the class average, while excluding categories that have no value
     const totalCategoryWeights = internalCategoryData.reduce(
-      (acc, obj) => acc + (!isNaN(obj.value) ? obj.weight : 0),
+      (acc, obj) =>
+        acc + (obj.value !== null && !isNaN(obj.value) ? obj.weight : 0),
       0,
     );
     const average = internalCategoryData.reduce(
       (acc, obj) =>
         acc +
-        (!isNaN(obj.value) ? obj.value : 0) *
+        (obj.value !== null && !isNaN(obj.value) ? obj.value : 0) *
           (obj.weight / totalCategoryWeights),
       0,
     );
