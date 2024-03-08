@@ -47,7 +47,9 @@ export function CategoryTable({
         {calculatedCategories.categories.map((category) => {
           return (
             <TableRow
-              className={cn({ "bg-yellow-500/25": !category.accurate })}
+              className={cn({
+                "bg-yellow-500/25 hover:bg-yellow-500/30": !category.accurate,
+              })}
               key={category.name}
             >
               <TableCell>{category.name}</TableCell>
@@ -64,7 +66,8 @@ export function CategoryTable({
       <TableFooter>
         <TableRow
           className={cn({
-            "bg-yellow-500/25": !calculatedCategories.accurate,
+            "bg-yellow-500/25 hover:bg-yellow-500/30":
+              !calculatedCategories.accurate,
           })}
         >
           <TableCell colSpan={2}>Gradebook Average</TableCell>
@@ -99,7 +102,7 @@ export function CategoryTable({
         const assignment = { ...singleAssignmentData };
         if (
           typeof assignment.points === "string" &&
-          assignment.points.toUpperCase() === "M"
+          assignment.points.toLowerCase() === "missing"
         )
           assignment.points = 0;
         if (assignment.category === category.name) {
@@ -131,12 +134,6 @@ export function CategoryTable({
             ?.value === null)
       ) {
         category.accurate = true;
-        // console.log(
-        //   "Accurate:",
-        //   category.value,
-        //   categories.categories.filter((c) => c.name === category.name)[0]
-        //     ?.value,
-        // );
       } else {
         category.accurate = false;
         console.warn(

@@ -100,10 +100,11 @@ async function extractData(page: Page): Promise<AspenAssignment[]> {
   const score = await page.$$eval(
     "#dataGrid tr:not(:first-of-type) > td:nth-of-type(8) tr",
     (elements) =>
-      elements.map(
-        (element) =>
-          element.querySelector("td:not(:has(.percentFieldContainer))")
-            ?.textContent,
+      elements.map((element) =>
+        element
+          .querySelector("td:last-of-type")
+          ?.textContent?.replaceAll("(", "")
+          .replaceAll(")", ""),
       ),
   );
   const feedback = await page.$$eval(
@@ -119,7 +120,7 @@ async function extractData(page: Page): Promise<AspenAssignment[]> {
       dateAssigned: dateAssigned[index] || "",
       dateDue: dateDue[index] || "",
       extraCredit: extraCredit[index] === "Y",
-      points: score[index]?.match(/^0\.0.*/)
+      points: score[index]?.match(/^0$/)
         ? 0
         : parseFloat(score[index] ?? "") ||
           capitalize(score[index]?.toString() ?? ""),
