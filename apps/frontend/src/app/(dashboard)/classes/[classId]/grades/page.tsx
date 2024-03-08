@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { toast } from "sonner";
 import { GradeTable } from "./grade-table";
 import { CategoryTable } from "./categories-table";
 import { api } from "@/trpc/react";
@@ -30,6 +32,12 @@ export default function Home({
   const thisClass = classData.data?.filter(
     (course) => course.id === params.classId,
   )[0];
+
+  useEffect(() => {
+    if (assignmentAspenData.isError) {
+      toast.error("Failed to fetch new assignments from Aspen!");
+    }
+  }, [assignmentAspenData.isError]);
 
   return (
     <main>
