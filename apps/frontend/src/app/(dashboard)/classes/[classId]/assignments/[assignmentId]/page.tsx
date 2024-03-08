@@ -73,8 +73,8 @@ export default async function Page({
                     `href="/classes/${params.classId}`,
                   )
                   .replaceAll(
-                    /background-color: #(?<hex>[A-Fa-f0-9]{6})/g,
-                    (matchedText) => `${matchedText}6b`,
+                    /background(?:-color)?: #(?<hex>[A-Fa-f0-9]{6});/g,
+                    (matchedText) => `${matchedText.replace(";", "")}6b;`,
                   ) || "",
             }}
           />
