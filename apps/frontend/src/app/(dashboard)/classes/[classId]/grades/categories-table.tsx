@@ -165,7 +165,7 @@ export function CategoryTable({
       // toast.error("Something went wrong while calculating your average!", {
       //   duration: 10000,
       // });
-      log.error("Something went wrong while calculating averages!");
+      log.warn("Something went wrong while calculating averages!");
     }
 
     return {

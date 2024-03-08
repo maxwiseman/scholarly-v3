@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { useLogger } from "next-axiom";
 import { GradeTable } from "./grade-table";
 import { CategoryTable } from "./categories-table";
 import { api } from "@/trpc/react";
@@ -33,11 +34,17 @@ export default function Home({
     (course) => course.id === params.classId,
   )[0];
 
+  const log = useLogger();
+
   useEffect(() => {
     if (assignmentAspenData.isError) {
       toast.error("Failed to fetch new assignments from Aspen!");
+      log.error(
+        "Failed to fetch new assignments from Aspen!",
+        assignmentAspenData.error,
+      );
     }
-  }, [assignmentAspenData.isError]);
+  }, [assignmentAspenData.error, assignmentAspenData.isError, log]);
 
   return (
     <main>
