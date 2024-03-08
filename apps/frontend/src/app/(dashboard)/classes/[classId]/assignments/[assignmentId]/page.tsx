@@ -66,11 +66,16 @@ export default async function Page({
             className="typography break-words"
             dangerouslySetInnerHTML={{
               __html:
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- This is sometimes empty
-                assignmentData.description?.replaceAll(
-                  /href="https:\/\/knoxschools\.instructure\.com\/courses\/[^/]*/g,
-                  `href="/classes/${params.classId}`,
-                ) || "",
+                assignmentData.description
+                  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- Sometimes this is empty
+                  ?.replaceAll(
+                    /href="https:\/\/knoxschools\.instructure\.com\/courses\/[^/]*/g,
+                    `href="/classes/${params.classId}`,
+                  )
+                  .replaceAll(
+                    /background-color: #(?<hex>[A-Fa-f0-9]{6})/g,
+                    (matchedText) => `${matchedText}6b`,
+                  ) || "",
             }}
           />
           {assignmentData.description !== "" &&
