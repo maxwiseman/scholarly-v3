@@ -51,6 +51,8 @@ export default function Home({
       {categoryData.data || classData.isFetched ? (
         <CategoryTable
           assignmentData={assignmentAspenData.data || assignmentData.data || []}
+          // eslint-disable-next-line react/jsx-no-leaked-render -- This is a prop
+          canLog={assignmentAspenData.isFetched && categoryData.isFetched}
           categoryData={
             categoryData.isFetched && categoryData.data
               ? categoryData.data

@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 export function CategoryTable({
   categoryData,
   assignmentData,
+  canLog,
 }: {
   categoryData: AspenCategories;
   assignmentData: {
@@ -28,6 +29,7 @@ export function CategoryTable({
     dateAssigned: Date | string | null;
     dateDue: Date | string | null;
   }[];
+  canLog?: boolean;
 }): React.ReactElement {
   const log = useLogger();
   const calculatedCategories = calculateCategories([...assignmentData], {
@@ -165,7 +167,7 @@ export function CategoryTable({
       // toast.error("Something went wrong while calculating your average!", {
       //   duration: 10000,
       // });
-      log.warn("Something went wrong while calculating averages!");
+      if (canLog) log.warn("Something went wrong while calculating averages!");
     }
 
     return {
