@@ -41,7 +41,7 @@ export default function Page({
   return (
     <main className="flex flex-col items-center gap-8">
       <div className="grid w-full gap-8 lg:grid-cols-2">
-        <Card className="h-48">
+        <Card className="min-h-48">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg font-bold">
               Missing Assignments
