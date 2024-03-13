@@ -58,7 +58,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const StyledIcon = props.icon
       ? React.cloneElement(props.icon, {
           className: cn(
-            "h-4 w-4 mr-2",
+            "h-4 overflow-hidden transition-[width]",
+            !props.loading ? "mr-2 w-4" : "mr-0 w-0",
             { "mr-0": size === "icon" },
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- this will either be a string or it wont be defined
             props.icon.props?.className as string | undefined,
@@ -90,7 +91,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               size === "icon" ? "mr-0 w-auto" : "",
             )}
           >
-            {!props.loading && StyledIcon}
+            {StyledIcon}
           </div>
         ) : null}
         {props.children}
