@@ -56,9 +56,10 @@ export default function Page({
             <ul className="[&>li]:mt-2">
               {assignmentAspenData.data?.map((assignment) => {
                 if (
-                  (!assignment.extraCredit &&
-                    assignment.points === "Missing") ||
-                  assignment.points === 0
+                  !assignment.extraCredit &&
+                  (assignment.points === "Missing" ||
+                    assignment.points === "M" ||
+                    assignment.points === 0)
                 ) {
                   return <li key={assignment.name}>{assignment.name}</li>;
                 }
@@ -66,8 +67,10 @@ export default function Page({
               }) ||
                 assignmentData.data?.map((assignment) => {
                   if (
-                    (!assignment.extraCredit && assignment.points === "M") ||
-                    assignment.points === 0
+                    !assignment.extraCredit &&
+                    (assignment.points === "Missing" ||
+                      assignment.points === "M" ||
+                      assignment.points === 0)
                   ) {
                     return <li key={assignment.name}>{assignment.name}</li>;
                   }

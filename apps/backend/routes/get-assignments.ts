@@ -120,7 +120,7 @@ async function extractData(page: Page): Promise<AspenAssignment[]> {
       dateAssigned: dateAssigned[index] || "",
       dateDue: dateDue[index] || "",
       extraCredit: extraCredit[index] === "Y",
-      points: score[index]?.match(/^0$/)
+      points: score[index]?.match(/^(?:\(0\.0\)|0\.0|0|\(0\))$/)
         ? 0
         : parseFloat(score[index] ?? "") ||
           capitalize(score[index]?.toString() ?? ""),
