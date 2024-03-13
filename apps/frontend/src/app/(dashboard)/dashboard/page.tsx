@@ -3,6 +3,7 @@
 import { ClassCard } from "./class-card";
 import { LinkButton } from "@/app/_components/ui/button";
 import { Separator } from "@/app/_components/ui/separator";
+import { Skeleton } from "@/app/_components/ui/skeleton";
 import { queryOpts } from "@/lib/utils";
 import { api } from "@/trpc/react";
 
@@ -35,6 +36,11 @@ export default function Page(): React.ReactElement {
       </h1>
       <Separator className="my-4 mb-8" />
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {!classFetcher.isFetched &&
+          Array(8).map((_, i) => (
+            // eslint-disable-next-line react/no-array-index-key -- It's just a skeleton
+            <Skeleton className="h-[8.625rem] rounded-xl" key={i} />
+          ))}
         {classFetcher.data?.map((classData) => {
           return (
             <ClassCard

@@ -9,6 +9,7 @@ import {
 } from "@/app/_components/ui/card";
 import { queryOpts } from "@/lib/utils";
 import { api } from "@/trpc/react";
+import { Spinner } from "@/app/_components/ui/spinner";
 
 export default function Page({
   params,
@@ -37,24 +38,26 @@ export default function Page({
     queryOpts,
   );
 
-  if (!assignmentData.isFetched) {
-    return <main className="text-muted-foreground">Loading...</main>;
-  }
-
   return (
     <main className="flex flex-col items-center gap-8">
       <div className="grid w-full gap-8 lg:grid-cols-2">
-        <Card>
+        <Card className="h-48">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg font-bold">
               Missing Assignments
             </CardTitle>
           </CardHeader>
           <CardContent>
+            {!assignmentData.isFetched && !assignmentAspenData.isFetched ? (
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Spinner /> Loading...
+              </div>
+            ) : null}
             <ul className="[&>li]:mt-2">
               {assignmentAspenData.data?.map((assignment) => {
                 if (
-                  (!assignment.extraCredit && assignment.points === "M") ||
+                  (!assignment.extraCredit &&
+                    assignment.points === "Missing") ||
                   assignment.points === 0
                 ) {
                   return <li key={assignment.name}>{assignment.name}</li>;
@@ -78,6 +81,11 @@ export default function Page({
             <CardTitle className="text-lg font-bold">Todo List</CardTitle>
           </CardHeader>
           <CardContent>
+            {!assignmentCanvasData.isFetched ? (
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Spinner /> Loading...
+              </div>
+            ) : null}
             <ul className="[&>li]:mt-2">
               {assignmentCanvasData.data?.map((assignment) => {
                 return (
