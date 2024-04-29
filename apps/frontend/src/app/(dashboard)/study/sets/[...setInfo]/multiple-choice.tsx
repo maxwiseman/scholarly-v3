@@ -39,7 +39,7 @@ export function MultipleChoice({
   useEffect(() => {
     pickChoices();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- this could cause some rerenders
-  }, [cardSet, promptCard]);
+  }, [cardSet]);
 
   return (
     <div className="absolute flex h-72 w-full flex-col items-center gap-5">
