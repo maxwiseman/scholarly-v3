@@ -14,7 +14,7 @@ export async function POST(req: Request): Promise<StreamingTextResponse> {
 
   const model = new ChatOllama({
     baseUrl: "http://localhost:11434",
-    model: "mistral",
+    model: "llama3",
   });
 
   const parser = new BytesOutputParser();

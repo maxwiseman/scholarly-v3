@@ -50,7 +50,7 @@ export function Chat({
   const panelRef = useRef<ImperativePanelHandle>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [model, setModel] = useState(
-    process.env.NODE_ENV === "development" ? "mistral" : "pplx",
+    process.env.NODE_ENV === "development" ? "llama" : "pplx",
   );
   const chat = useChat({ api: `/api/chat/${model}` });
 
@@ -118,7 +118,11 @@ export function Chat({
                 <div className="flex w-max flex-row items-center gap-2">
                   <IconBrandOpenai className="h-4 w-4 min-w-4" />
                   <Select
-                    defaultValue="pplx"
+                    defaultValue={
+                      process.env.NODE_ENV === "development"
+                        ? "mistral"
+                        : "pplx"
+                    }
                     onValueChange={setModel}
                     value={model}
                   >
@@ -127,11 +131,11 @@ export function Chat({
                     </SelectTrigger>
                     <SelectContent>
                       {process.env.NODE_ENV === "development" ? (
-                        <SelectItem value="mistral">Mistral</SelectItem>
+                        <SelectItem value="llama">Llama 3</SelectItem>
                       ) : null}
                       <SelectItem value="pplx">Perplexity</SelectItem>
                       <SelectItem value="3.5t">GPT-3.5 Turbo</SelectItem>
-                      <SelectItem value="4t">GPT-4 Turbo</SelectItem>
+                      <SelectItem value="4o">GPT-4o</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -181,7 +185,7 @@ export function Chat({
               </div>
             ) : (
               <ScrollArea
-                className="h-full px-6 py-0"
+                className="h-full overflow-x-auto px-6 py-0"
                 ref={scrollRef}
                 style={{
                   maskImage: `linear-gradient(#000,#000,transparent 0,#000 10px,#000 calc(100% - 10px),transparent)`,

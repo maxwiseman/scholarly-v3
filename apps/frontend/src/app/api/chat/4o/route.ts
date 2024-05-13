@@ -17,7 +17,7 @@ export async function POST(req: Request): Promise<StreamingTextResponse> {
 
   // Ask OpenAI for a streaming chat completion given the prompt
   const response = await openai.createChatCompletion({
-    model: "gpt-4-turbo-preview",
+    model: "gpt-4o",
     stream: true,
     messages,
     max_tokens: 1000,
