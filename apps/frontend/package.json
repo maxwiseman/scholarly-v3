@@ -77,7 +77,7 @@
     "embla-carousel-react": "^8.0.0-rc22",
     "framer-motion": "^10.16.16",
     "geist": "^1.2.1",
-    "langchain": "^0.1.7",
+    "langchain": "^0.3.5",
     "lucide-react": "^0.309.0",
     "mini-svg-data-uri": "^1.4.4",
     "next": "^14.1.0",
