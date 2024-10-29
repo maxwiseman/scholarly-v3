@@ -20,7 +20,7 @@
     "@auth/drizzle-adapter": "^0.3.6",
     "@cyntler/react-doc-viewer": "^1.14.1",
     "@hookform/resolvers": "^3.3.2",
-    "@langchain/community": "^0.0.20",
+    "@langchain/community": "^0.3.10",
     "@libsql/client": "^0.4.0-pre.5",
     "@nextui-org/react": "^2.2.9",
     "@planetscale/database": "^1.11.0",
